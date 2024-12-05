@@ -14,6 +14,28 @@ const CreateGroup = ({ setFooterOption }) => {
   });
 
   const [error, setError] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState(""); // Store the image name dynamically
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Check if the file is a PNG
+      if (file.type !== "image/png") {
+        alert("Please upload a PNG file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result); // Set the preview image data
+      };
+      reader.readAsDataURL(file); // Read file as a data URL
+
+      // Set the file name dynamically
+      setImageName(file.name);
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -42,7 +64,7 @@ const CreateGroup = ({ setFooterOption }) => {
       university,
       SLD,
       description,
-      picture: "group10.png", // Hardcoded picture
+      picture: imageName || "default.png", // Use dynamic name or default
       number_of_participants: numberOfParticipants,
       joined,
     };
@@ -79,15 +101,19 @@ const CreateGroup = ({ setFooterOption }) => {
                 height: "80px",
                 backgroundColor: "#3cacae43",
                 borderRadius: "50%",
+                backgroundImage: imagePreview ? `url(${imagePreview})` : "none",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
-              <span>+ Add</span>
+              {!imagePreview && <span>+ Add</span>}
             </div>
             <input
               type="file"
               id="group-pic"
               className="form-items form-control mt-2"
               style={{ width: "80px", height: "30px", fontSize: "10px" }}
+              onChange={handleFileChange} 
             />
           </div>
 
