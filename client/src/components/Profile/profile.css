@@ -1,0 +1,73 @@
+/* Impostazione del layout per occupare tutta la pagina */
+.profile-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f8ff; /* Azzurro chiaro per uno sfondo fresco */
+    min-height: 100vh; /* Occupare tutta la altezza dello schermo */
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #008b8b; /* Verde acqua per l'intestazione */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 5px solid #fff; /* Bordo bianco per un effetto di contrasto */
+  }
+  
+  .profile-info h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #fff; /* Testo bianco per l'intestazione */
+  }
+  
+  .profile-university {
+    font-size: 18px;
+    color: #fff; /* Testo bianco per il nome dell'università */
+    font-style: italic;
+  }
+  
+  .profile-details {
+    margin-top: 40px;
+    background-color: #fff; /* Sfondo bianco per i dettagli */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-detail {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px; /* Aggiunta di spazio tra i dettagli */
+  }
+  
+  .profile-detail strong {
+    color: #008b8b; /* Colore del testo forte */
+  }
+  
+  .sld-list {
+    list-style-type: disc; /* Punto elenco circolare */
+    margin-left: 20px;  /* Distanza sinistra per la lista */
+    padding-left: 20px; /* Aggiunge un po' di spazio tra il punto e il testo */
+    color: #333; /* Colore del testo */
+  }
+  
+  .sld-item {
+    font-size: 18px;
+    color: #2e8b57; /* Colore verde per gli SLD */
+    margin: 10px 0; /* Distanza tra le voci della lista */
+    font-weight: bold;
+  }
+  
+  .sld-item:nth-child(odd) {
+    color: #ff6347; /* Colore rosso per gli elementi dispari */
+  }
+  
