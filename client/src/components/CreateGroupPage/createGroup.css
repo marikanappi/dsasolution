@@ -1,64 +1,62 @@
 .help-icon {
-    background-color: #c26dbc;
-    color: #ecdfeb;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 24px;
-    transition: transform 0.2s;
-  }
-  
-  .help-icon:hover {
-    transform: scale(1.1); /* Slight zoom effect on hover */
-    background-color: #3cacae; /* Lighten the background on hover */
-  }
+  background-color: #c26dbc;
+  color: #ecdfeb;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 24px;
+  transition: transform 0.2s;
+}
 
-  
+.help-icon:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  background-color: #3cacae; /* Lighten the background on hover */
+}
+
 .form-items {
-    font-size: 13px;
-    margin-right: 2px;
-  }
-  
-  .uniform-width {
-    width: 100%;
-    max-width: 300px; /* Adjust as needed */
-  }
-  
-  .custom-button {
-    background-color: #c26dbc;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
-    margin-left: 20px;
-  }
-  
-  .custom-button:hover {
-    transform: scale(1.1); /* Slight zoom effect on hover */
-    background-color: #9fe7ed; /* Lighten the background on hover */
-    color: white;
-  }
-  
-  .scrollable-page {
-    max-height: 425px; /* Adjust based on container */
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 12px; /* Space for scrollbar */
-  }
-  
-  .scrollable-page::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  .scrollable-page::-webkit-scrollbar-thumb {
-    background-color: #3cacae43;
-    border-radius: 3px;
-  }
-  
-  .scrollable-page::-webkit-scrollbar-thumb:hover {
-    background: #c26dbc;
-  }
-  
+  font-size: 13px;
+  margin-right: 2px;
+}
+
+.uniform-width {
+  width: 100%;
+  max-width: 300px; /* Adjust as needed */
+}
+
+.custom-button {
+  background-color: #c26dbc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  margin-left: 20px;
+}
+
+.custom-button:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  background-color: #9fe7ed; /* Lighten the background on hover */
+  color: white;
+}
+
+.scrollable-form {
+  max-height: 425px; /* Adjust based on container */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px; /* Space for scrollbar */
+}
+
+.scrollable-form::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollable-form::-webkit-scrollbar-thumb {
+  background-color: #3cacae43;
+  border-radius: 3px;
+}
+
+.scrollable-form::-webkit-scrollbar-thumb:hover {
+  background: #c26dbc;
+}

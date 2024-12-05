@@ -61,7 +61,7 @@ const CreateGroup = ({ setFooterOption }) => {
       <hr />
 
       {/* Form */}
-      <form onSubmit={handleCreate} className="mb-2 scrollable-page">
+      <form onSubmit={handleCreate} className="mb-2 scrollable-form">
         {/* Picture Upload and Group Details */}
         <div className="row mb-3">
           <div className="col-md-4 text-center" style={{ marginTop: "10px" }}>
