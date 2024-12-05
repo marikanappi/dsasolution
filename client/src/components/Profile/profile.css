@@ -71,3 +71,23 @@
     color: #ff6347; /* Colore rosso per gli elementi dispari */
   }
   
+
+  .scrollable-page {
+    max-height: 520px; /* Adjust based on container */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 12px; /* Space for scrollbar */
+  }
+  
+  .scrollable-page::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .scrollable-page::-webkit-scrollbar-thumb {
+    background-color: #3cacae43;
+    border-radius: 3px;
+  }
+  
+  .scrollable-page::-webkit-scrollbar-thumb:hover {
+    background: #c26dbc;
+  }
