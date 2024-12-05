@@ -3,6 +3,7 @@ import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { addGroup } from "../../../API.mjs";
 import "./createGroup.css";
+import Group from "../../models/group";
 
 const CreateGroup = ({ setFooterOption }) => {
   const [isMandatoryWarningVisible, setMandatoryWarningVisible] =
@@ -16,32 +17,38 @@ const CreateGroup = ({ setFooterOption }) => {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+
+    // Fetching form values
     const name = document.getElementById("group-name").value;
     const university = document.getElementById("university").value;
     const level = document.getElementById("level").value;
     const SLD = document.getElementById("special-needs").value;
     const description = document.getElementById("description").value;
-    const picture = ""; // Placeholder, replace with actual file input handling.
-    const number_of_participants =
-      document.getElementById("max-participants").value || null;
-    const joined = false;
+    const numberOfParticipants =
+      document.getElementById("max-participants").value || 0;
+    const joined = true;
 
+    // Validation
     if (!name || !university || !level || !SLD) {
       setError(true);
       setMandatoryWarningVisible(true);
       return;
     }
 
-    const result = await addGroup(
+    // Create Group object
+    const newGroup = {
       name,
       level,
       university,
       SLD,
       description,
-      picture,
-      number_of_participants,
-      joined
-    );
+      picture: "group10.png", // Hardcoded picture
+      number_of_participants: numberOfParticipants,
+      joined,
+    };
+
+    // Call the API
+    const result = await addGroup(newGroup);
     if (result) {
       alert("Group added successfully!");
       setFooterOption("Home");

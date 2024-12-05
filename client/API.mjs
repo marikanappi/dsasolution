@@ -98,14 +98,14 @@ async function leaveGroup(id) {
 }
 
 // Function to add a new group
-async function addGroup(name, level, university, SLD, description, picture, number_of_participants, joined) {
+async function addGroup(group) {
   try {
     const response = await fetch(`${BASE_URL}/groups`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, level, university, SLD, description, picture, number_of_participants, joined }),
+      body: JSON.stringify(group),
     });
     if (!response.ok) {
       throw new Error('Failed to add group');
