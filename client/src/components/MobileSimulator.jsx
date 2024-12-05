@@ -4,7 +4,7 @@ import { FaHome, FaSearch, FaUser } from "react-icons/fa";
 import "../style.css";
 import HomePage from "./HomePage/Home";
 import SearchPage from "./SearchPage/Search";
-import CreateGroup from "./CreateGroupPage";
+import CreateGroup from "./CreateGroupPage/CreateGroup";
 import GroupPage from "./GroupPage/Group";
 import ProfilePage from "./Profile/Profile";
 

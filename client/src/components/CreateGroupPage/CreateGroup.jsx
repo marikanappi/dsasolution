@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { addGroup } from "../../API.mjs";
+import { addGroup } from "../../../API.mjs";
+import "./createGroup.css";
 
 const CreateGroup = ({ setFooterOption }) => {
   const [isMandatoryWarningVisible, setMandatoryWarningVisible] =
@@ -247,7 +248,7 @@ const CreateGroup = ({ setFooterOption }) => {
             transform: "translate(-50%, -50%)",
             width: "250px",
             padding: "20px",
-            backgroundColor: "#c4eaed",
+            backgroundColor: "#ecdfeb",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             borderRadius: "8px",
             zIndex: 1000,
@@ -273,7 +274,7 @@ const CreateGroup = ({ setFooterOption }) => {
             transform: "translate(-50%, -50%)",
             width: "250px",
             padding: "20px",
-            backgroundColor: "#c4eaed",
+            backgroundColor: "#ecdfeb",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             borderRadius: "8px",
             zIndex: 1000,
