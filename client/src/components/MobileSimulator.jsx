@@ -7,6 +7,7 @@ import SearchPage from "./SearchPage/Search";
 import CreateGroup from "./CreateGroupPage/CreateGroup";
 import GroupPage from "./GroupPage/Group";
 import ProfilePage from "./Profile/Profile";
+import ChatPage from "./GroupPage/Chat";
 
 const MobileAppSimulator = ({children}) => {
   const [footerOption, setFooterOption] = useState("Home");  
@@ -17,6 +18,13 @@ const MobileAppSimulator = ({children}) => {
       {footerOption === "Profile" && (
         <FaArrowLeft 
           onClick={() => setFooterOption("Home")} 
+          className="icon-back-arrow" 
+          style={{ position: "absolute", left: "10px", cursor: "pointer" }}
+        />
+      )}
+      {footerOption === "Chat" && (
+        <FaArrowLeft 
+          onClick={() => setFooterOption("Group")} 
           className="icon-back-arrow" 
           style={{ position: "absolute", left: "10px", cursor: "pointer" }}
         />
@@ -33,6 +41,7 @@ const MobileAppSimulator = ({children}) => {
         {footerOption === "Group" && <GroupPage setFooterOption={setFooterOption}/>}
         {footerOption === "CreateGroup" && <CreateGroup setFooterOption={setFooterOption} />}
         {footerOption === "Profile" && <ProfilePage/>}
+        {footerOption === "Chat" && <ChatPage setFooterOption={setFooterOption} />}
       </main>
 
       {/* Footer */}

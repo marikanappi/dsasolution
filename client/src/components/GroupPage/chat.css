@@ -1,0 +1,66 @@
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto; /* Impedisce lo scroll orizzontale */
+  overflow-y: auto; /* Abilita lo scroll verticale */
+  height: 100vh; /* Imposta l'altezza totale della pagina */
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-x: auto; /* Impedisce lo scroll orizzontale */
+    overflow-y: auto; /* Abilita lo scroll verticale */
+    padding: 10px 0;
+    width: 100%;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.sent {
+  text-align: right;
+  background-color: #d1e7dd;
+}
+
+.received {
+  text-align: left;
+  background-color: #f8d7da;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+  flex-grow: 1; /* Rende l'input espandibile */
+  margin-right: 10px; /* Distanza tra l'input e il bottone */
+}
+
+.send-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.microphone-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #555;
+    margin-right: 10px;
+    cursor: pointer;
+  }
