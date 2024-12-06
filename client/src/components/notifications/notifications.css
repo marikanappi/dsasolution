@@ -1,0 +1,52 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .table th,
+  .table td {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .table td {
+    font-size: 0.9rem;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tr:hover {
+    background-color: #eaf2f8;
+    transition: background-color 0.2s ease;
+  }
+  
+  .group-labels {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ffc107;
+    color: #212529;
+    font-weight: bold;
+  }
+  
+  .card-body p {
+    text-align: center;
+    color: #757575;
+    font-style: italic;
+  }
+  
+  .card-header{
+    background-color: #BA55D3;
+    color: #212529;
+    font-weight: bold;
+    text-align: center;
+  }

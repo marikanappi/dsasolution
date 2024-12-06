@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./home.css";
 import { Link } from "react-router-dom";
-import NotificationsCard from "../Notification";
+import NotificationsCard from "../notifications/Notification.jsx";
 import { getAllGroups } from "../../../API.mjs";
 
 const HomePage = ({ setFooterOption }) => {

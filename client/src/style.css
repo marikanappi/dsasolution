@@ -10,6 +10,12 @@
   margin: auto;
 }
 
+.back-button {
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
 /* Header */
 .mobile-header {
   height: 60px;
