@@ -6,14 +6,14 @@ const NotificationsCard = ({ onCollapseChange }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [groups, setGroups] = useState([]);
 
-  // Funzione per gestire il toggle della card
+  // Toggle collapse
   const toggleCollapse = () => {
     const newCollapsedState = !isCollapsed;
     setIsCollapsed(newCollapsedState);
     onCollapseChange(newCollapsedState);
   };
 
-  // Effettua la chiamata API al montaggio del componente
+  // Fetch groups
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -21,7 +21,7 @@ const NotificationsCard = ({ onCollapseChange }) => {
         const joinedGroups = allGroups.filter((group) => group.joined === 1);
         setGroups(joinedGroups);
       } catch (error) {
-        console.error("Errore nel recupero dei gruppi:", error);
+        console.error("Error fetching groups:", error);
       }
     };
     fetchGroups();
@@ -39,22 +39,17 @@ const NotificationsCard = ({ onCollapseChange }) => {
       {!isCollapsed && (
         <div className="card-body">
           {groups.length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="text-center">Notification</th>
-                  <th className="text-center">Group</th>
-                </tr>
-              </thead>
-              <tbody>
-                {groups.map((group, index) => (
-                  <tr key={index}>
-                    <td className="text-center">New Challenge Available</td>
-                    <td className="text-center group-labels">{group.name}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div>
+              {groups.map((group, index) => (
+                <div
+                  className="notification d-flex justify-content-between align-items-center mb-2"
+                  key={index}
+                >
+                  <span className="notif-text">New Material Available</span>
+                  <span className="group-labels">{group.name}</span>
+                </div>
+              ))}
+            </div>
           ) : (
             <p className="text-center">No notifications available</p>
           )}
