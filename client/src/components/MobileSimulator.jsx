@@ -51,7 +51,10 @@ const MobileAppSimulator = () => {
           <ChatPage setFooterOption={setFooterOption} />
         )}
         {footerOption === "Challenges" && (
-          <Challenges group={group}></Challenges>
+          <Challenges
+            setFooterOption={setFooterOption}
+            group={group}
+          ></Challenges>
         )}
       </main>
 

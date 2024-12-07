@@ -2,13 +2,13 @@ import React from "react";
 import { FaArrowLeft, FaTrophy } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Challenges = ({ group }) => {
+const Challenges = ({ setFooterOption, group }) => {
   // { stFooterOption, onGenerateChallenge }
   return (
     <div className="p-3">
       {/* Header */}
       <div className="d-flex align-items-center justify-content-between mb-3">
-        <FaArrowLeft style={{ cursor: "pointer" }} />
+        <FaArrowLeft style={{ cursor: "pointer" }} onClick= {() => setFooterOption("Group") } />
         <h5 className="text-center m-0">{group.name}</h5>
         <img
           src={group.picture} // Replace with actual image URL
