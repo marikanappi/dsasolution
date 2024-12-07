@@ -28,25 +28,6 @@ const GroupPage = ({ setFooterOption, group }) => {
 
   return (
     <div className="p-3">
-      {/* Header Row */}
-      <div className="row mb-4">
-      <div className="d-flex align-items-center mb-3" style={{ gap: "10px"}}>
-        <img
-          src={group.picture} // Replace with actual image URL
-          alt="Profile"
-          style={{
-            borderRadius: "50%",
-            width: "40px",
-            height: "40px",
-            objectFit: "cover",
-          }}
-        />
-        <h5 className="m-0" >
-          {group.name}
-        </h5>
-      </div>
-        <hr />
-      </div>
 
       {/* Sections for Chat, Challenges, and Materials */}
       <div className="row justify-content-center">

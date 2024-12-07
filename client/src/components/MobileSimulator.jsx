@@ -48,6 +48,29 @@ const MobileAppSimulator = () => {
         <img src="logo.png" alt="Logo" className="logo" />
       </header>
 
+      {(footerOption === "Group" || footerOption === "Challenges") && (
+        <div className="p-3">
+          {/* Header */}
+          <div
+            className="d-flex align-items-center mb-3"
+            style={{ gap: "12px", marginLeft: "12px"}}
+          >
+            <img
+              src={group.picture} // Replace with actual image URL
+              alt="Profile"
+              style={{
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                objectFit: "cover",
+              }}
+            />
+            <h5 className="m-0">{group.name}</h5>
+          </div>
+          <hr />
+        </div>
+      )}
+
       {/* Main Content */}
       <main className="mobile-content flex-grow-1 bg-light d-flex flex-column align-items-center">
         {footerOption === "Home" && (
