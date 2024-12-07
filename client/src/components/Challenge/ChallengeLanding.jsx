@@ -1,6 +1,7 @@
 import React from "react";
 import { FaArrowLeft, FaTrophy } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./challenge.css";
 
 const Challenges = ({ setFooterOption, group }) => {
   // { stFooterOption, onGenerateChallenge }
@@ -8,7 +9,10 @@ const Challenges = ({ setFooterOption, group }) => {
     <div className="p-3">
       {/* Header */}
       <div className="d-flex align-items-center justify-content-between mb-3">
-        <FaArrowLeft style={{ cursor: "pointer" }} onClick= {() => setFooterOption("Group") } />
+        <FaArrowLeft
+          style={{ cursor: "pointer" }}
+          onClick={() => setFooterOption("Group")}
+        />
         <h5 className="text-center m-0">{group.name}</h5>
         <img
           src={group.picture} // Replace with actual image URL
@@ -44,7 +48,7 @@ const Challenges = ({ setFooterOption, group }) => {
       {/* Generate Button */}
       <div className="d-flex justify-content-end">
         <button
-          className="btn btn-primary"
+          className="bottom-right-button btn"
           style={{ fontSize: "14px" }}
           //   onClick={onGenerateChallenge}
         >
