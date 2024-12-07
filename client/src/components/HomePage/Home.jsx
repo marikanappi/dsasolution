@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import NotificationsCard from "../notifications/Notification.jsx";
 import { getAllGroups } from "../../../API.mjs";
 
-const HomePage = ({ setFooterOption }) => {
+const HomePage = ({ setFooterOption, setGroup }) => {
   const [isNotificationsCollapsed, setIsNotificationsCollapsed] =
     useState(false);
   const [userGroups, setUserGroups] = useState([]);
@@ -48,7 +48,10 @@ const HomePage = ({ setFooterOption }) => {
               <li
                 key={index}
                 className="d-flex align-items-start mb-3"
-                onClick={() => setFooterOption("Group")}
+                onClick={() => {
+                  setFooterOption("Group");
+                  setGroup(group);
+                }}
                 style={{ cursor: "pointer" }}
               >
                 <Link

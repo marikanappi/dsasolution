@@ -5,21 +5,32 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./group.css";
 import { FaComments, FaTrophy, FaBook } from "react-icons/fa"; // Icons for Chat, Challenges, and Materials
 
-const GroupPage = ({ setFooterOption }) => {
+const GroupPage = ({ setFooterOption, group }) => {
   const location = useLocation();
-  const group = location.state; 
 
   const sections = [
-    { name: "Chat", icon: <FaComments />, onClick: () => setFooterOption("Chat") },
-    { name: "Challenges", icon: <FaTrophy />, onClick: () => setFooterOption("Challenges") },
-    { name: "Materials", icon: <FaBook />, onClick: () => setFooterOption("Materials") },
+    {
+      name: "Chat",
+      icon: <FaComments />,
+      onClick: () => setFooterOption("Chat"),
+    },
+    {
+      name: "Challenges",
+      icon: <FaTrophy />,
+      onClick: () => setFooterOption("Challenges"),
+    },
+    {
+      name: "Materials",
+      icon: <FaBook />,
+      onClick: () => setFooterOption("Materials"),
+    },
   ];
 
   return (
     <div className="p-3">
       {/* Header Row */}
       <div className="row mb-4">
-        <h5 className="text-center text-uppercase">{group}</h5>
+        <h5 className="text-center text-uppercase">{group.name}</h5>
         <hr />
       </div>
 
