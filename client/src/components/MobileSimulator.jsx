@@ -48,7 +48,7 @@ const MobileAppSimulator = () => {
         <img src="logo.png" alt="Logo" className="logo" />
       </header>
 
-      {(footerOption === "Group" || footerOption === "Challenges") && (
+      {(footerOption === "Group" || footerOption === "Challenges" || footerOption === "Challenges") && (
         <div className="p-3">
           {/* Header */}
           <div

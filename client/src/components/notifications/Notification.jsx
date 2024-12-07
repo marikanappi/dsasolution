@@ -28,7 +28,7 @@ const NotificationsCard = ({ onCollapseChange }) => {
   }, []);
 
   return (
-    <div className="card mb-5">
+    <div className="card mb-5" style = {{width: "312px"}}>
       <div
         className="card-header text-white"
         onClick={toggleCollapse}
@@ -43,6 +43,7 @@ const NotificationsCard = ({ onCollapseChange }) => {
               {groups.map((group, index) => (
                 <div
                   className="notification d-flex justify-content-between align-items-center mb-2"
+                  style={{ gap: "12px"}}
                   key={index}
                 >
                   <span className="notif-text">New Material Available</span>

@@ -34,7 +34,7 @@ const HomePage = ({ setFooterOption, setGroup }) => {
       <NotificationsCard onCollapseChange={handleCollapseChange} />
 
       {/* User Groups Section */}
-      <h5 className="text-center mb-4">Your Groups</h5>
+      <h5 className="text-center mb-4">My Groups</h5>
       <div
         className="vertical-scrollable mb-4"
         style={{
@@ -87,7 +87,7 @@ const HomePage = ({ setFooterOption, setGroup }) => {
       <div className="d-flex justify-content-end">
         <button
           className="bottom-right-button btn"
-          style={{maxHeight: "40px" }}
+          style={{ maxHeight: "40px" }}
           onClick={() => setFooterOption("CreateGroup")}
         >
           Create Group
