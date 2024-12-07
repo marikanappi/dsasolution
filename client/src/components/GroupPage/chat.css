@@ -1,7 +1,7 @@
 .chat-page {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full height for the chat page */
+  height: 48vh; /* Full height for the chat page */
   overflow: hidden; /* Prevent scrolling outside */
 }
 
@@ -70,4 +70,25 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+
+.scrollable-chat {
+  max-height: 425px; /* Adjust based on container */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px; /* Space for scrollbar */
+}
+
+.scrollable-chat::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-chat::-webkit-scrollbar-thumb {
+  background-color: #3cacae43;
+  border-radius: 5px;
+}
+
+.scrollable-chat::-webkit-scrollbar-thumb:hover {
+  background: #c26dbc;
 }

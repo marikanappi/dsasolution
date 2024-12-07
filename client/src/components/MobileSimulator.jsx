@@ -48,12 +48,14 @@ const MobileAppSimulator = () => {
         <img src="logo.png" alt="Logo" className="logo" />
       </header>
 
-      {(footerOption === "Group" || footerOption === "Challenges" || footerOption === "Challenges") && (
+      {(footerOption === "Group" ||
+        footerOption === "Challenges" ||
+        footerOption === "Chat") && (
         <div className="p-3">
           {/* Header */}
           <div
             className="d-flex align-items-center mb-3"
-            style={{ gap: "12px", marginLeft: "12px"}}
+            style={{ gap: "12px", marginLeft: "12px" }}
           >
             <img
               src={group.picture} // Replace with actual image URL

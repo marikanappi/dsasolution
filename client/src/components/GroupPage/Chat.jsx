@@ -86,12 +86,8 @@ const ChatPage = ({ setFooterOption }) => {
   }, [messages]);
 
   return (
-    <div className="chat-page d-flex flex-column">
-      <header className="chat-header d-flex align-items-center">
-        <h3>Chat</h3>
-      </header>
-
-      <div className="chat-messages flex-grow-1 overflow-auto p-3">
+    <div className="chat-page">
+      <div className="chat-messages scrollable-chat">
         {messages.map((message) => (
           <div
             key={message.id}
