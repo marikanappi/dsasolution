@@ -81,10 +81,6 @@ const CreateGroup = ({ setFooterOption }) => {
     <div className="p-3">
       {/* Header */}
       <div className="d-flex align-items-center mb-3">
-        <FaArrowLeft
-          style={{ cursor: "pointer" }}
-          onClick={() => setFooterOption("Home")}
-        />
         <h5 className="text-center flex-grow-1 m-0">Create a Group</h5>
       </div>
       <hr />
@@ -113,7 +109,7 @@ const CreateGroup = ({ setFooterOption }) => {
               id="group-pic"
               className="form-items form-control mt-2"
               style={{ width: "80px", height: "30px", fontSize: "10px" }}
-              onChange={handleFileChange} 
+              onChange={handleFileChange}
             />
           </div>
 

@@ -17,18 +17,32 @@ const MobileAppSimulator = () => {
     <div className="mobile-frame d-flex flex-column ">
       {/* Header */}
       <header className="mobile-header text-white d-flex align-items-center justify-content-center">
-        {footerOption === "Profile" && (
+        {footerOption === "Group" && (
           <FaArrowLeft
             onClick={() => setFooterOption("Home")}
             className="icon-back-arrow"
-            style={{ position: "absolute", left: "10px", cursor: "pointer" }}
+            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
           />
         )}
         {footerOption === "Chat" && (
           <FaArrowLeft
             onClick={() => setFooterOption("Group")}
             className="icon-back-arrow"
-            style={{ position: "absolute", left: "10px", cursor: "pointer" }}
+            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
+          />
+        )}
+        {footerOption === "Challenges" && (
+          <FaArrowLeft
+            onClick={() => setFooterOption("Group")}
+            className="icon-back-arrow"
+            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
+          />
+        )}
+        {footerOption === "CreateGroup" && (
+          <FaArrowLeft
+            onClick={() => setFooterOption("Home")}
+            className="icon-back-arrow"
+            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
           />
         )}
         <img src="logo.png" alt="Logo" className="logo" />
