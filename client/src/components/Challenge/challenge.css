@@ -1,11 +1,10 @@
 .bottom-right-button {
-  position: fixed;
   background-color: #c26dbc;
   color: white;
   position: absolute; /* Positioned relative to the .mobile-simulator container */
   bottom: 80px; /* Distance from the bottom of the container */
   right: 30px; /* Distance from the right side of the container */
-  width: 100px;
+  min-width: 120px; /* Ensure enough space for text */
   height: 50px;
   border-radius: 8px;
   display: flex;
@@ -13,7 +12,9 @@
   justify-content: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  font-size: 24px;
+  font-size: 14px;
+  font-weight: 500; /* Optional: slightly bolder font */
+  white-space: nowrap; /* Prevent text wrapping */
   transition: transform 0.2s;
 }
 

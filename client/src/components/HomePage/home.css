@@ -20,10 +20,10 @@
   color: white;
   position: absolute; /* Positioned relative to the .mobile-simulator container */
   bottom: 80px; /* Distance from the bottom of the container */
-  right: 169px; /* Distance from the right side of the container */
-  width: 40px;
+  right: 30px; /* Distance from the right side of the container */
+  width: 100px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;

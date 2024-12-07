@@ -84,11 +84,14 @@ const HomePage = ({ setFooterOption, setGroup }) => {
       </div>
 
       {/* Floating + Icon */}
-      <div className="floating-icon">
-        <FaPlus
+      <div className="d-flex justify-content-end">
+        <button
+          className="bottom-right-button btn"
+          style={{maxHeight: "40px" }}
           onClick={() => setFooterOption("CreateGroup")}
-          style={{ cursor: "pointer" }}
-        />
+        >
+          Create Group
+        </button>
       </div>
     </div>
   );
