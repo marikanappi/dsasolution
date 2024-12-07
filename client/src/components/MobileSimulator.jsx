@@ -46,23 +46,22 @@ const MobileAppSimulator = () => {
           />
         )}
 
-        {(footerOption === "Group" ||
+        {footerOption === "Group" ||
         footerOption === "Challenges" ||
-        footerOption === "Chat") ? (
-        <div className="p-3 d-flex align-items-center">
-          {/* Header */}
+        footerOption === "Chat" ? (
+          <div className="p-3 d-flex align-items-center">
+            {/* Header */}
             <h5 className="group-name m-0 text-white">{group.name}</h5>
             <img
               src={group.picture} // Replace with actual image URL
               alt="Profile"
-              className = "group-profile"
+              className="group-profile"
             />
-        </div>
-      ) : 
-      <img src="logo.png" alt="Logo" className="logo" />}
+          </div>
+        ) : (
+          <img src="logo.png" alt="Logo" className="logo" />
+        )}
       </header>
-
-      
 
       {/* Main Content */}
       <main className="mobile-content flex-grow-1 bg-light d-flex flex-column align-items-center">

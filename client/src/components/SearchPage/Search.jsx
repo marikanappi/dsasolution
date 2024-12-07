@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaPlus, FaFilter } from "react-icons/fa";
 import "./search.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -36,22 +36,22 @@ const GroupCard = ({ name, level, picture, onJoinGroup, joined }) => (
         }}
       />
       {!joined && (
-      <button
-        className="floating-icon"
-        onClick={onJoinGroup}
-        style={{
-          position: "absolute",
-          width: "30px",
-          height: "30px",
-          top: "-5px",
-          right: "-5px",
-          padding: "3px 5px",
-          fontSize: "12px",
-          borderRadius: "50%",
-        }}
-      >
-        <FaPlus />
-      </button>
+        <button
+          className="floating-icon"
+          onClick={onJoinGroup}
+          style={{
+            position: "absolute",
+            width: "30px",
+            height: "30px",
+            top: "-5px",
+            right: "-5px",
+            padding: "3px 5px",
+            fontSize: "12px",
+            borderRadius: "50%",
+          }}
+        >
+          <FaPlus />
+        </button>
       )}
     </div>
     <div
@@ -98,25 +98,32 @@ const SuggestedGroups = ({ groups, onJoinGroup, joinedGroups }) => (
 );
 
 const OtherGroups = ({ groups, onJoinGroup, joinedGroups }) => (
-  <div className="mb-2 vertical-scrollable" style={{ maxHeight: "200px", overflowY: "auto" }}>
+  <div
+    className="mb-2 vertical-scrollable"
+    style={{ maxHeight: "200px", overflowY: "auto" }}
+  >
     <div className="card-body">
       {groups.map((group, index) => (
         <div className="group-row" key={index}>
-          <img src={group.picture} alt={group.name} className="group-profile" />
+          <img
+            src={group.picture}
+            alt={group.name}
+            className="group-profile-search"
+          />
           <div className="group-content">
             <h6>{group.name}</h6>
           </div>
           {!joinedGroups.includes(group.name) && (
-          <button
-            className="floating-icon-row"
-            onClick={() => onJoinGroup(group)}
-            style={{
-              width: "30px",
-              height: "30px",
-            }}
-          >
-            <FaPlus />
-          </button>
+            <button
+              className="floating-icon-row"
+              onClick={() => onJoinGroup(group)}
+              style={{
+                width: "30px",
+                height: "30px",
+              }}
+            >
+              <FaPlus />
+            </button>
           )}
         </div>
       ))}
@@ -180,7 +187,6 @@ const Modal = ({ group, onClose, onConfirmJoin }) => (
 );
 
 const SearchPage = () => {
-
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [joinedGroups, setJoinedGroups] = useState([]);
@@ -200,12 +206,15 @@ const SearchPage = () => {
     async function fetchGroups() {
       try {
         const groups = await getAllGroups(); // API per ottenere i gruppi
-        console.log('Fetched groups:', groups);
-        setSuggestedGroups(groups.filter(group => group.university === 'Politecnico di Torino'));
-        setOtherGroups(groups.filter(group => group.university !== 'Politecnico di Torino'));
-
+        console.log("Fetched groups:", groups);
+        setSuggestedGroups(
+          groups.filter((group) => group.university === "Politecnico di Torino")
+        );
+        setOtherGroups(
+          groups.filter((group) => group.university !== "Politecnico di Torino")
+        );
       } catch (error) {
-        console.error('Errore nel caricamento dei gruppi:', error);
+        console.error("Errore nel caricamento dei gruppi:", error);
       } finally {
         setIsLoading(false);
       }
@@ -217,10 +226,10 @@ const SearchPage = () => {
     async function fetchFilters() {
       try {
         const groups = await getAllGroups();
-        setLevels([...new Set(groups.map(group => group.level))]); // Estrai i livelli unici
-        setSlds([...new Set(groups.map(group => group.SLD))]); // Estrai gli SLD unici
+        setLevels([...new Set(groups.map((group) => group.level))]); // Estrai i livelli unici
+        setSlds([...new Set(groups.map((group) => group.SLD))]); // Estrai gli SLD unici
       } catch (error) {
-        console.error('Errore nel caricamento dei filtri:', error);
+        console.error("Errore nel caricamento dei filtri:", error);
       }
     }
     fetchFilters();
@@ -236,11 +245,15 @@ const SearchPage = () => {
 
   const handleClickOutside = (e) => {
     // Ignora il clic se il target è il pulsante di filtro o un altro elemento all'interno del componente
-    if (filtersRef.current && !filtersRef.current.contains(e.target) && !e.target.closest('.filter-btn')) {
-      closeFilters();  // Chiudi la tendina se clicchi fuori
+    if (
+      filtersRef.current &&
+      !filtersRef.current.contains(e.target) &&
+      !e.target.closest(".filter-btn")
+    ) {
+      closeFilters(); // Chiudi la tendina se clicchi fuori
     }
   };
-  
+
   useEffect(() => {
     // Aggiungi l'evento per il clic fuori quando la tendina è visibile
     if (filtersVisible) {
@@ -252,7 +265,6 @@ const SearchPage = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [filtersVisible]);
-
 
   const handleJoinGroup = (group) => {
     setSelectedGroup(group); // Imposta il gruppo selezionato
@@ -272,18 +284,17 @@ const SearchPage = () => {
         alert(`You have joined the group: ${group.name}`);
       }
     } catch (error) {
-      console.error('Errore durante la join del gruppo:', error);
+      console.error("Errore durante la join del gruppo:", error);
     } finally {
       setModalOpen(false);
     }
   };
-  
+
   const filteredGroups = suggestedGroups.filter(
     (group) =>
       (selectedLevel ? group.level === selectedLevel : true) &&
       (selectedSLD ? group.SLD === selectedSLD : true)
   );
-
 
   return (
     <div className="p-2" style={{ maxWidth: "300px" }}>
@@ -301,7 +312,7 @@ const SearchPage = () => {
           style={{
             width: "40px",
             height: "40px",
-            marginLeft: "10px",  // Keep some space between the search bar and the filter button
+            marginLeft: "10px", // Keep some space between the search bar and the filter button
             backgroundColor: "#f0f0f0",
             border: "1px solid #ddd",
             borderRadius: "5px",
@@ -318,8 +329,8 @@ const SearchPage = () => {
       {/* Filters Dropdown */}
       {filtersVisible && (
         <div
-        className="filters-dropdown-container"
-          ref={filtersRef}  // Riferimento alla tendina dei filtri
+          className="filters-dropdown-container"
+          ref={filtersRef} // Riferimento alla tendina dei filtri
           style={{
             position: "absolute",
             top: "70px", // Just below the search bar
@@ -383,23 +394,28 @@ const SearchPage = () => {
               }}
             >
               {group.name}
-              <p style={{ fontSize: "10px", color: "#666" }}>
-                {group.level}
-              </p>
+              <p style={{ fontSize: "10px", color: "#666" }}>{group.level}</p>
             </div>
           </div>
-
         ))}
-      </div>  
+      </div>
 
       {/* Other Groups */}
       <h6 className="row mt-4">Other Groups</h6>
       <hr />
-      <OtherGroups groups={otherGroups} onJoinGroup={handleJoinGroup} joinedGroups={joinedGroups}/>
+      <OtherGroups
+        groups={otherGroups}
+        onJoinGroup={handleJoinGroup}
+        joinedGroups={joinedGroups}
+      />
 
       {/* Modal */}
       {modalOpen && selectedGroup && (
-        <Modal group={selectedGroup} onClose={handleCloseModal} onConfirmJoin={handleConfirmJoin}/>
+        <Modal
+          group={selectedGroup}
+          onClose={handleCloseModal}
+          onConfirmJoin={handleConfirmJoin}
+        />
       )}
     </div>
   );
