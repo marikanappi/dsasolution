@@ -1,12 +1,10 @@
 // GroupPage.jsx
 import React from "react";
-import { useParams, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./group.css";
 import { FaComments, FaTrophy, FaBook } from "react-icons/fa"; // Icons for Chat, Challenges, and Materials
 
-const GroupPage = ({ setFooterOption, group }) => {
-  const location = useLocation();
+const GroupPage = ({ setFooterOption }) => {
 
   const sections = [
     {
@@ -30,7 +28,7 @@ const GroupPage = ({ setFooterOption, group }) => {
     <div className="p-3">
 
       {/* Sections for Chat, Challenges, and Materials */}
-      <div className="row justify-content-center">
+      <div className="row justify-content-center" style= {{marginTop: "60px"}}>
         {sections.map((section, index) => (
           <div
             key={index}

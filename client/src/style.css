@@ -53,3 +53,20 @@
   max-width: 25%;
   height: auto;
 }
+
+.group-profile {
+  position: absolute; /* Positioned relative to the .mobile-simulator container */
+  top: 10px; /* Distance from the bottom of the container */
+  right: 17px; /* Distance from the right side of the container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.group-name {
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  top: "15px";
+}

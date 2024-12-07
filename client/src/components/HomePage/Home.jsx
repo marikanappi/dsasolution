@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { FaPlus } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./home.css";
 import { Link } from "react-router-dom";
