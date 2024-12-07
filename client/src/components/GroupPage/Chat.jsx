@@ -87,7 +87,6 @@ const ChatPage = ({ setFooterOption }) => {
 
   return (
     <div className="chat-page d-flex flex-column">
-      {/* Header */}
       <header className="chat-header d-flex align-items-center">
         <h3>Chat</h3>
       </header>
@@ -96,19 +95,33 @@ const ChatPage = ({ setFooterOption }) => {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`message ${message.user === "User" ? "sent" : "received"}`}
+            className={`message-container ${
+              message.user === "User" ? "sent" : "received"
+            }`}
           >
-            <p>{message.text}</p>
+            {message.user === "System" && (
+              <img
+                src="https://via.placeholder.com/40"
+                alt="System Profile"
+                className="profile-image"
+              />
+            )}
+            <div className="message-bubble">
+              <p>{message.text}</p>
+            </div>
+            {message.user === "User" && (
+              <img
+                src="https://via.placeholder.com/40"
+                alt="User Profile"
+                className="profile-image"
+              />
+            )}
           </div>
         ))}
       </div>
 
       <div className="chat-input d-flex align-items-center">
-        {/* Bottone Microfono */}
-        <button
-          className="microphone-btn"
-          onClick={handleStartStopRecording}
-        >
+        <button className="microphone-btn" onClick={handleStartStopRecording}>
           <FaMicrophone />
         </button>
 
