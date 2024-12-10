@@ -1,3 +1,21 @@
+/* Global styles for the body and HTML */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the page takes up at least the full height of the viewport */
+}
+
+.search-page-content {
+  flex: 1; /* Makes this section take up remaining space */
+}
+
+/* Scrollable cards layout */
 .scrollable-cards {
   display: flex;
   gap: 10px;
@@ -5,6 +23,7 @@
   white-space: nowrap; /* Ensure cards stay inline */
   padding: 10px 0;
   width: 100%;
+  flex-shrink: 1; /* Prevents it from taking more space than necessary */
 }
 
 .scrollable-cards::-webkit-scrollbar {
@@ -20,6 +39,7 @@
   background: #c26dbc;
 }
 
+/* Vertical scrollable container */
 .vertical-scrollable {
   max-height: 300px; /* Adjust based on container */
   overflow-y: auto;
@@ -40,6 +60,7 @@
   background: #c26dbc;
 }
 
+/* Group row with flexbox */
 .group-row {
   display: flex;
   align-items: center;
@@ -48,6 +69,7 @@
   padding: 10px 0;
 }
 
+/* Group profile image */
 .group-profile-search {
   width: 40px;
   height: 40px;
@@ -55,11 +77,13 @@
   object-fit: cover;
 }
 
+/* Group content area */
 .group-content {
   flex-grow: 1;
   margin-left: 10px;
 }
 
+/* Floating icon row with hover effect */
 .floating-icon-row {
   background-color: #c26dbc;
   color: white;
@@ -80,6 +104,7 @@
   background-color: #9fe7ed; /* Lighten the background on hover */
 }
 
+/* Filter button style */
 .filter-btn {
   background: none;
   border: none;
@@ -87,6 +112,7 @@
   cursor: pointer;
 }
 
+/* Filters dropdown container */
 .filters-dropdown-container {
   display: flex;
   flex-direction: column;
@@ -105,7 +131,15 @@
   border: 1px solid #ddd;
 }
 
-.floating-icon-row:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  background-color: #9fe7ed; /* Lighten the background on hover */
+/* Footer style */
+footer {
+  height: 50px; /* Example footer height */
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }

@@ -23,12 +23,13 @@
 }
 
 /* Mobile Content Scrollable */
+
 .mobile-content {
-  overflow-y: hidden; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: hidden; 
+  overflow-x: hidden; 
   padding: 10px;
-  max-height: calc(100% - 120px); /* Adjust for header and footer heights */
-  width: 100%; /* Ensure it stays within the frame */
+  max-height: calc(100% - 120px); 
+  width: 100%; 
 }
 
 /* Footer */

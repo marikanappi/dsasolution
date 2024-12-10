@@ -13,8 +13,9 @@ import Challenges from "./Challenge/ChallengeLanding";
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
   const [group, setGroup] = useState();
+
   return (
-    <div className="mobile-frame d-flex flex-column ">
+    <div className="mobile-frame d-flex flex-column">
       {/* Header */}
       <header className="mobile-header text-white d-flex align-items-center justify-content-center">
         {footerOption === "Group" && (
@@ -50,8 +51,7 @@ const MobileAppSimulator = () => {
         footerOption === "Challenges" ||
         footerOption === "Chat" ? (
           <div className="p-3 d-flex align-items-center">
-            {/* Header */}
-            <h5 className="group-name m-0 text-white">{group.name}</h5>
+            <h4 className="group-name m-0 text-white">{group.name}</h4>
             <img
               src={group.picture} // Replace with actual image URL
               alt="Profile"
@@ -63,8 +63,7 @@ const MobileAppSimulator = () => {
         )}
       </header>
 
-      {/* Main Content */}
-      <main className="mobile-content flex-grow-1 bg-light d-flex flex-column align-items-center">
+      <main className="mobile-content flex-grow-1 ">
         {footerOption === "Home" && (
           <HomePage setFooterOption={setFooterOption} setGroup={setGroup} />
         )}

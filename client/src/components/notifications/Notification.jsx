@@ -46,7 +46,7 @@ const NotificationsCard = ({ onCollapseChange }) => {
                   style={{ gap: "12px"}}
                   key={index}
                 >
-                  <span className="notif-text">New Material Available</span>
+                  <span className="notif-text">You just joined the group!</span>
                   <span className="group-labels">{group.name}</span>
                 </div>
               ))}

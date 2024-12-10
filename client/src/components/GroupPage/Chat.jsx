@@ -4,7 +4,7 @@ import "./chat.css";
 
 const ChatPage = ({ setFooterOption }) => {
   const [messages, setMessages] = useState([
-    { id: 1, user: "System", text: "Hi, welcome in Machine Learning Basis group" }
+    { id: 1, user: "System", text: "Welcome Mario !!" }
   ]);
   const [newMessage, setNewMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false); // Stato per controllare se stiamo registrando
@@ -97,7 +97,7 @@ const ChatPage = ({ setFooterOption }) => {
           >
             {message.user === "System" && (
               <img
-                src="https://via.placeholder.com/40"
+                src="talk2.png"
                 alt="System Profile"
                 className="profile-image"
               />
@@ -107,7 +107,7 @@ const ChatPage = ({ setFooterOption }) => {
             </div>
             {message.user === "User" && (
               <img
-                src="https://via.placeholder.com/40"
+                src="talk1.png"
                 alt="User Profile"
                 className="profile-image"
               />

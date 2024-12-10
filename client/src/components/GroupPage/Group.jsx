@@ -1,10 +1,28 @@
-// GroupPage.jsx
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./group.css";
 import { FaComments, FaTrophy, FaBook } from "react-icons/fa"; // Icons for Chat, Challenges, and Materials
+import { AiOutlineLogout } from "react-icons/ai"; // Icon for Leave Group
+import { leaveGroup as apiLeaveGroup } from "/../client/API.mjs"; // Import API function
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import "./group.css";
 
-const GroupPage = ({ setFooterOption }) => {
+const GroupPage = ({ setFooterOption, group }) => {
+  const navigate = useNavigate(); // Initialize navigate function
+
+  const handleLeaveGroup = async () => {
+    try {
+      console.log("Leaving group with ID:", group.id);
+      const result = await apiLeaveGroup(group.id); // Call API with the group ID
+      if (result) {
+        setFooterOption("Home"); // Set footer option to "Home" to navigate to HomePage
+      } else {
+        alert("Failed to leave the group. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error leaving the group:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   const sections = [
     {
@@ -26,9 +44,8 @@ const GroupPage = ({ setFooterOption }) => {
 
   return (
     <div className="p-3">
-
       {/* Sections for Chat, Challenges, and Materials */}
-      <div className="row justify-content-center" style= {{marginTop: "60px"}}>
+      <div className="row justify-content-center" style={{ marginTop: "60px" }}>
         {sections.map((section, index) => (
           <div
             key={index}
@@ -56,6 +73,14 @@ const GroupPage = ({ setFooterOption }) => {
             </span>
           </div>
         ))}
+      </div>
+
+      <div className="leave-div">
+        <button
+          className="btn btn-leave-group"
+          onClick={handleLeaveGroup}
+        ><AiOutlineLogout /> Leave Group
+        </button>
       </div>
     </div>
   );

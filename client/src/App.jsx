@@ -9,14 +9,13 @@ function App() {
   
     return (
       
-      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-        {/* Passa le rotte come children */}
+      <div>
         <MobileAppSimulator>
           <Routes>
-            {/* HomePage route */}
             <Route index element={<HomePage />} />
-            {/* GroupPage route with dynamic group name */}
             <Route path='/search' element={<SearchPage />}/>
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/home' element={<HomePage/>}/>
             <Route path='/group' element={<GroupPage />} />
           </Routes>
         </MobileAppSimulator>

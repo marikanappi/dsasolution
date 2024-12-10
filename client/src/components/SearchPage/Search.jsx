@@ -30,7 +30,7 @@ const GroupCard = ({ name, level, picture, onJoinGroup, joined }) => (
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: "50%", // Change to "0" for square shape
+          borderRadius: "50%",
           objectFit: "cover",
           border: "2px solid #3cacae",
         }}
@@ -57,27 +57,16 @@ const GroupCard = ({ name, level, picture, onJoinGroup, joined }) => (
     <div
       style={{
         width: "100%",
-        height: "100%",
         fontSize: "12px",
         marginBottom: "4px",
-        lineHeight: "1",
-        textAlign: "center", // Ensures text is centered
-        overflow: "hidden", // Prevents text from overflowing
-        whiteSpace: "nowrap", // Prevents wrapping
-        textOverflow: "ellipsis", // Adds "..." if the text is too long
+        textAlign: "center",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
       }}
     >
       {name}
-      <p
-        style={{
-          fontSize: "10px",
-          color: "#666",
-          margin: "0",
-          lineHeight: "1.2",
-        }}
-      >
-        {level}
-      </p>
+      <p style={{ fontSize: "10px", color: "#666" }}>{level}</p>
     </div>
   </div>
 );
@@ -208,10 +197,10 @@ const SearchPage = () => {
         const groups = await getAllGroups(); // API per ottenere i gruppi
         console.log("Fetched groups:", groups);
         setSuggestedGroups(
-          groups.filter((group) => group.university === "Politecnico di Torino")
+          groups.filter((group) => (group.university === "Politecnico di Torino" && !joinedGroups.includes(group.name)))
         );
         setOtherGroups(
-          groups.filter((group) => group.university !== "Politecnico di Torino")
+          groups.filter((group) => (group.university !== "Politecnico di Torino" && !joinedGroups.includes(group.name)))
         );
       } catch (error) {
         console.error("Errore nel caricamento dei gruppi:", error);
@@ -244,7 +233,6 @@ const SearchPage = () => {
   };
 
   const handleClickOutside = (e) => {
-    // Ignora il clic se il target è il pulsante di filtro o un altro elemento all'interno del componente
     if (
       filtersRef.current &&
       !filtersRef.current.contains(e.target) &&
@@ -255,12 +243,10 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    // Aggiungi l'evento per il clic fuori quando la tendina è visibile
     if (filtersVisible) {
       document.addEventListener("click", handleClickOutside);
     }
 
-    // Rimuovi l'evento quando la tendina è chiusa
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -278,15 +264,21 @@ const SearchPage = () => {
 
   const handleConfirmJoin = async (group) => {
     try {
-      const response = await joinGroup(group.id); // Usa l'API joinGroup
+      const response = await joinGroup(group.id); // Use the joinGroup API
       if (response) {
-        setJoinedGroups([...joinedGroups, group.name]); // Aggiorna lo stato
-        alert(`You have joined the group: ${group.name}`);
+        setJoinedGroups([...joinedGroups, group.name]);
+
+        // Remove the group from the suggested groups list
+        setSuggestedGroups((prevGroups) =>
+          prevGroups.filter((g) => g.name !== group.name)
+        );
+
+       //alert(`You have joined the group: ${group.name}`);
       }
     } catch (error) {
-      console.error("Errore durante la join del gruppo:", error);
+      console.error("Error while joining the group:", error);
     } finally {
-      setModalOpen(false);
+      setModalOpen(false); // Close the modal
     }
   };
 
@@ -298,7 +290,6 @@ const SearchPage = () => {
 
   return (
     <div className="p-2" style={{ maxWidth: "300px" }}>
-      {/* Search Bar and Filter Button */}
       <div className="d-flex mb-3" style={{ position: "relative" }}>
         <input
           type="text"
@@ -312,7 +303,7 @@ const SearchPage = () => {
           style={{
             width: "40px",
             height: "40px",
-            marginLeft: "10px", // Keep some space between the search bar and the filter button
+            marginLeft: "10px",
             backgroundColor: "#f0f0f0",
             border: "1px solid #ddd",
             borderRadius: "5px",
@@ -326,14 +317,13 @@ const SearchPage = () => {
         </button>
       </div>
 
-      {/* Filters Dropdown */}
       {filtersVisible && (
         <div
           className="filters-dropdown-container"
-          ref={filtersRef} // Riferimento alla tendina dei filtri
+          ref={filtersRef}
           style={{
             position: "absolute",
-            top: "70px", // Just below the search bar
+            top: "70px",
             left: "0",
             width: "100%",
             backgroundColor: "#fff",
@@ -357,60 +347,28 @@ const SearchPage = () => {
         </div>
       )}
 
-      {/* Suggested Groups */}
       <h6 className="row mb-2">Suggested for You</h6>
       <div className="scrollable-cards">
         {filteredGroups.map((group, index) => (
-          <div key={index} className="d-flex flex-column align-items-center">
-            <div
-              style={{
-                position: "relative",
-                width: "55px",
-                height: "55px",
-                marginBottom: "10px",
-              }}
-            >
-              <img
-                src={group.picture}
-                alt={group.name}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "2px solid #3cacae",
-                }}
-              />
-            </div>
-            <div
-              style={{
-                width: "100%",
-                fontSize: "12px",
-                marginBottom: "4px",
-                textAlign: "center",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {group.name}
-              <p style={{ fontSize: "10px", color: "#666" }}>{group.level}</p>
-            </div>
-          </div>
+          <GroupCard
+            key={index}
+            name={group.name}
+            level={group.level}
+            picture={group.picture}
+            onJoinGroup={() => handleJoinGroup(group)}
+            joined={joinedGroups.includes(group.name)}
+          />
         ))}
       </div>
 
-      {/* Other Groups */}
-      <h6 className="row mt-4">Other Groups</h6>
-      <hr />
+      <h6 className="row mb-2">Other Groups</h6>
       <OtherGroups
         groups={otherGroups}
         onJoinGroup={handleJoinGroup}
         joinedGroups={joinedGroups}
       />
 
-      {/* Modal */}
-      {modalOpen && selectedGroup && (
+      {modalOpen && (
         <Modal
           group={selectedGroup}
           onClose={handleCloseModal}
