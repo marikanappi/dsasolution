@@ -16,21 +16,6 @@ async function getAllGroups() {
   }
 }
 
-// Function to fetch all challenges
-async function getChallenges() {
-  try {
-    const response = await fetch(`${BASE_URL}/challenges`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch challenges');
-    }
-    const challenges = await response.json();
-    return challenges;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
-
 // Function to fetch groups by label
 async function getGroupsByLabel(label) {
   try {
@@ -134,15 +119,59 @@ async function getGroupBySLD(SLD) {
   }
 }
 
+async function getChallenge(groupId) {
+  try {
+    const response = await fetch(`${BASE_URL}/challenges/${groupId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch challenges for the group');
+    }
+    const challenges = await response.json();
+    return challenges;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+async function getQuestions(challengeId) {
+  try {
+    const response = await fetch(`${BASE_URL}/questions/${challengeId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch questions for the challenge');
+    }
+    const questions = await response.json();
+    return questions;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+async function getAnswers(questionId) {
+  try{
+    const response = await fetch(`${BASE_URL}/answers/${questionId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch answers for the question');
+    }
+    const answers = await response.json();
+    return answers;
+  }
+  catch (err) {
+    console.error(err);
+    return null;
+  }}
+
 export {
   getAllGroups,
-  getChallenges,
   getGroupsByLabel,
   joinGroup,
   leaveGroup,
   addGroup,
   getGroupByName,
   getGroupBySLD,
+  getChallenge,
+  getQuestions,
+  getAnswers
 };
 
 

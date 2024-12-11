@@ -1,25 +1,74 @@
-.bottom-right-button {
-  background-color: #c26dbc;
-  color: white;
-  position: absolute; /* Positioned relative to the .mobile-simulator container */
-  bottom: 80px; /* Distance from the bottom of the container */
-  right: 30px; /* Distance from the right side of the container */
-  min-width: 120px; /* Ensure enough space for text */
-  height: 50px;
-  border-radius: 8px;
+/* General Container */
+.challenges-container {
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+/* Header Styling */
+.group-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Challenges Grid */
+.challenge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.challenge-card {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500; /* Optional: slightly bolder font */
-  white-space: nowrap; /* Prevent text wrapping */
-  transition: transform 0.2s;
+  height: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.bottom-right-button:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  background-color: #9fe7ed; /* Lighten the background on hover */
-  color: #c26dbc;
+.challenge-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Trophy Icon */
+.trophy-icon {
+  font-size: 1.5rem;
+  color: #f39c12;
+  margin-right: 10px;
+}
+
+/* Button Styling */
+.generate-button {
+  font-size: 14px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.generate-button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .challenges-container {
+    padding: 2rem;
+  }
+
+  .challenge-grid {
+    gap: 1rem;
+  }
+
+  .challenge-card {
+    height: 100px;
+  }
 }

@@ -88,15 +88,11 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                       className="d-flex align-items-center w-100 text-decoration-none text-dark"
                     >
                       <img
-                        src={group.picture || "../../../public/default.png"}
+                        src={group.picture}
                         alt="Group Icon"
                         className="rounded-circle me-2"
                         width="40" /* Aggiornato per corrispondere al CSS */
                         height="40" /* Aggiornato per corrispondere al CSS */
-                        onError={(e) => {
-                          e.target.onerror = null; // Prevent infinite loop in case the fallback image is also missing
-                          e.target.src = "../../../public/default.png"; // Load default image
-                        }}
                       />
                       <div>
                         <div className="group-name">{group.name}</div>

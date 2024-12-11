@@ -7,13 +7,15 @@ import session from 'express-session';
 import db from './db.mjs'; // Assuming db is correctly exported from db.mjs
 import { 
   getAllGroups,  
-  getChallenges, 
   getGroupByLabel, 
   leaveGroup, 
   joinGroup, 
   addGroup, 
   getGroupById, 
   getGroupBySLD, 
+  getChallenges,
+  getQuestions,
+  getAnswers
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -22,7 +24,7 @@ const port = 3001;
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors()); // Enable CORS for all routes
-
+app.use(express.static('public'));
 // Setup express-session
 app.use(session({
   secret: 'your_secret_key',
@@ -59,9 +61,7 @@ passport.deserializeUser((id, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-
-// Get all groups
+//Get all groups
 app.get('/groups', async (req, res) => {
   try {
     const groups = await getAllGroups(db);
@@ -77,16 +77,6 @@ app.get('/users', async (req, res) => {
   try {
     const users = await getUsers(db);
     res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Get all challenges
-app.get('/challenges', async (req, res) => {
-  try {
-    const challenges = await getChallenges(db);
-    res.json(challenges);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -158,18 +148,39 @@ app.get('/groups/sld/:SLD', async (req, res) => {
   }
 });
 
-// User login (using passport local strategy)
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/profile', // Redirect to profile page on successful login
-  failureRedirect: '/login',   // Redirect to login page on failure
-}));
+app.get('/challenges/:groupId', async (req, res) => {
+  const groupId = req.params.groupId;  // Correct reference to groupId
+  try {
+    const challenges = await getChallenges(db, groupId);
+    
+    if (challenges.length === 0) {
+      return res.status(404).json({ error: "No challenges found for this group" });
+    }
 
-// User profile route (protected)
-app.get('/profile', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ user: req.user });
-  } else {
-    res.status(401).json({ message: 'Unauthorized' });
+    res.json(challenges); // Return the challenges as JSON
+  } catch (err) {
+    console.error('Error fetching challenges:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get ('/questions/:challengeId', async (req, res) => {
+  const challengeId = req.params.challengeId;
+  try {
+    const questions = await getQuestions(db, challengeId);
+    res.json(questions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/answers/:questionId', async (req, res) => {
+  const questionId = req.params.questionId;
+  try {
+    const answers = await getAnswers(db, questionId);
+    res.json(answers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
