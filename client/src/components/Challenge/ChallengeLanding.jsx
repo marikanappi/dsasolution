@@ -7,8 +7,6 @@ const Challenges = ({ setFooterOption, group }) => {
   // { stFooterOption, onGenerateChallenge }
   return (
     <div className="p-3">
-      
-
       {/* Challenges */}
       <div className="row text-center">
         {Array.from({ length: 4 }).map((_, index) => (
@@ -32,7 +30,7 @@ const Challenges = ({ setFooterOption, group }) => {
         <button
           className="bottom-right-button btn"
           style={{ fontSize: "14px" }}
-          //   onClick={onGenerateChallenge}
+          onClick={() => setFooterOption("NewChallenge")}
         >
           Generate Challenge
         </button>
