@@ -24,7 +24,7 @@ const port = 3001;
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors()); // Enable CORS for all routes
-
+app.use(express.static('public'));
 // Setup express-session
 app.use(session({
   secret: 'your_secret_key',
