@@ -1,15 +1,54 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #2c2c2c;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
 /* Mobile Frame Dimensions */
 .mobile-frame {
   position: relative;
-  width: 375px;
-  height: 667px;
+  background-color: #e4e4e4;
+  width: 320px; /* Le dimensioni che hai scelto */
+  height: 700px;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin: auto;
 }
 
+/* Back Button */
 .back-button {
   cursor: pointer;
   font-size: 1.5rem;
@@ -19,35 +58,44 @@
 /* Header */
 .mobile-header {
   height: 60px;
-  background-color: #eeb5eb;
+  background-color: #e4e4e4;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.mobile-header h1 {
+  font-size: 1.75rem;
+  color: #2c2c2c;
 }
 
 /* Mobile Content Scrollable */
-
 .mobile-content {
   overflow-y: hidden; 
-  overflow-x: hidden; 
   padding: 10px;
-  max-height: calc(100% - 120px); 
-  width: 100%; 
+  max-height: calc(100% - 120px);
+  width: 100%;
 }
 
 /* Footer */
 .mobile-footer {
   height: 60px;
   font-size: 24px;
-  background-color: #eeb5eb;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon {
   cursor: pointer;
-  color: white;
+  color: rgb(110, 0, 173);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .icon:hover {
   transform: scale(1.2);
-  color: #3cacae;
+  color: #ac00b6;
 }
 
 .logo {
@@ -55,22 +103,27 @@
   height: auto;
 }
 
-.group-profile {
-  position: absolute; /* Positioned relative to the .mobile-simulator container */
-  top: 10px; /* Distance from the bottom of the container */
-  right: 17px; /* Distance from the right side of the container */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.group-name {
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  top: "15px";
+.card-header {
+  background-color: rgb(110, 0, 173); 
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  border-bottom: 1px solid #ccc;
+  border-radius: 8px 8px 0 0;
+}
+
+@media screen and (max-width: 320px) {
+  .mobile-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  
 }

@@ -28,70 +28,90 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   };
 
   return (
-    <div className="p-3">
+    <div className="d-flex flex-column"
+      style={{
+        height: "100%", // Rende il contenitore flessibile
+        overflow: "hidden", // Evita lo scroll non desiderato
+      }}
+    >
       {/* Recent Notifications Frame */}
       <NotificationsCard onCollapseChange={handleCollapseChange} />
 
       {/* User Groups Section */}
-      <h5 className="text-center mb-4">My Groups</h5>
       <div
-        className="vertical-scrollable mb-4"
+        className={`d-flex flex-column flex-grow-1 ${isNotificationsCollapsed ? "expanded-groups" : "collapsed-groups"
+          }`}
         style={{
-          maxHeight: isNotificationsCollapsed ? "300px" : "200px",
-          overflowY: "auto",
+          marginTop: "-20px", // Sposta leggermente verso l'alto
+          transition: "height 0.3s ease", // Animazione fluida per l'espansione
         }}
       >
-        <div className="card-body mb-4">
-          <ul className="list-unstyled">
-            {userGroups.map((group, index) => (
-              <li
-                key={index}
-                className="d-flex align-items-start mb-3"
-                onClick={() => {
-                  setFooterOption("Group");
-                  setGroup(group);
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <Link
-                  to={{
-                    pathname: `/group/${group.name}`, // Pass group.name as part of the URL
-                    state: { group }, // Pass entire group object as state
-                  }}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                ></Link>
-                <img
-                  src={group.picture || "../../../public/default.png"}
-                  alt="Group Icon"
-                  className="rounded-circle me-2"
-                  width="50"
-                  height="50"
-                  onError={(e) => {
-                    e.target.onerror = null; // Prevent infinite loop in case the fallback image is also missing
-                    e.target.src = "../../../public/default.png"; // Load default image
-                  }}
-                />
-
-                <div>
-                  <div className="group-name">{group.name}</div>
-                  <div className="group-level">{group.level}</div>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="d-flex align-items-center justify-content-between mb-2">
+    <h5 className="text mb-0">My Groups</h5>
+    <button
+      className="btn btn-primary btn-sm "
+      onClick={() => setFooterOption("CreateGroup")}
+    >
+      Create Group
+    </button>
+  </div>
+        <div
+          className="vertical-scrollable"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%", // Rende il contenitore flessibile
+          }}
+        >
+          <div className="card mb-5">
+            <div className="card-body mb-4">
+              <ul className="list-unstyled">
+                {userGroups.map((group, index) => (
+                  <li
+                    key={index}
+                    className="d-flex align-items-start mb-3"
+                    onClick={() => {
+                      setFooterOption("Group");
+                      setGroup(group);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                      padding: "10px",
+                      borderBottom: "1px solid #ddd", // Separatore visivo
+                    }}
+                  >
+                    <Link
+                      to={{
+                        pathname: `/group/${group.name}`, // Pass group.name as part of the URL
+                        state: { group }, // Pass entire group object as state
+                      }}
+                      className="d-flex align-items-center w-100 text-decoration-none text-dark"
+                    >
+                      <img
+                        src={group.picture || "../../../public/default.png"}
+                        alt="Group Icon"
+                        className="rounded-circle me-2"
+                        width="40" /* Aggiornato per corrispondere al CSS */
+                        height="40" /* Aggiornato per corrispondere al CSS */
+                        onError={(e) => {
+                          e.target.onerror = null; // Prevent infinite loop in case the fallback image is also missing
+                          e.target.src = "../../../public/default.png"; // Load default image
+                        }}
+                      />
+                      <div>
+                        <div className="group-name">{group.name}</div>
+                        <div className="group-level">{group.level}</div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Floating + Icon */}
-      <div className="d-flex justify-content-end">
-        <button
-          className="bottom-right-button btn"
-          style={{ maxHeight: "40px" }}
-          onClick={() => setFooterOption("CreateGroup")}
-        >
-          Create Group
-        </button>
-      </div>
+
     </div>
   );
 };

@@ -1,50 +1,28 @@
-.card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  background-color: #6c757d; /* Consistent with 'text-white' */
-  padding: 10px 15px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-  border-bottom: 1px solid #ccc;
-  border-radius: 8px 8px 0 0;
-}
-
-.card-body {
-  padding: 15px;
-  background-color: #f8f9fa; /* Light background for the card body */
-}
 
 .notification {
   padding: 8px 0;
-  border-bottom: 1px solid #e9ecef; /* Subtle separation */
+  border-bottom: 1px solid #e9ecef; 
 }
 
 .notification:last-child {
-  border-bottom: none; /* No border for the last item */
+  border-bottom: none; 
 }
 
 .group-labels {
-  background-color: #e2e3e5; /* Light badge background */
+  background-color: #e2e3e5; 
   font-size: 10px;
   font-weight: 500;
   padding: 4px 5px;
-  border-radius: 15px;
-  text-transform: capitalize;
+  border-radius: 7px;
 }
 
 .notif-text {
   font-size: 13px;
   font-weight: 500;
-  text-transform: capitalize;
 }
 
 .table {
-  margin-bottom: 0; /* Align table spacing with card */
+  margin-bottom: 0;
 }
 
 .text-center {

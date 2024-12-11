@@ -3,17 +3,21 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow: hidden; /* Impedisce l'overflow globale della pagina */
 }
 
 .page-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures the page takes up at least the full height of the viewport */
+  height: 100%;
+  overflow: hidden; /* Aggiungi questo per evitare overflow in tutta la pagina */
 }
 
 .search-page-content {
-  flex: 1; /* Makes this section take up remaining space */
+  flex: 1;
+  overflow: auto; /* Permette lo scroll solo nella sezione dei contenuti */
 }
+
 
 /* Scrollable cards layout */
 .scrollable-cards {
@@ -27,16 +31,16 @@ body, html {
 }
 
 .scrollable-cards::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
 
 .scrollable-cards::-webkit-scrollbar-thumb {
-  background: #3cacae;
+  background: rgb(110, 0, 173);
   border-radius: 4px;
 }
 
 .scrollable-cards::-webkit-scrollbar-thumb:hover {
-  background: #c26dbc;
+  background: #ac00b6;
 }
 
 /* Vertical scrollable container */
@@ -52,12 +56,12 @@ body, html {
 }
 
 .vertical-scrollable::-webkit-scrollbar-thumb {
-  background-color: #3cacae;
+  background-color: rgb(110, 0, 173);
   border-radius: 4px;
 }
 
 .vertical-scrollable::-webkit-scrollbar-thumb:hover {
-  background: #c26dbc;
+  background: #ac00b6;
 }
 
 /* Group row with flexbox */
@@ -81,27 +85,6 @@ body, html {
 .group-content {
   flex-grow: 1;
   margin-left: 10px;
-}
-
-/* Floating icon row with hover effect */
-.floating-icon-row {
-  background-color: #c26dbc;
-  color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  font-size: 24px;
-  transition: transform 0.2s;
-}
-
-.floating-icon-row:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  background-color: #9fe7ed; /* Lighten the background on hover */
 }
 
 /* Filter button style */
@@ -131,15 +114,3 @@ body, html {
   border: 1px solid #ddd;
 }
 
-/* Footer style */
-footer {
-  height: 50px; /* Example footer height */
-  background-color: #f1f1f1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: 1px solid #ddd;
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-}
