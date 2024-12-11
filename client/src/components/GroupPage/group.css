@@ -1,5 +1,6 @@
-  .text-center {
-    text-align: center !important;
+/*
+.text-center {
+  text-align: center !important;
   }
 
   .row {
@@ -64,4 +65,4 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.4);
   }
-  
+  /*

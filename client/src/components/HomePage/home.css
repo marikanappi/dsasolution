@@ -1,87 +1,87 @@
-/* Scrollable List */
-.card {
-  border-radius: 10px;
+/* General Styles */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #2c2c2c; /* Stile comune per i titoli */
+}
+
+.group-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-top: 3px; /* Specifico solo se necessario */
+}
+
+.group-level {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #6c757d;
+  margin-top: 2px;
+}
+
+.list-unstyled li {
+  padding: 5px 8px; /* Ridotto rispetto ai 10px originali */
+  border-bottom: 1px solid #ddd; /* Manteniamo il separatore */
+  transition: background-color 0.2s ease;
+}
+
+.list-unstyled li:last-child {
+  border-bottom: none; /* Rimuoviamo la linea sotto l'ultimo elemento */
+}
+
+.list-unstyled li img {
+  width: 35px; /* Ridotto rispetto ai 50px originali */
+  height: 35px; /* Ridotto rispetto ai 50px originali */
+  margin-right: 8px; /* Margine ridotto */
 }
 
 .card-body {
-  padding: 15px;
+  padding-bottom: 8px; /* Minore spazio inferiore per chiudere visivamente */
+  padding-top: 8px; /* Minore spazio superiore per coerenza */
 }
 
-.card-header {
-  font-weight: bold;
-  background-color: #3cacae;
+/* Quando la tendina delle notifiche è chiusa, la sezione dei gruppi si espande */
+.expanded-groups {
+  height: calc(100% - 50px); /* Espande la sezione al massimo dello spazio disponibile */
 }
 
-/* Floating + Icon */
-.floating-icon {
-  position: fixed;
-  background-color: #c26dbc;
-  color: white;
-  position: absolute; /* Positioned relative to the .mobile-simulator container */
-  bottom: 80px; /* Distance from the bottom of the container */
-  right: 30px; /* Distance from the right side of the container */
-  width: 100px;
-  height: 40px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  font-size: 24px;
-  transition: transform 0.2s;
+.collapsed-groups {
+  height: calc(100% - 150px); /* Lascia spazio per la tendina delle notifiche */
 }
 
-.floating-icon:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  background-color: #9fe7ed; /* Lighten the background on hover */
+/* Optional: aggiungi un'animazione fluida */
+.expanded-groups,
+.collapsed-groups {
+  transition: height 0.3s ease-in-out;
 }
 
-.group-labels {
-  background-color: #c8f4f9;
-}
-
-body {
-  font-family: "Quicksand", sans-serif; /* Default font */
-}
-
-/* Group Name */
-.group-name {
-  font-size: 0.95rem; /* Larger font size for group name */
-  font-weight: 600; /* Bold font weight */
-  color: #343a40; /* Dark gray for better readability */
-}
-
-/* Group Level */
-.group-level {
-  font-size: 0.7rem; /* Smaller font size for the level */
-  font-weight: 400; /* Regular font weight */
-  color: #6c757d; /* Lighter gray for a subtle look */
-}
-
-/* Card Header */
-.card-header {
-  font-size: 1.1rem; /* Slightly larger for emphasis */
+.btn-sm {
+  background-color: #6e00ad; /* Colore coerente con il tema */
+  border: none;
+  border-radius: 15px; /* Forma arrotondata più compatta */
+  padding: 5px 15px; /* Dimensioni ridotte */
+  font-size: 0.8rem; /* Testo più piccolo */
   font-weight: 600;
+  color: white;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* General List Styling */
-ul.list-unstyled {
-  margin: 0;
-  padding: 0;
+.btn-sm:hover {
+  background-color: #ac00b6; /* Colore più chiaro al passaggio */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Effetto ombra al passaggio */
 }
 
-li {
-  list-style: none;
-}
-
-.groups-expanded {
-  transition: all 0.3s ease;
-  /* Adjust spacing or padding if needed */
-}
-
-.group-item-expanded {
-  height: 150px; /* Adjust to desired size */
-  transition: height 0.3s ease;
+.d-flex.justify-content-center {
+  margin-top: 5px; /* Margine più discreto */
 }

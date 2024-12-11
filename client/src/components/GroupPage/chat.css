@@ -1,8 +1,9 @@
+/*
 .chat-page {
   display: flex;
   flex-direction: column;
-  height: 97vh; /* Full height for the chat page */
-  overflow: hidden; /* Prevent scrolling outside */
+  height: 97vh; 
+  overflow: hidden; 
 }
 
 .chat-header {
@@ -74,10 +75,10 @@
 
 
 .scrollable-chat {
-  max-height: 475px; /* Adjust based on container */
+  max-height: 475px; 
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 12px; /* Space for scrollbar */
+  padding-right: 12px; 
 }
 
 .scrollable-chat::-webkit-scrollbar {
@@ -92,3 +93,4 @@
 .scrollable-chat::-webkit-scrollbar-thumb:hover {
   background: #c26dbc;
 }
+  /*
