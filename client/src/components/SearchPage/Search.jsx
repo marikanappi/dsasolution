@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FaPlus, FaFilter } from "react-icons/fa";
+import React, {useState, useRef, useEffect } from "react";
+import { FaPlus, FaFilter, FaCheck } from "react-icons/fa";
 import "./search.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getAllGroups, joinGroup } from "/../client/API.mjs";
@@ -35,38 +35,66 @@ const GroupCard = ({ name, level, picture, onJoinGroup, joined }) => (
           border: "2px solid #3cacae",
         }}
       />
-      {!joined && (
-        <button
-          className="floating-icon"
-          onClick={onJoinGroup}
-          style={{
-            position: "absolute",
-            width: "30px",
-            height: "30px",
-            top: "-5px",
-            right: "-5px",
-            padding: "3px 5px",
-            fontSize: "12px",
-            borderRadius: "50%",
-          }}
-        >
-          <FaPlus />
-        </button>
-      )}
+      <div
+        style={{
+          position: "absolute",
+          width: "30px",
+          height: "30px",
+          top: "-5px",
+          right: "-5px",
+          borderRadius: "50%",
+          backgroundColor: joined ? "#4CAF50" : "#f0f0f0", // Verde per il tick
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+          transition: "all 0.3s ease", // Aggiunge un'animazione morbida
+          cursor: joined ? "default" : "pointer", // Rende non cliccabile se già unito
+        }}
+        onClick={!joined ? onJoinGroup : null} // Abilita il click solo se non è unito
+      >
+        {joined ? (
+          <FaCheck style={{ color: "#fff", fontSize: "16px" }} /> // Tick bianco su sfondo verde
+        ) : (
+          <FaPlus style={{ color: "#666", fontSize: "16px" }} /> // Simbolo + di default
+        )}
+      </div>
     </div>
     <div
       style={{
         width: "100%",
         fontSize: "12px",
         marginBottom: "4px",
+        lineHeight: "1.2",
         textAlign: "center",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textOverflow: "ellipsis",
+        display: "flex",
+        flexDirection: "column", // Stack name and level vertically
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {name}
-      <p style={{ fontSize: "10px", color: "#666" }}>{level}</p>
+      <div
+        style={{
+          fontWeight: "bold", 
+          marginBottom: "4px",
+          wordBreak: "break-word", 
+          whiteSpace: "normal", 
+          overflow: "hidden", 
+          textOverflow: "ellipsis",
+        }}
+      >
+        {name}
+      </div>
+      <p
+        style={{
+          fontSize: "10px",
+          color: "#666",
+          margin: "0",
+          lineHeight: "1.2",
+        }}
+      >
+        {level}
+      </p>
     </div>
   </div>
 );
@@ -88,37 +116,51 @@ const SuggestedGroups = ({ groups, onJoinGroup, joinedGroups }) => (
 
 const OtherGroups = ({ groups, onJoinGroup, joinedGroups }) => (
   <div
-    className="mb-2 vertical-scrollable"
-    style={{ maxHeight: "200px", overflowY: "auto" }}
-  >
-    <div className="card-body">
-      {groups.map((group, index) => (
-        <div className="group-row" key={index}>
-          <img
-            src={group.picture}
-            alt={group.name}
-            className="group-profile-search"
-          />
-          <div className="group-content">
-            <h6>{group.name}</h6>
-          </div>
-          {!joinedGroups.includes(group.name) && (
-            <button
-              className="floating-icon-row"
-              onClick={() => onJoinGroup(group)}
+          className="vertical-scrollable"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%", // Rende il contenitore flessibile
+          }}
+        >
+  <div className="card mb-5">
+    <div className="card-body mb-4">
+        <ul className="list-unstyled">
+          {groups.map((group, index) => (
+            <li
+              key={index}
+              className="d-flex align-items-start mb-3"
               style={{
-                width: "30px",
-                height: "30px",
+                cursor: "pointer",
+                padding: "10px",
+                borderBottom: "1px solid #ddd", // Separatore visivo
               }}
             >
-              <FaPlus />
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
+              <div className="d-flex align-items-center w-100">
+                <img
+                  src={group.picture || "../../../public/default.png"}
+                  alt="Group Icon"
+                  className="rounded-circle me-2"
+                  width="40"
+                  height="40"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "../../../public/default.png";
+                  }}
+                />
+                <div className="w-100">
+                  <div className="group-name">{group.name}</div>
+                  <div className="group-level">{group.level}</div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+  </div>
   </div>
 );
+
 
 const FilterDropdown = ({ options, label, selected, onSelect }) => (
   <div className="filter-dropdown">
@@ -176,6 +218,7 @@ const Modal = ({ group, onClose, onConfirmJoin }) => (
 );
 
 const SearchPage = () => {
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [joinedGroups, setJoinedGroups] = useState([]);
@@ -195,15 +238,12 @@ const SearchPage = () => {
     async function fetchGroups() {
       try {
         const groups = await getAllGroups(); // API per ottenere i gruppi
-        console.log("Fetched groups:", groups);
-        setSuggestedGroups(
-          groups.filter((group) => (group.university === "Politecnico di Torino" && !joinedGroups.includes(group.name)))
-        );
-        setOtherGroups(
-          groups.filter((group) => (group.university !== "Politecnico di Torino" && !joinedGroups.includes(group.name)))
-        );
+        console.log('Fetched groups:', groups);
+        setSuggestedGroups(groups.filter(group => group.university === 'Politecnico di Torino'));
+        setOtherGroups(groups.filter(group => group.university !== 'Politecnico di Torino'));
+
       } catch (error) {
-        console.error("Errore nel caricamento dei gruppi:", error);
+        console.error('Errore nel caricamento dei gruppi:', error);
       } finally {
         setIsLoading(false);
       }
@@ -215,10 +255,10 @@ const SearchPage = () => {
     async function fetchFilters() {
       try {
         const groups = await getAllGroups();
-        setLevels([...new Set(groups.map((group) => group.level))]); // Estrai i livelli unici
-        setSlds([...new Set(groups.map((group) => group.SLD))]); // Estrai gli SLD unici
+        setLevels([...new Set(groups.map(group => group.level))]); // Estrai i livelli unici
+        setSlds([...new Set(groups.map(group => group.SLD))]); // Estrai gli SLD unici
       } catch (error) {
-        console.error("Errore nel caricamento dei filtri:", error);
+        console.error('Errore nel caricamento dei filtri:', error);
       }
     }
     fetchFilters();
@@ -233,24 +273,24 @@ const SearchPage = () => {
   };
 
   const handleClickOutside = (e) => {
-    if (
-      filtersRef.current &&
-      !filtersRef.current.contains(e.target) &&
-      !e.target.closest(".filter-btn")
-    ) {
-      closeFilters(); // Chiudi la tendina se clicchi fuori
+    // Ignora il clic se il target è il pulsante di filtro o un altro elemento all'interno del componente
+    if (filtersRef.current && !filtersRef.current.contains(e.target) && !e.target.closest('.filter-btn')) {
+      closeFilters();  // Chiudi la tendina se clicchi fuori
     }
   };
-
+  
   useEffect(() => {
+    // Aggiungi l'evento per il clic fuori quando la tendina è visibile
     if (filtersVisible) {
       document.addEventListener("click", handleClickOutside);
     }
 
+    // Rimuovi l'evento quando la tendina è chiusa
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [filtersVisible]);
+
 
   const handleJoinGroup = (group) => {
     setSelectedGroup(group); // Imposta il gruppo selezionato
@@ -264,32 +304,27 @@ const SearchPage = () => {
 
   const handleConfirmJoin = async (group) => {
     try {
-      const response = await joinGroup(group.id); // Use the joinGroup API
+      const response = await joinGroup(group.id); // Usa l'API joinGroup
       if (response) {
-        setJoinedGroups([...joinedGroups, group.name]);
-
-        // Remove the group from the suggested groups list
-        setSuggestedGroups((prevGroups) =>
-          prevGroups.filter((g) => g.name !== group.name)
-        );
-
-       //alert(`You have joined the group: ${group.name}`);
+        setJoinedGroups((prevJoinedGroups) => [...prevJoinedGroups, group.name]); // Aggiorna lo stato
       }
     } catch (error) {
-      console.error("Error while joining the group:", error);
+      console.error('Errore durante la join del gruppo:', error);
     } finally {
-      setModalOpen(false); // Close the modal
+      setModalOpen(false); // Chiudi il modal
     }
   };
-
+  
   const filteredGroups = suggestedGroups.filter(
     (group) =>
       (selectedLevel ? group.level === selectedLevel : true) &&
       (selectedSLD ? group.SLD === selectedSLD : true)
   );
 
+
   return (
     <div className="p-2" style={{ maxWidth: "300px" }}>
+      {/* Search Bar and Filter Button */}
       <div className="d-flex mb-3" style={{ position: "relative" }}>
         <input
           type="text"
@@ -303,7 +338,7 @@ const SearchPage = () => {
           style={{
             width: "40px",
             height: "40px",
-            marginLeft: "10px",
+            marginLeft: "10px",  // Keep some space between the search bar and the filter button
             backgroundColor: "#f0f0f0",
             border: "1px solid #ddd",
             borderRadius: "5px",
@@ -317,13 +352,14 @@ const SearchPage = () => {
         </button>
       </div>
 
+      {/* Filters Dropdown */}
       {filtersVisible && (
         <div
-          className="filters-dropdown-container"
-          ref={filtersRef}
+        className="filters-dropdown-container"
+          ref={filtersRef}  // Riferimento alla tendina dei filtri
           style={{
             position: "absolute",
-            top: "70px",
+            top: "70px", // Just below the search bar
             left: "0",
             width: "100%",
             backgroundColor: "#fff",
@@ -347,33 +383,21 @@ const SearchPage = () => {
         </div>
       )}
 
-      <h6 className="row mb-2">Suggested for You</h6>
-      <div className="scrollable-cards">
-        {filteredGroups.map((group, index) => (
-          <GroupCard
-            key={index}
-            name={group.name}
-            level={group.level}
-            picture={group.picture}
-            onJoinGroup={() => handleJoinGroup(group)}
-            joined={joinedGroups.includes(group.name)}
-          />
-        ))}
-      </div>
-
-      <h6 className="row mb-2">Other Groups</h6>
-      <OtherGroups
-        groups={otherGroups}
-        onJoinGroup={handleJoinGroup}
-        joinedGroups={joinedGroups}
+      {/* Suggested Groups */}
+      <h5 className="row mb-2">Suggested for You</h5>
+      <SuggestedGroups 
+      groups={filteredGroups} 
+      onJoinGroup={handleJoinGroup} 
+      joinedGroups={joinedGroups} 
       />
 
-      {modalOpen && (
-        <Modal
-          group={selectedGroup}
-          onClose={handleCloseModal}
-          onConfirmJoin={handleConfirmJoin}
-        />
+      {/* Other Groups */}
+      <h5 className="row mt-4">Other Groups</h5>
+      <OtherGroups groups={otherGroups} onJoinGroup={handleJoinGroup} joinedGroups={joinedGroups}/>
+
+      {/* Modal */}
+      {modalOpen && selectedGroup && (
+        <Modal group={selectedGroup} onClose={handleCloseModal} onConfirmJoin={handleConfirmJoin}/>
       )}
     </div>
   );

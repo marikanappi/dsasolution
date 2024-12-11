@@ -28,7 +28,7 @@ const NotificationsCard = ({ onCollapseChange }) => {
   }, []);
 
   return (
-    <div className="card mb-5" style = {{width: "312px"}}>
+    <div className="card mb-5">
       <div
         className="card-header text-white"
         onClick={toggleCollapse}
