@@ -12,6 +12,7 @@ function group(id, name, level, university, SLD, description, picture, numberOfP
 
 function Challenge(id) {
     this.id = id;
+    this.topic = "";
     this.question = "";
     this.answer1 = {
         correct: false,
