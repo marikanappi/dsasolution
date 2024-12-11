@@ -9,6 +9,7 @@ import GroupPage from "./GroupPage/Group";
 import ProfilePage from "./Profile/Profile";
 import ChatPage from "./GroupPage/Chat";
 import Challenges from "./Challenge/ChallengeLanding";
+import NewChallenge from "./Challenge/CreateChallenge";
 
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
@@ -84,6 +85,7 @@ const MobileAppSimulator = () => {
             group={group}
           ></Challenges>
         )}
+        {footerOption === "NewChallenge" && <NewChallenge></NewChallenge>}
       </main>
 
       {/* Footer */}
