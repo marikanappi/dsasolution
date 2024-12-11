@@ -10,32 +10,24 @@ function group(id, name, level, university, SLD, description, picture, numberOfP
     this.joined = joined;
 }
 
-function Challenge(id) {
+function Challenge(id, title, group_id) {
     this.id = id;
-    this.topic = "";
-    this.question = "";
-    this.answer1 = {
-        correct: false,
-        text: "",
-        feedback: ""
-    };
-    this.answer2 = {
-        correct: false,
-        text: "",
-        feedback: ""
-    };
-    this.answer3 = {
-        correct: false,
-        text: "",
-        feedback: ""
-    };
-    this.answer4 = {
-        correct: false,
-        text: "",
-        feedback: ""
-    };
+    this.title = title; // Titolo della challenge
+    this.group_id = group_id; // ID del gruppo associato
 }
 
+// Aggiungiamo una domanda alla challenge
+function Question (id, text) {
+    this.id = id;
+    this.text = text;
+}
+
+function Answer (id, text, is_correct, feedback) {
+    this.id = id;
+    this.text = text;
+    this.is_correct = is_correct;
+    this.feedback = feedback;
+}
 export default group;
 
-export { Challenge };
+export { Challenge, Question, Answer };

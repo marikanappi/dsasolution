@@ -10,7 +10,8 @@ import ProfilePage from "./Profile/Profile";
 import ChatPage from "./GroupPage/Chat";
 import Challenges from "./Challenge/ChallengeLanding";
 import NewChallenge from "./Challenge/CreateChallenge";
-
+import ChallengePage from "./Challenge/DochallengePage";
+import ChallengeSummary from "./Challenge/SumPage";
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
   const [group, setGroup] = useState();
@@ -84,6 +85,19 @@ const MobileAppSimulator = () => {
             setFooterOption={setFooterOption}
             group={group}
           ></Challenges>
+        )}
+        {footerOption === "DoChallenge" && (
+          <ChallengePage
+            setFooterOption={setFooterOption}
+            group={group}
+          ></ChallengePage>
+        )}
+
+        {footerOption === "SummaryChallenge" && (
+          <ChallengeSummary
+            setFooterOption={setFooterOption}
+            group={group}
+          ></ChallengeSummary>
         )}
         {footerOption === "NewChallenge" && <NewChallenge></NewChallenge>}
       </main>

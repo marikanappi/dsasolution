@@ -5,6 +5,9 @@ import GroupPage from "./components/GroupPage/Group";
 import HomePage from "./components/HomePage/Home";
 import SearchPage from "./components/SearchPage/Search";
 import ProfilePage from "./components/Profile/Profile";
+import Challenges from "./components/Challenge/ChallengeLanding";
+import ChallengePage  from "./components/Challenge/DochallengePage";
+import ChallengeSummary from "./components/Challenge/SumPage";
 function App() {
   
     return (
@@ -17,6 +20,9 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/home' element={<HomePage/>}/>
             <Route path='/group' element={<GroupPage />} />
+            <Route path='/challenge' element={<Challenges />} />
+            <Route path='/challenge/:id' element={<ChallengePage />} />
+            <Route path= '/summary' element={<ChallengeSummary />} />
           </Routes>
         </MobileAppSimulator>
       </div>

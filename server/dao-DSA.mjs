@@ -1,7 +1,7 @@
 import { url } from 'inspector';
 import db from './db.mjs';
 import group from './DSAmodel.mjs';
-import { Challenge } from './DSAmodel.mjs';
+import { Challenge, Answer, Question } from './DSAmodel.mjs';
 
 // Funzione per ottenere tutti i gruppi
 export function getAllGroups(db) {
@@ -28,48 +28,6 @@ export function getAllGroups(db) {
             });
     
             resolve(groups); // Risolviamo la Promise con i gruppi ottenuti
-        });
-    });
-}
-
-// Funzione per ottenere tutte le sfide
-export function getChallenges(db) {
-    return new Promise((resolve, reject) => {
-        let query = "SELECT * FROM Challenges";
-    
-        db.all(query, [], (err, rows) => {
-            if (err) {
-                return reject(err); // Rifiutiamo la Promise se c'è un errore
-            }
-    
-            let challenges = rows.map(row => {
-                return new Challenge(
-                    row.challenge_id,          // ID della sfida
-                    row.question,              // Testo della domanda
-                    {
-                        correct: row.answer1_correct,  // Risposta 1 - corretto
-                        text: row.answer1_text,      // Risposta 1 - testo
-                        feedback: row.answer1_feedback // Risposta 1 - feedback
-                    },
-                    {
-                        correct: row.answer2_correct,  // Risposta 2 - corretto
-                        text: row.answer2_text,      // Risposta 2 - testo
-                        feedback: row.answer2_feedback // Risposta 2 - feedback
-                    },
-                    {
-                        correct: row.answer3_correct,  // Risposta 3 - corretto
-                        text: row.answer3_text,      // Risposta 3 - testo
-                        feedback: row.answer3_feedback // Risposta 3 - feedback
-                    },
-                    {
-                        correct: row.answer4_correct,  // Risposta 4 - corretto
-                        text: row.answer4_text,      // Risposta 4 - testo
-                        feedback: row.answer4_feedback // Risposta 4 - feedback
-                    }
-                );
-            });
-    
-            resolve(challenges); // Risolviamo la Promise con le sfide ottenute
         });
     });
 }
@@ -207,6 +165,72 @@ export function getGroupBySLD(db, SLD) {
             );
         
             resolve(group); // Risolviamo la Promise con il gruppo ottenuto
+        });
+    });
+}
+
+export function getChallenges (db, groupId) {
+
+    return new Promise((resolve, reject) => {
+        const query = "SELECT challenge_id, title, group_id FROM challenges WHERE group_id = ?";
+
+        db.all(query, [groupId], (err, rows) => {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Rifiutiamo la Promise in caso di errore
+            }
+
+            if (rows.length === 0) {
+                return reject(new Error("Challenges not found"));
+            }
+
+            // Creiamo gli oggetti Challenge per ogni riga
+            const challenges = rows.map(row => new Challenge(row.challenge_id, row.title, row.group_id));
+
+            resolve(challenges); // Restituiamo l'array di oggetti Challenge
+        });
+    });
+}
+
+export function getQuestions(db, challengeId) {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT question_id, text FROM questions WHERE challenge_id = ?";
+
+        db.all(query, [challengeId], (err, rows) => {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Rifiutiamo la Promise in caso di errore
+            }
+
+            if (rows.length === 0) {
+                return reject(new Error("Questions not found"));
+            }
+
+            // Creiamo gli oggetti Question per ogni riga
+            const questions = rows.map(row => new Question(row.question_id, row.text));
+            resolve(questions); // Restituiamo l'array di oggetti Question
+        });
+    });
+}
+
+export function getAnswers(db, questionId) { 
+    return new Promise((resolve, reject) => {
+        const query = "SELECT answer_id, text, is_correct, feedback FROM answers WHERE question_id = ?";
+
+        db.all(query, [questionId], (err, rows) => {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Rifiutiamo la Promise in caso di errore
+            }
+
+            if (rows.length === 0) {
+                return reject(new Error("Answers not found"));
+            }
+
+            // Creiamo gli oggetti Answer per ogni riga
+            const answers = rows.map(row => new Answer(row.answer_id, row.text, row.is_correct, row.feedback));
+
+            resolve(answers); // Restituiamo l'array di oggetti Answer
         });
     });
 }
