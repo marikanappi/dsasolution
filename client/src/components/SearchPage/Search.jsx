@@ -138,15 +138,12 @@ const OtherGroups = ({ groups, onJoinGroup, joinedGroups }) => (
             >
               <div className="d-flex align-items-center w-100">
                 <img
-                  src={group.picture || "../../../public/default.png"}
+                  src={group.picture}
                   alt="Group Icon"
                   className="rounded-circle me-2"
                   width="40"
                   height="40"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "../../../public/default.png";
-                  }}
+                  
                 />
                 <div className="w-100">
                   <div className="group-name">{group.name}</div>
