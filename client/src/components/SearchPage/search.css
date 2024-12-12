@@ -18,7 +18,6 @@ body, html {
   overflow: auto; /* Permette lo scroll solo nella sezione dei contenuti */
 }
 
-
 /* Scrollable cards layout */
 .scrollable-cards {
   display: flex;

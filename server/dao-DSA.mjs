@@ -21,7 +21,7 @@ export function getAllGroups(db) {
                     row.university, 
                     row.SLD, 
                     row.description, 
-                    row.picture, 
+                    `http://localhost:3001/${row.picture}`, 
                     row.number_of_participants, 
                     row.joined
                 );
@@ -51,7 +51,7 @@ export function getGroupByLabel(db, label) {
                     university: row.university,
                     SLD: row.SLD,
                     description: row.description,
-                    picture: row.picture,
+                    picture: `http://localhost:3001/${row.picture}`,
                     number_of_participants: row.number_of_participants,
                     joined: row.joined
                 };
@@ -128,7 +128,7 @@ export function getGroupById(db, name) {
                 row.university, 
                 row.SLD, 
                 row.description, 
-                row.picture, 
+                `http://localhost:3001/${row.picture}`,
                 row.number_of_participants, 
                 row.joined
             );
@@ -159,7 +159,7 @@ export function getGroupBySLD(db, SLD) {
                 row.university, 
                 row.SLD, 
                 row.description, 
-                row.picture, 
+                `http://localhost:3001/${row.picture}`, 
                 row.number_of_participants, 
                 row.joined
             );
