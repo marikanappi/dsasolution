@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaTrophy } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import "./challenge.css";
 import { getChallenge } from "/../client/API.mjs"; // Import API function
 
 const Challenges = ({ setFooterOption, group }) => {
   const [challenges, setChallenges] = useState([]); // State for challenges
+  const [currentChallenge, setCurrentChallenge] = useState(null); // State for current challenge
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     // When the component mounts, load challenges
@@ -33,15 +35,14 @@ const Challenges = ({ setFooterOption, group }) => {
         ) : (
           challenges.map((challenge) => (
             <div className="col-md-6 mb-3" key={challenge.id}>
-              {/* Using Link to navigate to the challenge page */}
-              <Link to={`/challenge/${challenge.id}`} className="text-decoration-none" state={{ challenge }} >
               <button
                 className="challenge-card"
-                onClick={() => setFooterOption("DoChallenge")} >
+                onClick={() =>{ 
+                  navigate("/challenge", { state: { challenge } })
+                  setFooterOption("DoChallenge")}} >
                 <FaTrophy className="trophy-icon" />
                 <span>{challenge.title}</span>
               </button>
-            </Link>
             </div>
           ))
         )}

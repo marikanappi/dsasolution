@@ -5,16 +5,17 @@ import { AiOutlineLogout } from "react-icons/ai"; // Icon for Leave Group
 import { leaveGroup as apiLeaveGroup } from "/../client/API.mjs"; // Import API function
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./group.css";
-
 const GroupPage = ({ setFooterOption, group }) => {
   const navigate = useNavigate(); // Initialize navigate function
 
+  // Handle leaving the group
   const handleLeaveGroup = async () => {
     try {
       console.log("Leaving group with ID:", group.id);
       const result = await apiLeaveGroup(group.id); // Call API with the group ID
       if (result) {
         setFooterOption("Home"); // Set footer option to "Home" to navigate to HomePage
+        navigate("/home"); // Naviga alla home page
       } else {
         alert("Failed to leave the group. Please try again.");
       }
@@ -24,27 +25,36 @@ const GroupPage = ({ setFooterOption, group }) => {
     }
   };
 
+  // Sections for Chat, Challenges, and Materials
   const sections = [
     {
       name: "Chat",
       icon: <FaComments />,
-      onClick: () => setFooterOption("Chat"),
+      onClick: () => {
+        setFooterOption("Chat");
+        navigate(`/chat`); // Naviga ai materiali del gruppo
+      },
     },
     {
       name: "Challenges",
       icon: <FaTrophy />,
-      onClick: () => setFooterOption("Challenges"),
+      onClick: () => {
+        setFooterOption("Challenges");
+        navigate(`/challenges`); // Naviga ai materiali del gruppo
+      },
     },
     {
       name: "Materials",
       icon: <FaBook />,
-      onClick: () => setFooterOption("Materials"),
+      onClick: () => {
+        setFooterOption("Materials");
+        navigate(`/materials`); // Naviga ai materiali del gruppo
+      },
     },
   ];
 
   return (
     <div className="p-3">
-      {/* Sections for Chat, Challenges, and Materials */}
       <div className="row justify-content-center" style={{ marginTop: "60px" }}>
         {sections.map((section, index) => (
           <div
@@ -76,10 +86,8 @@ const GroupPage = ({ setFooterOption, group }) => {
       </div>
 
       <div className="leave-div">
-        <button
-          className="btn btn-leave-group"
-          onClick={handleLeaveGroup}
-        ><AiOutlineLogout /> Leave Group
+        <button className="btn btn-leave-group" onClick={handleLeaveGroup}>
+          <AiOutlineLogout /> Leave Group
         </button>
       </div>
     </div>

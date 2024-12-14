@@ -4,11 +4,12 @@ import "./home.css";
 import { Link } from "react-router-dom";
 import NotificationsCard from "../notifications/Notification.jsx";
 import { getAllGroups } from "../../../API.mjs";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = ({ setFooterOption, setGroup }) => {
-  const [isNotificationsCollapsed, setIsNotificationsCollapsed] =
-    useState(false);
+  const [isNotificationsCollapsed, setIsNotificationsCollapsed] = useState(false);
   const [userGroups, setUserGroups] = useState([]);
+  const navigate = useNavigate(); // Inizializza il navigatore
 
   useEffect(() => {
     async function fetchGroups() {
@@ -28,10 +29,11 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   };
 
   return (
-    <div className="d-flex flex-column"
+    <div
+      className="d-flex flex-column"
       style={{
-        height: "100%", // Rende il contenitore flessibile
-        overflow: "hidden", // Evita lo scroll non desiderato
+        height: "100%",
+        overflow: "hidden",
       }}
     >
       {/* Recent Notifications Frame */}
@@ -39,28 +41,32 @@ const HomePage = ({ setFooterOption, setGroup }) => {
 
       {/* User Groups Section */}
       <div
-        className={`d-flex flex-column flex-grow-1 ${isNotificationsCollapsed ? "expanded-groups" : "collapsed-groups"
-          }`}
+        className={`d-flex flex-column flex-grow-1 ${
+          isNotificationsCollapsed ? "expanded-groups" : "collapsed-groups"
+        }`}
         style={{
-          marginTop: "-20px", // Sposta leggermente verso l'alto
-          transition: "height 0.3s ease", // Animazione fluida per l'espansione
+          marginTop: "-20px",
+          transition: "height 0.3s ease",
         }}
       >
         <div className="d-flex align-items-center justify-content-between mb-2">
-    <h5 className="text mb-0">My Groups</h5>
-    <button
-      className="btn btn-primary btn-sm "
-      onClick={() => setFooterOption("CreateGroup")}
-    >
-      Create Group
-    </button>
-  </div>
+          <h5 className="text mb-0">My Groups</h5>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => {
+              navigate("/create-group"); 
+              setFooterOption("CreateGroup");
+            }}
+          >
+            Create Group
+          </button>
+        </div>
         <div
           className="vertical-scrollable"
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "100%", // Rende il contenitore flessibile
+            height: "100%",
           }}
         >
           <div className="card mb-5">
@@ -71,34 +77,29 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                     key={index}
                     className="d-flex align-items-start mb-3"
                     onClick={() => {
-                      setFooterOption("Group");
-                      setGroup(group);
+                      setGroup(group); // Salva i dati del gruppo nel genitore
+                      setFooterOption("Group"); // Aggiorna l'opzione del footer
+                      navigate(`/group/${group.name}`); // Naviga alla pagina specifica
                     }}
                     style={{
                       cursor: "pointer",
                       padding: "10px",
-                      borderBottom: "1px solid #ddd", // Separatore visivo
+                      borderBottom: "1px solid #ddd",
                     }}
                   >
-                    <Link
-                      to={{
-                        pathname: `/group/${group.name}`, // Pass group.name as part of the URL
-                        state: { group }, // Pass entire group object as state
-                      }}
-                      className="d-flex align-items-center w-100 text-decoration-none text-dark"
-                    >
+                    <div className="d-flex align-items-center w-100 text-decoration-none text-dark">
                       <img
                         src={group.picture}
                         alt="Group Icon"
                         className="rounded-circle me-2"
-                        width="40" /* Aggiornato per corrispondere al CSS */
-                        height="40" /* Aggiornato per corrispondere al CSS */
+                        width="40"
+                        height="40"
                       />
                       <div>
                         <div className="group-name">{group.name}</div>
                         <div className="group-level">{group.level}</div>
                       </div>
-                    </Link>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -106,8 +107,6 @@ const HomePage = ({ setFooterOption, setGroup }) => {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 };
