@@ -98,18 +98,55 @@ const SearchGroup = ({ setGroup }) => {
   );
 
   // Componenti riutilizzabili
-  const GroupCard = ({ group, onClick }) => (
+  const SuggestedGroupCard = ({ group, onClick, isSuggested }) => (
     <li className="group-item" onClick={onClick}>
-      <img
-        src={group.picture}
-        alt={`${group.name} Icon`}
-        className="group-icon"
-      />
+      <div className="group-image-container">
+        <img
+          src={group.picture}
+          alt={`${group.name} Icon`}
+          className="group-icon"
+        />
+        <button
+          className="join-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleJoinGroup(group);
+          }}
+        >
+          +
+        </button>
+      </div>
       <div>
         <div className="group-name">{group.name}</div>
         <div className="group-university">{group.university}</div>
-        <div className="group-level">{group.level}</div>
+        {isSuggested && <div className="group-level">{group.level}</div>}
       </div>
+    </li>
+  );
+
+  const OtherGroupCard = ({ group, onClick, isSuggested }) => (
+    <li className="group-item" onClick={onClick}>
+      <div className="group-image-container">
+        <img
+          src={group.picture}
+          alt={`${group.name} Icon`}
+          className="group-icon"
+        />
+      </div>
+      <div>
+        <div className="group-name">{group.name}</div>
+        <div className="group-university">{group.university}</div>
+        {isSuggested && <div className="group-level">{group.level}</div>}
+      </div>
+      <button
+          className="plus-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleJoinGroup(group);
+          }}
+        >
+          +
+        </button>
     </li>
   );
 
@@ -191,22 +228,22 @@ const SearchGroup = ({ setGroup }) => {
 
       {/* Gruppi Suggeriti */}
       <h4>Suggested for You</h4>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : filteredGroups.length > 0 ? (
-          <ul className="scrollable-cards">
-            {filteredGroups.map((group) => (
-              <GroupCard
-                key={group.id}
-                group={group}
-                onClick={() => handleJoinGroup(group)}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p>No suggested groups found.</p>
-        )}
-
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : filteredGroups.length > 0 ? (
+        <ul className="scrollable-cards">
+          {filteredGroups.map((group) => (
+            <SuggestedGroupCard
+              key={group.id}
+              group={group}
+              onClick={() => handleJoinGroup(group)}
+              isSuggested={true}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>No suggested groups found.</p>
+      )}
 
       {/* Altri Gruppi */}
       <h4>Other Groups</h4>
@@ -216,10 +253,11 @@ const SearchGroup = ({ setGroup }) => {
         ) : otherGroups.length > 0 ? (
           <ul>
             {otherGroups.map((group) => (
-              <GroupCard
+              <OtherGroupCard
                 key={group.id}
                 group={group}
                 onClick={() => handleJoinGroup(group)}
+                isSuggested={false}
               />
             ))}
           </ul>

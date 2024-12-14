@@ -86,7 +86,7 @@ const HomePage = ({ setFooterOption, setGroup }) => {
 
       {/* Pulsante per creare un nuovo gruppo */}
       <button className="create-group-button" onClick={handleCreateGroup}>
-        Crea un nuovo gruppo
+        Create Group
       </button>
     </div>
   );

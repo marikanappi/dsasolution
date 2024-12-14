@@ -180,3 +180,45 @@ h4 {
   .modal-actions .btn-success:hover {
     background-color: #218838;
   }
+
+  .group-image-container {
+    position: relative;
+  }
+
+  .join-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #6e00ad;
+    color: white;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+
+  .plus-btn {
+    background-color: #6e00ad;  /* Colore viola */
+    color: white;  /* Testo bianco */
+    font-size: 20px;  /* Dimensione del testo */
+    width: 35px;  /* Dimensione uniforme per il cerchio */
+    height: 35px;  /* Dimensione uniforme per il cerchio */
+    border-radius: 50%;  /* Per ottenere la forma circolare */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;  /* Nessun bordo */
+    transition: background-color 0.3s ease;  /* Transizione per l'effetto hover */
+  }
+  
+  /* Cambia colore al passaggio del mouse */
+  .plus-btn:hover {
+    background-color: #5b0079;  /* Colore più scuro quando l'utente passa sopra */
+  }
