@@ -1,84 +1,83 @@
 import React, { useState } from "react";
-import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
+import { FaQuestionCircle } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { addGroup } from "../../../API.mjs";
-import "./createGroup.css";
-import Group from "../../models/group";
+import "./createGroup.css"; // Importa il file CSS separato
 
 const CreateGroup = ({ setFooterOption }) => {
-  const [isMandatoryWarningVisible, setMandatoryWarningVisible] =
-    useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    university: "",
+    level: "",
+    specialNeeds: "",
+    description: "",
+    maxParticipants: 0,
+  });
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState(""); // Store the image name dynamically
+  const [error, setError] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
     text: "",
   });
+  const [isMandatoryWarningVisible, setMandatoryWarningVisible] = useState(false);
 
-  const [error, setError] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [imageName, setImageName] = useState(""); // Store the image name dynamically
+  // Handle form field changes
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Check if the file is a PNG
-      if (file.type !== "image/png") {
-        alert("Please upload a PNG file.");
-        return;
-      }
-
+  // Handle file upload
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === "image/png") {
       const reader = new FileReader();
-      reader.onload = () => {
-        setImagePreview(reader.result); // Set the preview image data
-      };
-      reader.readAsDataURL(file); // Read file as a data URL
-
-      // Set the file name dynamically
-      setImageName(file.name);
+      reader.onload = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
+      setImageName(file.name); // Store the image file name
+    } else {
+      alert("Please upload a PNG file.");
     }
   };
 
+  // Handle group creation
   const handleCreate = async (e) => {
     e.preventDefault();
 
-    // Fetching form values
-    const name = document.getElementById("group-name").value;
-    const university = document.getElementById("university").value;
-    const level = document.getElementById("level").value;
-    const SLD = document.getElementById("special-needs").value;
-    const description = document.getElementById("description").value;
-    const numberOfParticipants =
-      document.getElementById("max-participants").value || 0;
-    const joined = true;
-
-    // Validation
-    if (!name || !university || !level || !SLD) {
+    // Validation: check if mandatory fields are filled
+    if (!formData.name || !formData.university || !formData.level || !formData.specialNeeds) {
       setError(true);
       setMandatoryWarningVisible(true);
       return;
     }
 
-    // Create Group object
+    // Construct group data object
     const newGroup = {
-      name,
-      level,
-      university,
-      SLD,
-      description,
-      picture: imageName || "default.png", // Use dynamic name or default
-      number_of_participants: numberOfParticipants,
-      joined,
+      ...formData,
+      picture: imageName || "default.png", // Use default picture name if no image is uploaded
+      joined: true,
     };
 
-    // Call the API
-    const result = await addGroup(newGroup);
-    if (result) {
-      alert("Group added successfully!");
-      setFooterOption("Home");
+    // Call the API to add the group
+    try {
+      const result = await addGroup(newGroup);
+      if (result) {
+        alert("Group added successfully!");
+        setFooterOption("Home");
+      }
+    } catch (error) {
+      console.error("Error creating group:", error);
+      alert("Failed to create group. Please try again.");
     }
   };
 
+  // Render the component
   return (
-    <div className="p-3">
+    <div className="create-group-container p-3">
       {/* Header */}
       <div className="d-flex align-items-center mb-3">
         <h5 className="text-center flex-grow-1 m-0">Create a Group</h5>
@@ -91,16 +90,9 @@ const CreateGroup = ({ setFooterOption }) => {
         <div className="row mb-3">
           <div className="col-md-4 text-center" style={{ marginTop: "10px" }}>
             <div
-              className="form-items border d-flex align-items-center justify-content-center"
-              style={{
-                width: "80px",
-                height: "80px",
-                backgroundColor: "#3cacae43",
-                borderRadius: "50%",
-                backgroundImage: imagePreview ? `url(${imagePreview})` : "none",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              className={`form-items border d-flex align-items-center justify-content-center ${
+                imagePreview ? "image-uploaded" : ""
+              }`}
             >
               {!imagePreview && <span>+ Add</span>}
             </div>
@@ -115,15 +107,15 @@ const CreateGroup = ({ setFooterOption }) => {
 
           <div className="col-md-8">
             <div className="mb-2">
-              <label htmlFor="group-name" className="form-items form-label">
+              <label htmlFor="name" className="form-items form-label">
                 Group Name*
               </label>
               <input
                 type="text"
-                id="group-name"
-                className={`form-control form-items ${
-                  error && "border-danger"
-                }`}
+                id="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={`form-control form-items ${error && "border-danger"}`}
                 placeholder="Enter group name"
               />
             </div>
@@ -134,16 +126,16 @@ const CreateGroup = ({ setFooterOption }) => {
               <input
                 type="text"
                 id="university"
-                className={`form-control form-items ${
-                  error && "border-danger"
-                }`}
+                value={formData.university}
+                onChange={handleInputChange}
+                className={`form-control form-items ${error && "border-danger"}`}
                 placeholder="Enter university name"
               />
             </div>
           </div>
         </div>
 
-        {/* Level */}
+        {/* Level Selection */}
         <div className="row mb-3">
           <div className="form-items">
             <label
@@ -164,6 +156,8 @@ const CreateGroup = ({ setFooterOption }) => {
             </label>
             <select
               id="level"
+              value={formData.level}
+              onChange={handleInputChange}
               className={`form-control form-items ${error && "border-danger"}`}
             >
               <option value="">Select level</option>
@@ -178,7 +172,7 @@ const CreateGroup = ({ setFooterOption }) => {
         <div className="row mb-3">
           <div className="form-items">
             <label
-              htmlFor="special-needs"
+              htmlFor="specialNeeds"
               className="form-items form-label d-flex align-items-center"
             >
               Special Needs*{" "}
@@ -194,10 +188,10 @@ const CreateGroup = ({ setFooterOption }) => {
               />
             </label>
             <select
-              id="special-needs"
-              className={`form-control form-items form-label ${
-                error && "border-danger"
-              }`}
+              id="specialNeeds"
+              value={formData.specialNeeds}
+              onChange={handleInputChange}
+              className={`form-control form-items form-label ${error && "border-danger"}`}
             >
               <option value="">Select special need</option>
               <option value="Dyslexia">Dyslexia</option>
@@ -208,25 +202,27 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         </div>
 
-        {/* Row: Max Participants */}
+        {/* Max Participants */}
         <div className="mb-3 d-flex flex-column">
           <div
             className="d-flex form-label form-items"
             style={{ gap: "10px", marginBottom: "-15px" }}
           >
             <label
-              htmlFor="max-participants"
+              htmlFor="maxParticipants"
               className="form-items form-label mb-0"
               style={{ whiteSpace: "nowrap", marginBottom: "5px" }}
             >
               Max Number of Participants
             </label>
             <select
-              id="max-participants"
+              id="maxParticipants"
+              value={formData.maxParticipants}
+              onChange={handleInputChange}
               className="form-items form-select"
               style={{ width: "120px" }}
             >
-              <option value="">No Limit</option>
+              <option value={0}>No Limit</option>
               {[...Array(50)].map((_, i) => (
                 <option key={i} value={i + 1}>
                   {i + 1}
@@ -242,22 +238,27 @@ const CreateGroup = ({ setFooterOption }) => {
           </small>
         </div>
 
+        {/* Description */}
         <div className="mb-3">
           <label htmlFor="description" className="form-items form-label d-flex">
             Description
           </label>
           <textarea
             id="description"
+            value={formData.description}
+            onChange={handleInputChange}
             className="form-items form-control"
             rows="3"
             placeholder="Enter description"
           ></textarea>
         </div>
 
-        {/* Mandatory Note */}
-        <p className={`form-items ${error ? "text-danger" : "text-muted"}`}>
-          * Mandatory fields to fill.
-        </p>
+        {/* Mandatory Fields Notice */}
+        {error && (
+          <p className="form-items text-danger">
+            * Mandatory fields to fill.
+          </p>
+        )}
 
         {/* Create Button */}
         <div className="text-center mb-3">
@@ -267,22 +268,9 @@ const CreateGroup = ({ setFooterOption }) => {
         </div>
       </form>
 
-      {/* Mandatory Warning Modal */}
+      {/* Mandatory Fields Warning Modal */}
       {isMandatoryWarningVisible && (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "250px",
-            padding: "20px",
-            backgroundColor: "#ecdfeb",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            borderRadius: "8px",
-            zIndex: 1000,
-          }}
-        >
+        <div className="mandatory-warning-modal">
           <p>Please fill out all mandatory fields.</p>
           <button
             className="btn btn-secondary"
@@ -295,26 +283,13 @@ const CreateGroup = ({ setFooterOption }) => {
 
       {/* Tooltip Modal */}
       {tooltipModal.visible && (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "250px",
-            padding: "20px",
-            backgroundColor: "#ecdfeb",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            borderRadius: "8px",
-            zIndex: 1000,
-          }}
-        >
+        <div className="tooltip-modal">
           <p>{tooltipModal.text}</p>
           <button
             className="btn btn-secondary"
             onClick={() => setTooltipModal({ visible: false, text: "" })}
           >
-            OK
+            Close
           </button>
         </div>
       )}

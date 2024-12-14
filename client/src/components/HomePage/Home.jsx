@@ -47,24 +47,11 @@ const HomePage = ({ setFooterOption, setGroup }) => {
         }}
       >
         <div className="d-flex align-items-center justify-content-between mb-2">
-    <h5 className="text mb-0">My Groups</h5>
-    <button
-      className="btn btn-primary btn-sm "
-      onClick={() => setFooterOption("CreateGroup")}
-    >
-      Create Group
-    </button>
-  </div>
-        <div
-          className="vertical-scrollable"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%", // Rende il contenitore flessibile
-          }}
-        >
-          <div className="card mb-5">
-            <div className="card-body mb-4">
+          <h5 className="text mb-0">My Groups</h5>
+        </div>
+
+        <div className="vertical-scrollable">
+            <div className="my-groups-card-body mb-4">
               <ul className="list-unstyled">
                 {userGroups.map((group, index) => (
                   <li
@@ -102,13 +89,21 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                   </li>
                 ))}
               </ul>
-            </div>
           </div>
         </div>
       </div>
 
-
+      {/* Create Group Button */}
+      <div className="d-flex justify-content-center mb-5 mt-auto">
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => setFooterOption("CreateGroup")}
+        >
+          Create Group
+        </button>
+      </div>
     </div>
+
   );
 };
 

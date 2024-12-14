@@ -35,19 +35,6 @@ h6 {
   font-size: 1rem;
 }
 
-/* Mobile Frame Dimensions */
-.mobile-frame {
-  position: relative;
-  background-color: #e4e4e4;
-  width: 320px; /* Le dimensioni che hai scelto */
-  height: 700px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  margin: auto;
-}
-
 /* Back Button */
 .back-button {
   cursor: pointer;

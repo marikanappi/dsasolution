@@ -46,8 +46,14 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 8px; /* Margine ridotto */
 }
 
-.card-body {
-  padding-bottom: 8px; /* Minore spazio inferiore per chiudere visivamente */
+.card {
+  margin-bottom: 15px;
+  height: auto; /* La card si adatta al contenuto, ma lo scroll sarà limitato dal contenitore */
+}
+
+.my-groups-card-body {
+  max-height: 160px; /* Imposta un'altezza massima */
+  padding-bottom: px; /* Minore spazio inferiore per chiudere visivamente */
   padding-top: 8px; /* Minore spazio superiore per coerenza */
 }
 
@@ -69,9 +75,9 @@ h1, h2, h3, h4, h5, h6 {
 .btn-sm {
   background-color: #6e00ad; /* Colore coerente con il tema */
   border: none;
-  border-radius: 15px; /* Forma arrotondata più compatta */
-  padding: 5px 15px; /* Dimensioni ridotte */
-  font-size: 0.8rem; /* Testo più piccolo */
+  border-radius: 25px; /* Forma arrotondata più compatta */
+  padding: 10px 30px; /* Dimensioni ridotte */
+  font-size: 0.9rem; /* Testo più piccolo */
   font-weight: 600;
   color: white;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -85,3 +91,25 @@ h1, h2, h3, h4, h5, h6 {
 .d-flex.justify-content-center {
   margin-top: 5px; /* Margine più discreto */
 }
+
+.vertical-scrollable {
+  max-height: 60vh; /* Imposta un'altezza massima */
+  overflow-y: auto; /* Aggiungi lo scroll verticale */
+}
+
+
+.my-groups-card-body {
+  padding-top: 0; /* Riduci il padding superiore per spostare la scrittura più in alto */
+}
+
+.my-groups-card-body .group-name,
+.my-groups-card-body .group-level {
+  font-size: 0.85rem; /* Riduce la dimensione del testo */
+  margin-bottom: 5px; /* Aggiungi uno spazio inferiore tra il nome del gruppo e il livello */
+}
+
+.my-groups-card-body .group-level {
+  font-size: 0.75rem; /* Riduci ancora la dimensione del livello */
+  color: #888; /* Cambia il colore per differenziare il livello dal nome */
+}
+

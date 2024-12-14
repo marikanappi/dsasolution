@@ -132,7 +132,7 @@ const OtherGroups = ({ groups, onJoinGroup, joinedGroups }) => (
               className="d-flex align-items-start mb-3"
               style={{
                 cursor: "pointer",
-                padding: "10px",
+                padding: "8px",
                 borderBottom: "1px solid #ddd", // Separatore visivo
               }}
             >
@@ -141,13 +141,25 @@ const OtherGroups = ({ groups, onJoinGroup, joinedGroups }) => (
                   src={group.picture}
                   alt="Group Icon"
                   className="rounded-circle me-2"
-                  width="40"
-                  height="40"
+                  width="30"
+                  height="30"
                   
                 />
                 <div className="w-100">
-                  <div className="group-name">{group.name}</div>
-                  <div className="group-level">{group.level}</div>
+                <div
+                    className="group-name"
+                    style={{
+                      fontSize: "0.9rem", // Testo più piccolo
+                      fontWeight: "bold",
+                    }}
+                  >{group.name}</div>
+                  <div
+                    className="group-level"
+                    style={{
+                      fontSize: "0.8rem", // Testo più piccolo per il livello
+                      color: "#666",
+                    }}
+                  >{group.level}</div>
                 </div>
               </div>
             </li>

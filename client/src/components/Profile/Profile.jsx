@@ -10,8 +10,7 @@ const ProfilePage = () => {
   const SLD = ['Dyscalculic', 'Dyslexic']; // Esempio di array con i disturbi SLD
 
   return (
-    <div className="scrollable-page">
-    <div className="profile-container">
+    <div className="profile-card">
       <div className="profile-header">
         <img src="profile.jpg" alt="Profile" className="profile-img" />
         <div className="profile-info">
@@ -19,7 +18,15 @@ const ProfilePage = () => {
           <p className="profile-university">{university}</p>
         </div>
       </div>
-      <div className="profile-details">
+      <div className="profile-body">
+      <div className="profile-detail">
+          <strong>Age: </strong>
+          <p>{age}</p>
+        </div>
+        <div className="profile-detail">
+          <strong>Email: </strong>
+          <p>{email}</p>
+        </div>
         <div className="profile-detail">
           <strong>SLD: </strong>
           <ul className="sld-list">
@@ -28,16 +35,7 @@ const ProfilePage = () => {
             ))}
           </ul>
         </div>
-        <div className="profile-detail">
-          <strong>Email: </strong>
-          <p>{email}</p>
-        </div>
-        <div className="profile-detail">
-          <strong>Age: </strong>
-          <p>{age} years old</p>
-        </div>
       </div>
-    </div>
     </div>
   );
 };

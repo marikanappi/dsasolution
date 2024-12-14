@@ -1,5 +1,5 @@
 .help-icon {
-  background-color: #c26dbc;
+  background-color: rgb(110, 0, 173);
   color: #ecdfeb;
   width: 16px;
   height: 16px;
@@ -29,7 +29,7 @@
 }
 
 .custom-button {
-  background-color: #c26dbc;
+  background-color: rgb(110, 0, 173);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: white;
   margin-left: 20px;
@@ -49,14 +49,37 @@
 }
 
 .scrollable-form::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 
 .scrollable-form::-webkit-scrollbar-thumb {
-  background-color: #3cacae43;
+  background-color: rgb(110, 0, 173);
   border-radius: 3px;
 }
 
 .scrollable-form::-webkit-scrollbar-thumb:hover {
-  background: #c26dbc;
+  background: #ac00b6;
 }
+
+
+
+.form-label {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+
+.mandatory-warning-modal,
+.tooltip-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  padding: 20px;
+  background-color: #ecdfeb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+}
+

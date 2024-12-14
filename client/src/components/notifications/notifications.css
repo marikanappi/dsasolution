@@ -4,6 +4,19 @@
   border-bottom: 1px solid #e9ecef; 
 }
 
+.notification-card {
+  font-size: 0.85rem; /* Riduce la dimensione del testo */
+  padding: 10px; /* Riduce il padding */
+}
+
+.notification-card-body {
+  padding: 5px 10px; /* Ridotto il padding */
+  font-size: 0.85rem; /* Ridotta la dimensione del testo */
+  width: auto; /* Puoi specificare una larghezza se necessario */
+  height: auto; /* Oppure una altezza specifica */
+}
+
+
 .notification:last-child {
   border-bottom: none; 
 }
