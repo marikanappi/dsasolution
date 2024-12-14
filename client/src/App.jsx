@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaHome, FaSearch, FaUser, FaArrowLeft } from "react-icons/fa";
 import "./style.css";
-import HomePage from "./components/HomePage/Home";
-import SearchPage from "./components/SearchPage/Search";
-import CreateGroup from "./components/CreateGroupPage/CreateGroup";
-import GroupPage from "./components/GroupPage/Group";
-import ProfilePage from "./components/Profile/Profile";
-import ChatPage from "./components/GroupPage/Chat";
-import Challenges from "./components/Challenge/ChallengeLanding";
-import NewChallenge from "./components/Challenge/CreateChallenge";
-import ChallengePage from "./components/Challenge/DochallengePage";
-import ChallengeSummary from "./components/Challenge/SumPage";
+import HomePage from "./components/HomePage";
+import SearchPage from "./components/SearchPage";
+import GroupPage from "./components/GroupPage";
+import CreateGroup from "./components/CreateGroup";
+import ProfilePage from "./components/ProfilePage";
+import ChatPage from "./components/ChatPage";
+import Challenges from "./components/Challenges";
+import ChallengePage from "./components/ChallengePage";
+import ChallengeSummary from "./components/ChallengeSummary";
+import NewChallenge from "./components/NewChallenge";
 
 import { useNavigate } from "react-router-dom";
 const MobileAppSimulator = () => {
