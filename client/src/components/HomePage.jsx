@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
 import { getAllGroups } from "../../api"; // Assicurati di avere l'import corretto per le API
-import { useNavigate } from "react-router-dom"; // Importa useNavigate per la navigazione
+import { useNavigate, Link } from "react-router-dom"; // Importa correttamente Link
 import "./../css/homepage.css"; // Il tuo file CSS per lo stile
 
 const HomePage = ({ setFooterOption, setGroup }) => {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState([]); // Gruppi con joined = 1
   const [notifications, setNotifications] = useState([
     "Nuovo gruppo creato!",
     "Nuove notifiche disponibili.",
-    "Partecipa alla sfida in corso!"
+    "Partecipa alla sfida in corso!",
   ]);
 
   const navigate = useNavigate(); // Usa il hook per la navigazione
 
+  // Fetch dei gruppi con joined = 1
   useEffect(() => {
-    // Carica i gruppi quando la HomePage è montata
     const fetchGroups = async () => {
-      const fetchedGroups = await getAllGroups();
-      if (fetchedGroups) setGroups(fetchedGroups);
+      try {
+        const fetchedGroups = await getAllGroups(); // Recupera tutti i gruppi
+        const joinedGroups = fetchedGroups.filter((group) => group.joined === 1); // Filtra solo quelli con joined = 1
+        setGroups(joinedGroups);
+      } catch (error) {
+        console.error("Error fetching groups:", error);
+      }
     };
+
     fetchGroups();
   }, []);
 
@@ -31,7 +37,9 @@ const HomePage = ({ setFooterOption, setGroup }) => {
     <div className="home-page-container">
       {/* Sezione Notifiche */}
       <div className="notifications-container">
-        <h5>Recent Notifications</h5>
+        <h5>
+          <FaExclamationCircle /> Recent Notifications
+        </h5>
         <ul>
           {notifications.map((notification, index) => (
             <li key={index}>{notification}</li>
@@ -47,12 +55,27 @@ const HomePage = ({ setFooterOption, setGroup }) => {
             {groups.map((group) => (
               <li
                 key={group.id}
+                className="group-item"
                 onClick={() => {
-                  setGroup(group);
                   setFooterOption("Group");
+                  setGroup(group);
                 }}
               >
-                {group.name}
+                <Link
+                  to={`/group/${group.name}`} // URL dinamico per il gruppo
+                  state={{ group }} // Passaggio dei dati tramite state
+                  className="group-link"
+                >
+                  <img
+                    src={group.picture || "/default-group-icon.png"} // Immagine di default se non disponibile
+                    alt={`${group.name || "Group"} Icon`}
+                    className="group-icon"
+                  />
+                  <div>
+                    <div className="group-name">{group.name || "Unnamed Group"}</div>
+                    <div className="group-level">{group.level || "Level not specified"}</div>
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>

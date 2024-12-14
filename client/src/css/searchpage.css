@@ -1,0 +1,53 @@
+.search-group-container {
+max-height: 730px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.suggested-groups-container,
+.other-groups-container {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #6e00ad;
+}
+
+.other-groups-container {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    /* Imposta altezza massima e rende la sezione scrollabile */
+    max-height: 400px; /* Cambia a seconda dello spazio disponibile */
+    overflow-y: auto;
+  }
+
+/* Stile per la barra di scorrimento */
+.other-groups-container::-webkit-scrollbar {
+    width: 12px; /* Imposta la larghezza della scrollbar */
+  }
+  
+  .other-groups-container::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Colore del track (sfondo della scrollbar) */
+    border-radius: 8px; /* Bordo arrotondato per il track */
+  }
+  
+  .other-groups-container::-webkit-scrollbar-thumb {
+    background-color: #6e00ad; /* Colore del pollice (thumb) */
+    border-radius: 8px; /* Bordo arrotondato per il thumb */
+    border: 3px solid #f0f0f0; /* Spaziatura intorno al thumb */
+  }
+  
+  .other-groups-container::-webkit-scrollbar-thumb:hover {
+    background-color: #540084; /* Colore del thumb quando l'utente passa sopra */
+  }
+  
