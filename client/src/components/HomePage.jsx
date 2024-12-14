@@ -32,11 +32,6 @@ const HomePage = ({ setFooterOption, setGroup }) => {
         </ul>
       </div>
 
-      {/* Logo Centrato */}
-      <div className="logo-container">
-        <img src="logo.png" alt="Logo" className="logo" />
-      </div>
-
       {/* Sezione My Groups */}
       <div className="my-groups-container">
         <h5>I miei gruppi</h5>

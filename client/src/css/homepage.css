@@ -13,14 +13,11 @@
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .notifications-container h5 {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
     display: flex;
-    align-items: center;
+    align-items: center;    
   }
   
   .notifications-container ul {
@@ -41,6 +38,7 @@
   }
   
   .my-groups-container {
+    max-height: 450px;
     width: 100%;
     padding: 15px;
     background-color: #f9f9f9;
