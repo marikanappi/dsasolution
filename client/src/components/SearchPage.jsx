@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getAllGroups, joinGroup } from "../../api"; // Import API
 import "./../css/searchpage.css"; // File CSS per lo stile
+import { FaFilter } from "react-icons/fa";
 
 const SearchGroup = ({ setGroup }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -152,32 +153,44 @@ const SearchGroup = ({ setGroup }) => {
 
   return (
     <div className="search-group-container">
-      {/* Filtri */}
-      <div className="filters-container">
-        <button className="filter-btn" onClick={toggleFilters}>
-          Filters
+      {/* Search Bar and Filter Button */}
+      <div className="d-flex mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search for groups..."
+          style={{ flex: 1 }}
+        />
+        <button
+          className="btn btn-light filter-btn"
+          onClick={toggleFilters}
+        >
+          <FaFilter />
         </button>
-        {filtersVisible && (
-          <div className="filters-panel" ref={filtersRef}>
-            <FilterDropdown
-              options={levels}
-              label="Level"
-              selected={selectedLevel}
-              onSelect={setSelectedLevel}
-            />
-            <FilterDropdown
-              options={slds}
-              label="SLD"
-              selected={selectedSLD}
-              onSelect={setSelectedSLD}
-            />
-          </div>
-        )}
       </div>
+      {/* Filtri */}
+      {filtersVisible && (
+        <div
+          className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`}
+          ref={filtersRef}  // Riferimento alla tendina dei filtri
+        >
+          <FilterDropdown
+            label="Level"
+            options={levels}
+            selected={selectedLevel}
+            onSelect={setSelectedLevel}
+          />
+          <FilterDropdown
+            label="SLD"
+            options={slds}
+            selected={selectedSLD}
+            onSelect={setSelectedSLD}
+          />
+        </div>
+      )}
 
       {/* Gruppi Suggeriti */}
-      <div className="suggested-groups-container">
-        <h4>Suggested for You</h4>
+      <h4>Suggested for You</h4>
         {isLoading ? (
           <p>Loading...</p>
         ) : filteredGroups.length > 0 ? (
@@ -193,15 +206,15 @@ const SearchGroup = ({ setGroup }) => {
         ) : (
           <p>No suggested groups found.</p>
         )}
-      </div>
+
 
       {/* Altri Gruppi */}
+      <h4>Other Groups</h4>
       <div className="other-groups-container">
-        <h4>Other Groups</h4>
         {isLoading ? (
           <p>Loading...</p>
         ) : otherGroups.length > 0 ? (
-          <ul className="scrollable-cards">
+          <ul>
             {otherGroups.map((group) => (
               <GroupCard
                 key={group.id}

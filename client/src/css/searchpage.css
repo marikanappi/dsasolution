@@ -1,17 +1,44 @@
 .search-group-container {
-max-height: 730px;
+  max-height: 730px;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
 }
 
-.suggested-groups-container,
-.other-groups-container {
-  background-color: #f9f9f9;
-  padding: 15px;
+.scrollable-cards {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto; /* Scroll orizzontale */
+  white-space: nowrap; /* Impedisce che le carte si disponano su più righe */
+  padding: 10px 0;
+  flex-shrink: 0; /* Assicura che il contenitore non venga compresso */
+  scroll-behavior: smooth; /* Scorrimento fluido */
+}
+
+.scrollable-cards::-webkit-scrollbar {
+  height: 8px;
+  background-color: #f0f0f0; /* Colore di sfondo per la scrollbar */
+}
+
+.scrollable-cards::-webkit-scrollbar-thumb {
+  background: rgb(110, 0, 173);
+  border-radius: 4px;
+}
+
+.scrollable-cards::-webkit-scrollbar-thumb:hover {
+  background: #ac00b6;
+}
+
+.scrollable-cards li {
+  list-style: none;
+  flex-shrink: 0;
+  flex-basis: 200px; /* O larghezza in % per una resa responsive */
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.3s ease;
 }
 
 h4 {
@@ -25,8 +52,6 @@ h4 {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-    /* Imposta altezza massima e rende la sezione scrollabile */
     max-height: 400px; /* Cambia a seconda dello spazio disponibile */
     overflow-y: auto;
   }
@@ -57,37 +82,41 @@ h4 {
   }
   
   .filter-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
+    font-size: large;
     border-radius: 8px;
-    padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-left: 10px;
   }
-  
-  .filter-dropdown {
-    position: absolute;
-    top: 50px;
-    z-index: 1000;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    min-width: 350px;
-    max-height: 300px; 
-    overflow-y: auto;
-    margin-top: 20px; /* Aggiungi un po' di spazio tra i due */
 
+  .filter-dropdown-container {
+    position: fixed; /* Posiziona il dropdown rispetto alla finestra */
+    top: 130px; /* Regola la distanza dal top della finestra */
+    left: 10;
+    width: 90%; /* Occupa tutta la larghezza della finestra */
+    background-color: rgb(240, 240, 240); /* Un grigio più chiaro per un aspetto più elegante */
+    border-radius: 10px; /* Rendi i bordi più morbidi */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata per farla risaltare */
+    padding: 20px; /* Più spazio interno per una disposizione più ordinata */
+    z-index: 1000;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Effetti di transizione morbidi */
+    opacity: 0;
+    transform: translateY(-10px); /* Partenza dalla parte superiore per un effetto di "salita" */
+}
+
+.filter-dropdown-container.visible {
+  opacity: 1; /* Quando la tendina è visibile */
+  transform: translateY(0); /* La tendina arriva nella sua posizione finale */
+}
+  .filter-dropdown {
+    margin-bottom: 10px;
   }
   
-  .filter-dropdown .form-select {
+  .filter-dropdown select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
+    padding: 5px;
     border-radius: 4px;
-    font-size: 14px;
+    border: 1px solid #ddd;
   }
 
   .modal-overlay {
