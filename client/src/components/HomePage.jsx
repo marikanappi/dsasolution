@@ -6,13 +6,16 @@ import "./../css/homepage.css"; // Il tuo file CSS per lo stile
 
 const HomePage = ({ setFooterOption, setGroup }) => {
   const [groups, setGroups] = useState([]); // Gruppi con joined = 1
-  const [notifications, setNotifications] = useState([
-    "Nuovo gruppo creato!",
-    "Nuove notifiche disponibili.",
-    "Partecipa alla sfida in corso!",
-  ]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navigate = useNavigate(); // Usa il hook per la navigazione
+
+  // Toggle collapse
+  const toggleCollapse = () => {
+    const newCollapsedState = !isCollapsed;
+    setIsCollapsed(newCollapsedState);
+    onCollapseChange(newCollapsedState);
+  };
 
   // Fetch dei gruppi con joined = 1
   useEffect(() => {
@@ -36,15 +39,25 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   return (
     <div className="home-page-container">
       {/* Sezione Notifiche */}
-      <div className="notifications-container">
-        <h5>
-          <FaExclamationCircle /> Recent Notifications
+      <div className="notifications-container" onClick={toggleCollapse}>
+        <h5> Recent Notifications
         </h5>
-        <ul>
-          {notifications.map((notification, index) => (
-            <li key={index}>{notification}</li>
-          ))}
-        </ul>
+        {!isCollapsed && (
+          <div className="card-body">
+            {groups.length > 0 ? (
+              <div>
+                {groups.map((group, index) => (
+                  <div className="notification" key={index}>
+                    <span className="notif-text">You just joined the group!</span>
+                    <span className="notification-group-name">{group.name}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">No notifications available</p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Sezione My Groups */}

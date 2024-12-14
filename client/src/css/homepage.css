@@ -86,3 +86,22 @@
   background-color: #540084;
 }
 
+.notification {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.notif-text {
+  color: #333;
+}
+
+.notification-group-name {
+  font-weight: bold;
+  margin-left: 20px; /* Distanza tra il testo e il nome del gruppo */
+  width: 200px;
+}
