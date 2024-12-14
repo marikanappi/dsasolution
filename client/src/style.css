@@ -46,27 +46,34 @@ h6 {
   margin-left: 10px;
 }
 
-
-/* Header */
-.mobile-header {
-  height: 60px;
-  background-color: #e4e4e4;
+/* Contenitore principale della pagina */
+.mobile-frame {
   display: flex;
-  align-items: center;
-  padding-left: 15px;
+  flex-direction: column;
+  height: 100vh; /* Imposta l'altezza al 100% della finestra */
 }
 
-/* Footer */
+/* Area principale (tra header e footer) */
+.mobile-content {
+  flex-grow: 1; /* Spinge il footer verso il basso */
+  overflow-y: auto; /* Rende scrollabile il contenuto principale se necessario */
+}
+
+/* Footer sempre fisso */
 .mobile-footer {
   height: 60px;
-  font-size: 24px;
   background-color: #ffffff;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid #ddd;
-  position: relative;
+  position: fixed; /* Footer sempre fisso */
+  bottom: 0; /* Posiziona il footer sul bordo inferiore */
+  width: 100%; /* Larghezza completa */
+  z-index: 1000; /* Assicurati che sia sopra altri elementi */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per separarlo visivamente */
 }
+
 
 .icon {
   cursor: pointer;
