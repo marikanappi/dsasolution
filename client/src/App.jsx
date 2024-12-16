@@ -27,9 +27,10 @@ const MobileAppSimulator = () => {
 
   const goBack = () => {
     console.log('footerOption:', footerOption);  // Aggiungi questa linea per debug
-    if (footerOption === "Chat") {
-      navigateTo("/group:id", "Group");
-    } else if (footerOption === "CreateGroup" || footerOption === "Challenges") {
+    if (footerOption === "Chat" || footerOption === "Challenges" || footerOption === "Materials") {
+      navigate(-1);
+    } 
+    else if (footerOption === "CreateGroup" ) {
       navigateTo("/", "Home");
     } else {
       navigateTo("/", "Home");
@@ -38,34 +39,31 @@ const MobileAppSimulator = () => {
   
 
   const renderHeader = () => {
-    if (footerOption === "Group" || footerOption === "Chat" || footerOption === "Challenges" || footerOption === "CreateGroup") {
-      return (
-        <div className="p-3 d-flex align-items-center">
-          <FaArrowLeft
-            onClick={goBack}
-            className="icon-back-arrow"
-            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
-          />
-          <h4 className="group-name m-0 text-white">{group?.name}</h4>
+  if (footerOption === "Group" || footerOption === "Chat" || footerOption === "Challenges" || footerOption === "Materials" || footerOption === "CreateGroup") {
+    return (
+      <div className="header-group d-flex align-items-center">
+        <FaArrowLeft
+          onClick={goBack}
+          className="icon-back-arrow"
+          style={{ position: "absolute", left: "20px", cursor: "pointer" }}
+        />
+          <h4 className="group-name-header">{group.name}</h4>
           <img
-            src={group?.picture || "default-profile.png"}
-            alt="Profile"
-            className="group-profile"
+            src={group?.picture}
+            className="group-profile ml-3"
+            alt="Group Profile"
           />
-        </div>
-      );
-    }
-    return <img src="logo.png" alt="Logo" className="logo" />;
-  };
+      </div>
+    );
+  }
+  return <img src="logo.png" alt="Logo" className="logo" />;
+};
 
   return (
     <div className="mobile-frame d-flex flex-column">
-      {/* Header */}
       <header className="mobile-header text-white d-flex align-items-center justify-content-center">
         {renderHeader()}
       </header>
-
-      {/* Main Content */}
       <main className="mobile-content flex-grow-1">
         <Routes>
           <Route
@@ -98,8 +96,6 @@ const MobileAppSimulator = () => {
           <Route path="/new-challenge" element={<NewChallenge />} />
         </Routes>
       </main>
-
-      {/* Footer */}
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
         <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
         <FaSearch onClick={() => navigateTo("/search", "Search")} className="icon" />

@@ -72,11 +72,12 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                 onClick={() => {
                   setFooterOption("Group");
                   setGroup(group);
+                  group ={group}; 
                 }}
               >
                 <Link
-                  to={`/group/${group.name}`} // URL dinamico per il gruppo
-                  state={{ group }} // Passaggio dei dati tramite state
+                  to={`/group/${group.name}`}
+                  state={{ group }}
                   className="group-link"
                 >
                   <img

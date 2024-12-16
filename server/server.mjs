@@ -26,42 +26,6 @@ app.use(morgan('dev'));
 app.use(cors()); // Enable CORS for all routes
 app.use(express.static('public'));
 
-// Setup express-session
-app.use(session({
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-// Passport setup
-passport.use(new LocalStrategy(
-  (username, password, done) => {
-    // You can implement user authentication logic here
-    getUserByLevel(db, username).then(user => {
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      // Assume password validation happens here
-      return done(null, user);
-    }).catch(err => done(err));
-  }
-));
-
-passport.serializeUser((user, done) => {
-  done(null, user.id); // Store the user's ID in the session
-});
-
-passport.deserializeUser((id, done) => {
-  // Retrieve user details from database based on ID
-  getUsers(db).then(users => {
-    const user = users.find(u => u.id === id);
-    done(null, user);
-  }).catch(err => done(err));
-});
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 //Get all groups
 app.get('/groups', async (req, res) => {
   try {
@@ -183,6 +147,18 @@ app.get('/answers/:questionId', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// Ottieni tutti i messaggi
+app.get('/messages', (req, res) => {
+  res.json(messages);
+});
+
+// Aggiungi un nuovo messaggio
+app.post('/messages', (req, res) => {
+  const newMessage = req.body;
+  messages.push(newMessage);
+  res.status(201).json(newMessage);
 });
 
 app.listen(port, () => {
