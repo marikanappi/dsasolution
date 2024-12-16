@@ -72,7 +72,7 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                 onClick={() => {
                   setFooterOption("Group");
                   setGroup(group);
-                  group ={group}; 
+                  group = {group}; 
                 }}
               >
                 <Link
@@ -81,13 +81,13 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                   className="group-link"
                 >
                   <img
-                    src={group.picture || "/default-group-icon.png"} // Immagine di default se non disponibile
-                    alt={`${group.name || "Group"} Icon`}
+                    src={group.picture} // Immagine di default se non disponibile
+                    alt={`${group.name} Icon`}
                     className="group-icon"
                   />
                   <div>
-                    <div className="group-name">{group.name || "Unnamed Group"}</div>
-                    <div className="group-level">{group.level || "Level not specified"}</div>
+                    <div className="group-name">{group.name}</div>
+                    <div className="group-level">{group.level}</div>
                   </div>
                 </Link>
               </li>

@@ -23,7 +23,7 @@ const Challenges = ({ setFooterOption, group }) => {
 
   return (
     <div className="challenges-container">
-      <h2 className="text-center mb-4 group-name">Challenges for Group {group.name}</h2>
+      <h2 className="text-center mb-4 challenge-group-name">Challenges for Group {group.name}</h2>
       <div className="row text-center challenge-grid">
         {challenges.length === 0 ? (
           <p>No challenges available for this group.</p>

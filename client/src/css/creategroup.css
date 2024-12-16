@@ -1,0 +1,145 @@
+/* Stile per il contenitore dell'immagine */
+.image-upload-container {
+    height: 120px;
+    /* Altezza del rettangolo */
+    width: 80px;
+    /* Larghezza del rettangolo */
+    background-color: #acacac;
+    /* Colore di sfondo grigio */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Stile per il testo + Add */
+.add-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    /* Colore del testo */
+}
+
+/* Stile quando l'immagine è stata caricata */
+.image-uploaded {
+    background-color: transparent;
+    /* Rimuovi il colore di sfondo quando un'immagine è caricata */
+    border: none;
+}
+
+/* Aggiungi eventuali altre personalizzazioni, come il cambio del colore quando si passa sopra il rettangolo */
+.image-upload-container:hover {
+    background-color: #d0d0d0;
+    /* Colore di hover */
+}
+
+/* Tooltip icon */
+.help-icon {
+    cursor: pointer;
+    color: #5500a9;
+}
+
+/* Mandatory Fields Warning */
+.text-danger {
+    font-size: 14px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Create Button */
+.custom-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+/* Tooltip Modal */
+.tooltip-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.tooltip-modal p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.tooltip-modal button {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* Mandatory Fields Warning Modal */
+.mandatory-warning-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.mandatory-warning-modal p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.mandatory-warning-modal button {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.help-icon {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.custom-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+    .col-md-4,
+    .col-md-8 {
+        flex: 1 1 100%;
+        padding: 0;
+    }
+
+    .custom-button {
+        font-size: 14px;
+    }
+
+    .tooltip-modal,
+    .mandatory-warning-modal {
+        max-width: 90%;
+    }
+}
