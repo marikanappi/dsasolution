@@ -245,7 +245,7 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
 
                 {/* Create Button */}
                 <div className="text-center mb-3">
-                    <button type="submit" className="custom-button btn">
+                    <button type="submit" className="create-group-button">
                         Create
                     </button>
                 </div>
@@ -256,7 +256,7 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
                 <div className="tooltip-modal">
                     <p>{tooltipModal.text}</p>
                     <button
-                        className="btn btn-secondary"
+                        className="create-group-button"
                         onClick={() => setTooltipModal({ visible: false, text: "" })}
                     >
                         Close
@@ -268,7 +268,7 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
             {isMandatoryWarningVisible && (
                 <div className="mandatory-warning-modal">
                     <p>Please fill out all mandatory fields.</p>
-                    <button className="btn btn-secondary" onClick={() => setMandatoryWarningVisible(false)}>
+                    <button className="create-group-button" onClick={() => setMandatoryWarningVisible(false)}>
                         OK
                     </button>
                 </div>
