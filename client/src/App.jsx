@@ -15,6 +15,7 @@ import ChallengeSummary from "./components/ChallengeSummary";
 import NewChallenge from "./components/NewChallenge";
 
 import { useNavigate } from "react-router-dom";
+
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
   const [group, setGroup] = useState();
@@ -37,7 +38,6 @@ const MobileAppSimulator = () => {
     }
   };
   
-
   const renderHeader = () => {
   if (footerOption === "Group" || footerOption === "Chat" || footerOption === "Challenges" || footerOption === "Materials" || footerOption === "CreateGroup") {
     return (
@@ -75,7 +75,7 @@ const MobileAppSimulator = () => {
             path="/group/:id"
             element={<GroupPage setFooterOption={setFooterOption} group={group} />}
           />
-          <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption} />} />
+          <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption}/>} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/chat"
@@ -96,6 +96,7 @@ const MobileAppSimulator = () => {
           <Route path="/new-challenge" element={<NewChallenge />} />
         </Routes>
       </main>
+      
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
         <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
         <FaSearch onClick={() => navigateTo("/search", "Search")} className="icon" />

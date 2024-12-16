@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaExclamationCircle, FaQuestionCircle } from "react-icons/fa";
+import { FaExclamationCircle, FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import { getAllGroups, addGroup } from "../../api"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
+import { useNavigate } from "react-router-dom"; // Import the navigate hook
 
-const CreateGroup = ({ setFooterOption, setGroup }) => {
+const CreateGroup = ({ setFooterOption }) => {
     const [formData, setFormData] = useState({
         name: "",
         university: "",
@@ -12,6 +13,8 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
         description: "",
         maxParticipants: 0,
     });
+
+    const navigate = useNavigate(); // Use the navigate hook
 
     const [imagePreview, setImagePreview] = useState(null);
     const [imageName, setImageName] = useState("");
@@ -22,20 +25,7 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
         text: "",
     });
 
-    // Handle tooltip modal visibility and text
-    const handleTooltip = (text) => {
-        setTooltipModal({
-            visible: true,
-            text: text,
-        });
-    };
-
-    const closeTooltip = () => {
-        setTooltipModal({
-            visible: false,
-            text: "",
-        });
-    };
+    const [exitModalVisible, setExitModalVisible] = useState(false); // State for exit confirmation modal
 
     // Handle form field changes
     const handleInputChange = (e) => {
@@ -73,7 +63,7 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
         // Construct group data object
         const newGroup = {
             ...formData,
-            picture: imageName || "default.png", // Default picture if no image uploaded
+            picture: imageName, // Default picture if no image uploaded
             joined: true,
         };
 
@@ -90,10 +80,22 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
         }
     };
 
+    const handleExit = () => {
+        setFooterOption("Home");  // Explicitly set footerOption to "Home" here
+        setExitModalVisible(false);  // Close the exit modal
+        navigate("/");  // Navigate to the home page
+      };      
+
     // Render the component
     return (
         <div className="create-group-container p-3">
             <div className="d-flex align-items-center mb-3">
+                {/* Back arrow for exit */}
+                <FaArrowLeft
+                    className="me-3 back-arrow"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setExitModalVisible(true)}
+                />
                 <h5 className="text-center flex-grow-1 m-0">Create a New Group</h5>
             </div>
 
@@ -116,33 +118,33 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
                         />
                     </div>
 
-                        <div className="mb-2">
-                            <label className="form-items form-label">
-                                Group Name*
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                className={`form-items form-control`}
-                                placeholder="Enter group name"
-                            />
-                        </div>
-                        
-                        <div className="mb-2">
-                            <label htmlFor="university" className="form-items form-label">
-                                University*
-                            </label>
-                            <input
-                                type="text"
-                                id="university"
-                                value={formData.university}
-                                onChange={handleInputChange}
-                                className={`form-items form-control`}
-                                placeholder="Enter university name"
-                            />
-                        </div>
+                    <div className="mb-2">
+                        <label className="form-items form-label">
+                            Group Name*
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            className={`form-items form-control`}
+                            placeholder="Enter group name"
+                        />
+                    </div>
+
+                    <div className="mb-2">
+                        <label htmlFor="university" className="form-items form-label">
+                            University*
+                        </label>
+                        <input
+                            type="text"
+                            id="university"
+                            value={formData.university}
+                            onChange={handleInputChange}
+                            className={`form-items form-control`}
+                            placeholder="Enter university name"
+                        />
+                    </div>
 
                     {/* Level Selection */}
                     <div className="mb-2">
@@ -264,13 +266,21 @@ const CreateGroup = ({ setFooterOption, setGroup }) => {
                 </div>
             )}
 
-            {/* Mandatory Fields Warning Modal */}
-            {isMandatoryWarningVisible && (
-                <div className="mandatory-warning-modal">
-                    <p>Please fill out all mandatory fields.</p>
-                    <button className="create-group-button" onClick={() => setMandatoryWarningVisible(false)}>
-                        OK
+            {/* Exit Confirmation Modal */}
+            {exitModalVisible && (
+                <div className="exit-modal">
+                    <p>Are you sure you want to exit?</p>
+                    <div className="d-flex justify-content-center">
+                    <button
+                            className="btn btn-secondary"
+                            onClick={() => setExitModalVisible(false)}
+                        >
+                            No
                     </button>
+                    <button className="btn btn-danger" onClick={handleExit}>
+                        Yes
+                    </button>   
+                    </div>
                 </div>
             )}
         </div>
