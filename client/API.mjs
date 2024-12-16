@@ -161,6 +161,43 @@ async function getAnswers(questionId) {
     return null;
   }}
 
+// Carica i messaggi dal server
+async function getMessages() {
+  try {
+    const response = await fetch(`${BASE_URL}/messages`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch messages');
+    }
+    const messages = await response.json();
+    return messages;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+//agiungi messaggio
+async function addMessage(message) {
+  try {
+    const response = await fetch(`${BASE_URL}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add message');
+    }
+    const result = await response.json();
+    console.log('Message added with ID:', result.messageId);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export {
   getAllGroups,
   getGroupsByLabel,
@@ -171,7 +208,9 @@ export {
   getGroupBySLD,
   getChallenge,
   getQuestions,
-  getAnswers
+  getAnswers,
+  getMessages,
+  addMessage,
 };
 
 

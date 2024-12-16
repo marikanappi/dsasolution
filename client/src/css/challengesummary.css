@@ -1,0 +1,75 @@
+/* challengeSummary.css */
+
+/* Layout principale della pagina */
+.challenge-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f9;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Titolo principale */
+  .challenge-summary h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Contenitore dei dettagli del riepilogo */
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ogni elemento del riepilogo */
+  .summary-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .summary-item p {
+    margin-left: 10px;
+  }
+  
+  /* Icona della coppa per le risposte corrette */
+  .summary-icon {
+    color: #ffd700; /* Colore oro per l'icona */
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+  
+  /* Pulsante per tornare ai gruppi */
+  .return-button {
+    margin-top: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .return-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Aggiungi uno spazio tra il titolo e il contenuto */
+  .summary-item p {
+    font-weight: 600;
+  }
+  
