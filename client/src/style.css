@@ -1,9 +1,13 @@
 /* General Styles */
 body {
   font-family: 'Poppins', sans-serif;
+  background-color: #e4e4e4;
   color: #333;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -35,43 +39,52 @@ h6 {
   font-size: 1rem;
 }
 
-/* Back Button */
 .back-button {
   cursor: pointer;
   font-size: 1.5rem;
   margin-left: 10px;
 }
 
-/* Header */
-.mobile-header {
-  height: 60px;
-  background-color: #e4e4e4;
+.mobile-frame {
   display: flex;
-  align-items: center;
-  padding-left: 15px;
+  flex-direction: column;
+  height: 100vh; /* Imposta l'altezza al 100% della finestra */
 }
 
-.mobile-header h1 {
-  font-size: 1.75rem;
-  color: #2c2c2c;
-}
-
-/* Mobile Content Scrollable */
 .mobile-content {
-  overflow-y: hidden; 
-  padding: 10px;
-  max-height: calc(100% - 120px);
-  width: 100%;
+  flex-grow: 1; /* Spinge il footer verso il basso */
+  overflow-y: auto; /* Rende scrollabile il contenuto principale se necessario */
+  padding-top: 60px; /* Distanza per non coprire l'header */
+  padding-bottom: 60px; /* Distanza per non coprire il footer */
+  margin: 0; /* Assicurati che non ci siano margini */
 }
 
-/* Footer */
+.mobile-header{
+  height: 60px;
+  background-color: #ffffff;
+  align-items: center;
+  display: flex;
+  box-shadow: 0 2px 5px rgba(126, 12, 130, 0.1); 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 1000; /* Assicurati che l'header sia sopra gli altri contenuti */
+}
+
 .mobile-footer {
   height: 60px;
-  font-size: 24px;
   background-color: #ffffff;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed; /* Footer sempre fisso */
+  bottom: 0; /* Posiziona il footer sul bordo inferiore */
+  width: 100%; /* Larghezza completa */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per separarlo visivamente */
+  z-index: 1000; /* Assicurati che il footer sia sopra il contenuto */
 }
 
 .icon {
@@ -88,6 +101,8 @@ h6 {
 .logo {
   max-width: 25%;
   height: auto;
+  margin: 0 auto;
+  display: block;
 }
 
 .card {
@@ -106,11 +121,63 @@ h6 {
   border-radius: 8px 8px 0 0;
 }
 
-@media screen and (max-width: 320px) {
+.group-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  list-style: none;
+}
+
+.group-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.group-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.group-name {
+  font-weight: bold;
+  margin-right: 10px; /* Distanza tra il nome del gruppo e l'immagine */
+}
+
+.icon-back-arrow {
+  color: #6e008d; /* Freccia viola */
+  margin-left: -10px;
+  font-size: 1.5rem; /* Puoi regolare la dimensione */
+}
+
+.group-name-header {
+  font-weight: bold;
+  color: #070707;
+  margin: 10px;
+  font-size: 1.5rem;
+}
+
+.group-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: -15px;
+  object-fit: cover; /* Assicura che l'immagine mantenga la proporzione */
+  order: 2; /* Assicura che l'immagine venga posizionata dopo il testo */
+}
+
+@media screen and (max-width: 1024px) {
   .mobile-frame {
     width: 100%;
     height: 100%;
     border-radius: 0;
   }
-  
+
+  .group-name-header {
+    font-size: 1.2rem; /* Riduci la dimensione del font per schermi più piccoli */
+  }
 }

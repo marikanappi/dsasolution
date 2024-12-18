@@ -1,0 +1,107 @@
+.home-page-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-container {
+  margin-bottom: 20px; /* Spazio tra le notifiche e la lista dei gruppi */
+  background-color: #fff; /* Sfondo bianco per contrastare con l'header viola */
+  border-radius: 8px; /* Bordo arrotondato */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra */
+  overflow: hidden; /* Nasconde eventuali contenuti che escono dai bordi */
+}
+
+.notifications-container h5 {
+  background-color: #6e00ad; /* Header viola */
+  color: #fff; /* Testo bianco */
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0; /* Rimuove margini interni per l'header */
+  padding: 10px; /* Spaziatura interna */
+}
+
+.notifications-container ul {
+  list-style: none;
+  padding: 10px; /* Aggiunge spaziatura interna */
+  margin: 0; /* Rimuove margini esterni */
+}
+
+.notifications-container li {
+  padding: 8px;
+  background-color: #f9f9f9; /* Colore leggero per i singoli elementi */
+  margin-bottom: 5px; /* Spazio tra le notifiche */
+  border-radius: 4px; /* Bordo leggermente arrotondato per gli elementi */
+  transition: background-color 0.3s;
+}
+
+.notifications-container li:hover {
+  background-color: #f0f0f0; /* Colore di hover più scuro */
+}
+
+
+.my-groups-container {
+  margin-bottom: 20px; /* Spazio tra la card dei gruppi e il pulsante */
+}
+
+.my-groups-container h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.my-groups-container ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 300px; /* Imposta un'altezza massima per la lista dei gruppi */
+  overflow-y: auto; /* Rende scrollabile la lista quando è troppo lunga */
+}
+
+.my-groups-container li {
+  padding: 10px;
+  background-color: #f4f4f4;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.my-groups-container li:hover {
+  background-color: #e0e0e0;
+}
+
+.create-group-button {
+  padding: 10px 20px;
+  background-color: #6e00ad;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.create-group-button:hover {
+  background-color: #540084;
+}
+
+.notification {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.notif-text {
+  color: #333;
+}
+
+.notification-group-name {
+  font-weight: bold;
+  margin-left: 20px; /* Distanza tra il testo e il nome del gruppo */
+  width: 200px;
+}

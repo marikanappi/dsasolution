@@ -1,0 +1,94 @@
+
+  .challenges-container {
+    padding: 2rem;
+    margin: 2rem;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+  }
+  
+  .challenge-group-name {
+    font-size: 1.8rem;
+    color: #4a90e2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .challenge-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .challenge-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, #56014a, #eaeae8);
+    border: none;
+    border-radius: 10px;
+    padding: 1.5rem;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .challenge-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .trophy-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-grid p {
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .generate-button-container {
+    position: fixed;
+    left: 50%;
+    margin-top: 30px;
+    transform: translateX(-50%);
+  }
+  
+  .generate-button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+  
+  .generate-button:hover {
+    background: #357abd;
+    cursor: pointer;
+  }
+  
+  .generate-button:active {
+    background: #285a8e;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+  
+    .challenge-card {
+      font-size: 1rem;
+      padding: 1rem;
+    }
+  
+    .trophy-icon {
+      font-size: 1.5rem;
+    }
+  }
+  
