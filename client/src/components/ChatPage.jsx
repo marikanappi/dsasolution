@@ -55,6 +55,10 @@ const Chat = ({ group }) => {
       return { text: 'The last meeting was on Friday. Do you need the minutes?', isUserMessage: false };
     } else if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
       return { text: 'Hello! How can I assist you today?', isUserMessage: false };
+    } else if (userMessage.toLowerCase().includes('thanks') || userMessage.toLowerCase().includes('thank you')) {
+      return { text: 'You are welcome!', isUserMessage: false };
+    } else if (userMessage.toLowerCase().includes('of course') || userMessage.toLowerCase().includes('goodbye')) {
+      return { text: 'Talk to you later!', isUserMessage: false };
     } else {
       return { text: 'I dont know what are you talking about :/', isUserMessage: false };
     }
