@@ -14,7 +14,6 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   const toggleCollapse = () => {
     const newCollapsedState = !isCollapsed;
     setIsCollapsed(newCollapsedState);
-    onCollapseChange(newCollapsedState);
   };
 
   // Fetch dei gruppi con joined = 1
