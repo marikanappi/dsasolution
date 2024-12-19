@@ -161,6 +161,26 @@ app.post('/messages', (req, res) => {
   res.status(201).json(newMessage);
 });
 
+
+//aggiungi immagine in material 
+app.post('/material', (req, res) => {
+  const newMaterial = req.body;
+  materials.push(newMaterial);
+  res.status(201).json(newMaterial);
+});
+
+//ottieni immagini in material 
+app.get('/material', async (req, res) => {
+  try {
+    const material = await getImage(db);
+    res.json(material);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+  
+
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });

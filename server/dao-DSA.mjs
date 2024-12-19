@@ -234,3 +234,48 @@ export function getAnswers(db, questionId) {
         });
     });
 }
+
+//funzione per caricare immagine nella table materials
+export function addMaterials(db, group_id, type, url, description) {
+    return new Promise((resolve, reject) => {
+      
+        let query = "INSERT INTO Materials (group_id, type, url, description) VALUES (?, ?, ?, ?)";
+    
+        db.run(query, [group_id, type, url, description], function(err) {
+            if (err) {
+                return reject(err); // Rifiutiamo la Promise se c'è un errore
+            }
+        
+            resolve(this.lastID); // Risolviamo la Promise con l'ID dell'ultimo materiale inserito
+        });
+    });
+}
+
+
+//funzione per ottenere immagine dal db secondo type = png o jpg
+export function getImage(db, group_id) {
+    return new Promise((resolve, reject) => {
+        let query = "SELECT * FROM Materials WHERE group_id = ? AND type = 'image'";
+
+        db.get(query, [group_id], (err, row) => {
+            if (err) {
+                return reject(err); // Rifiutiamo la Promise se c'è un errore
+            }
+        
+            if (row === undefined) {
+                reject(new Error("Not found")); // Rifiutiamo la Promise se non troviamo il materiale
+            }
+        
+            let material = new Material(
+                row.id, 
+                row.group_id, 
+                row.type, 
+                row.url, 
+                row.description
+            );
+        
+            resolve(material); // Risolviamo la Promise con il materiale ottenuto
+        });
+    });
+}
+    
