@@ -1,27 +1,36 @@
 /* Contenitore principale per centrare il contenuto */
 .group-page {
+  max-height: 720px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group-card {
+  background-color: #6b00a0;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  height: 180px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra per un effetto di profondità */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 40px;
-  background: linear-gradient(135deg, #f0f4f8, #d8e1e8); /* Gradient background */
-  font-family: 'Poppins', sans-serif; /* Modern font */
-  box-sizing: border-box;
+  text-align: left;
 }
 
-/* Descrizione del gruppo */
-.group-header p {
-  font-size: 1.6rem;
-  color: #333;
-  text-align: center;
-  margin-bottom: 40px;
-  line-height: 1.7;
-  max-width: 800px;
-  word-wrap: break-word; /* Ensures long text fits properly */
-  font-style: italic; /* Slightly differentiated font style */
+.group-card-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
 /* Sezione dei tasti di azione */
@@ -34,11 +43,9 @@
   
 }
 
-
 .action-btn {
   background-color: #6a5acd;
   color: white;
-  font-size: 1.8rem;
   border: none;
   border-radius: 50px; 
   cursor: pointer;
@@ -47,7 +54,6 @@
   justify-content: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.5px;
   outline: none;
