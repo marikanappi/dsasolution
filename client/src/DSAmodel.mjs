@@ -10,11 +10,9 @@ function group(id, name, level, university, SLD, description, picture, numberOfP
     this.joined = joined;
 }
 
-function Challenge(id, title, group_id, topic_id) {
-    this.id = id;
+function Challenge(title, group_id, topic_id) {
     this.title = title; // Titolo della challenge
     this.group_id = group_id; // ID del gruppo associato
-
     this.topic_id= topic_id; // ID del topic associato
 }
 

@@ -17,6 +17,7 @@ import {
   getQuestions,
   getAnswers,
   getTopics,
+  createChallenge  
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -164,9 +165,9 @@ app.post('/messages', (req, res) => {
 });
 
 app.post('/create-challenge', (req, res) => {
-  console.log('Received request to create challenge');
   const challenge = req.body;
-  console.log('Challenge created:', challenge);
+  console.log("Server challenge:",challenge);
+  createChallenge(db, challenge);
   res.status(201).json(challenge);
 });
 

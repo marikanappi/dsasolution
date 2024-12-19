@@ -199,19 +199,19 @@ async function addMessage(message) {
 }
 
 async function createChallenge(challenge) {
+  console.log(challenge);
   try {
     const response = await fetch(`${BASE_URL}/create-challenge`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(challenge),
+        body: JSON.stringify(challenge),  
     });
     if (!response.ok) {
         throw new Error('Failed to create challenge');
     }
     const result = await response.json();
-    console.log('Challenge created:', result);
     return result;
     } catch (err) {
     console.error(err);

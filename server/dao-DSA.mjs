@@ -236,11 +236,12 @@ export function getAnswers(db, questionId) {
     });
 }
 
-export function createChallenge(db, title, groupId, topic_id) {
+export function createChallenge(db, challenge) {
     return new Promise((resolve, reject) => {
-        const query = "INSERT INTO challenges (title, group_id, topic_id) VALUES (?, ?, ?)";
+        console.log("DAO: challenge:",challenge);
+        const query = "INSERT INTO challenges (group_id, title, topic_id) VALUES (?, ?, ?)";
 
-        db.run(query, [title, groupId, topic_id], function(err) {
+        db.run(query, [challenge.group_id,challenge.title,challenge.topic_id], function(err) {
             if (err) {
                 console.error('Database error: ', err);
                 return reject(err); // Rifiutiamo la Promise in caso di errore

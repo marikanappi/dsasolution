@@ -32,6 +32,9 @@ const NewChallenge = ({ setFooterOption, group }) => {
         e.preventDefault();
         //const challenge = { title, topic_id: selectedTopic, external_material: externalMaterial, num_questions: numQuestions };
         const challenge = new Challenge(title, group.id, selectedTopic);
+        console.log ("titolo: ", challenge.title);
+        console.log ("group.id: ", challenge.group_id);
+        console.log ("selectedTopic: ", challenge.topic_id);
         const result = await createChallenge(challenge);
         if (result) {
             setFooterOption('Group');
