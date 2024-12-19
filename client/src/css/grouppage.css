@@ -9,12 +9,13 @@
   padding: 40px;
   background: linear-gradient(135deg, #f0f4f8, #d8e1e8); /* Gradient background */
   font-family: 'Poppins', sans-serif; /* Modern font */
+  box-sizing: border-box;
 }
 
 /* Descrizione del gruppo */
 .group-header p {
   font-size: 1.6rem;
-  color: #51085a;
+  color: #333;
   text-align: center;
   margin-bottom: 40px;
   line-height: 1.7;
@@ -26,9 +27,11 @@
 /* Sezione dei tasti di azione */
 .action-buttons {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 20px 0;
+  flex-direction: column; 
+  width: 100%; 
+  max-width: 600px; 
+  margin: 0 auto; 
+  
 }
 
 
@@ -37,7 +40,7 @@
   color: white;
   font-size: 1.8rem;
   border: none;
-  border-radius: 50px; /* Fully rounded corners for a modern look */
+  border-radius: 50px; 
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -48,18 +51,78 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   outline: none;
+} 
+
+.chat-btn {
+  background: linear-gradient(135deg, #306f2a, #77e47b);
+  border-radius: 20px;
+  padding: 10%;
+  
 }
 
-.action-btn svg {
-  margin-right: 10px;
-  width: 22px; /* Consistent icon size */
-  height: 22px;
+.chat-btn:hover {
+  background: linear-gradient(135deg, #25b22c, #295a2b); /* Verde più scuro al passaggio del mouse */
 }
+
+.chat-btn svg {
+  margin-right: 10px;
+}
+
+/* Pulsante Challenge */
+.challenge-btn {
+  background: linear-gradient(135deg, #230e9a, #7cc0fb);
+  border-radius: 20px;
+  padding: 10%;
+
+}
+
+.challenge-btn:hover {
+  background: linear-gradient(135deg,#61a8e6, #230e9a);
+
+}
+
+.challenge-btn svg {
+  margin-right: 10px;
+}
+
+/* Pulsante Materials */
+.materials-btn {
+  background: linear-gradient(135deg, #ed6509, #f3d16d); /* Arancione */
+  border-radius: 20px;
+  padding: 10%;
+}
+
+.materials-btn:hover {
+  background: linear-gradient(135deg,#fbc46c, #e5640e); 
+}
+
+.materials-btn svg {
+  margin-right: 10px;
+}
+
 
 /* Effetto focus per l'accessibilità */
 .action-btn:focus {
   box-shadow: 0 0 0 2px rgba(106, 92, 205, 0.8);
 }
+
+.leave-group {
+  bottom: 0%;
+  display: flex;
+  align-items: center;
+  color: #000;
+  
+}
+
+.confirm-btn{
+  background-color: #6e00ad;
+}
+
+.cancel-btn{
+  background-color: #6e00ad;
+}
+
+
 
 /* Adattamento per dispositivi piccoli */
 @media screen and (max-width: 768px) {
@@ -73,4 +136,5 @@
     padding: 14px 0;
     margin-bottom: 15px;
   }
+
 }
