@@ -34,8 +34,7 @@ const MobileAppSimulator = () => {
       setFooterOption("Home"); 
       navigate("/");
     } else {
-      setFooterOption("Home");
-      navigate("/"); 
+      navigate(-1); 
     }
   };
 
