@@ -105,3 +105,14 @@
   margin-left: 20px; /* Distanza tra il testo e il nome del gruppo */
   width: 200px;
 }
+
+.header-group {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers content horizontally */
+  position: relative; /* Needed for the absolute positioning of FaArrowLeft */
+}
+
+.logo {
+  cursor: pointer;
+}
