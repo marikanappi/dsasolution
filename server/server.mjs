@@ -83,12 +83,29 @@ app.post('/groups/leave/:id', async (req, res) => {
 
 // Add group
 app.post('/group', async (req, res) => {
-  const { name, level, university, SLD, description, picture, number_of_participants, joined } = req.body;
+  console.log(req.body);
+  const { name, level, university, specialNeeds, description, maxParticipants, picture, joined } = req.body;
+
+  // Map `specialNeeds` to `SLD` and `maxParticipants` to `number_of_participants`
+  const SLD = specialNeeds;
+  const number_of_participants = parseInt(maxParticipants, 10) || 0;
+
   try {
-    const groupId = await addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined);
+    const groupId = await addGroup(
+      db,
+      name,
+      level,
+      university,
+      SLD,
+      description,
+      picture,
+      number_of_participants,
+      joined
+    );
     console.log(req.body);
     res.status(201).json({ groupId });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });

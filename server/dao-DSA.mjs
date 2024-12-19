@@ -95,18 +95,25 @@ export function joinGroup(db, idGroup) {
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
     return new Promise((resolve, reject) => {
-        const joinedInt = joined ? 1 : 0;
-        let query = "INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    
-        db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt], function(err) {
-            if (err) {
-                return reject(err); // Rifiutiamo la Promise se c'è un errore
-            }
-        
-            resolve(this.lastID); // Risolviamo la Promise con l'ID dell'ultimo gruppo inserito
-        });
+      const joinedInt = joined ? 1 : 0;
+      const query = `
+        INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      console.log('Executing query:', query);
+      console.log('With values:', [name, level, university, SLD, description, picture, number_of_participants, joinedInt]);
+  
+      db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt], function (err) {
+        if (err) {
+          console.error('Database insert error:', err.message);
+          return reject(err);
+        }
+  
+        console.log('Inserted ID:', this.lastID); // Log the ID of the inserted record
+        resolve(this.lastID); // Return the ID of the inserted record
+      });
     });
-}
+  }  
 
 // Funzione per ottenere un gruppo per un determinato ID
 export function getGroupById(db, name) {
