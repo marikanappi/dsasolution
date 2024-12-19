@@ -26,38 +26,49 @@ const MobileAppSimulator = () => {
     navigate(path);
   };
 
-  const goBack = () => {
-    console.log('footerOption:', footerOption);  // Aggiungi questa linea per debug
-    if (footerOption === "Chat" || footerOption === "Challenges" || footerOption === "Materials") {
-      navigate(-1);
-    } 
-    else if (footerOption === "CreateGroup" ) {
-      navigateTo("/", "Home");
+  const goBack = () => {  
+    if (["Chat", "Challenges", "Materials"].includes(footerOption)) {
+      setFooterOption("Group"); 
+      navigate(-1); 
+    } else if (footerOption === "CreateGroup") {
+      setFooterOption("Home"); 
+      navigate("/");
     } else {
-      navigateTo("/", "Home");
+      setFooterOption("Home");
+      navigate("/"); 
     }
   };
-  
+
   const renderHeader = () => {
-  if (footerOption === "Group" || footerOption === "Chat" || footerOption === "Challenges" || footerOption === "Materials" || footerOption === "CreateGroup") {
+    if (footerOption === "Home" || footerOption === "Search" || footerOption === "Profile") {
+      return (
+        <img
+          src="logo.png"
+          alt="Logo"
+          className="logo"
+          onClick={() => navigateTo("/", "Home")} // Reindirizza sempre alla Home
+          style={{ cursor: "pointer" }}
+        />
+      );
+    }
     return (
       <div className="header-group d-flex align-items-center">
         <FaArrowLeft
-          onClick={goBack}
+          onClick={goBack} // Usa la funzione per tornare indietro
           className="icon-back-arrow"
           style={{ position: "absolute", left: "20px", cursor: "pointer" }}
         />
-          <h4 className="group-name-header">{group.name}</h4>
-          <img
-            src={group?.picture}
-            className="group-profile ml-3"
-            alt="Group Profile"
-          />
+        <img
+          src="logo.png"
+          alt="Logo"
+          className="logo"
+          onClick={() => navigateTo("/", "Home")} // Reindirizza alla Home se cliccato
+          style={{ cursor: "pointer", position: "center" }}
+        />
       </div>
     );
-  }
-  return <img src="logo.png" alt="Logo" className="logo" />;
-};
+  };
+  
 
   return (
     <div className="mobile-frame d-flex flex-column">
@@ -75,7 +86,10 @@ const MobileAppSimulator = () => {
             path="/group/:id"
             element={<GroupPage setFooterOption={setFooterOption} group={group} />}
           />
-          <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption}/>} />
+          <Route
+            path="/create-group"
+            element={<CreateGroup setFooterOption={setFooterOption} />}
+          />
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/chat"
@@ -96,7 +110,7 @@ const MobileAppSimulator = () => {
           <Route path="/new-challenge" element={<NewChallenge />} />
         </Routes>
       </main>
-      
+
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
         <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
         <FaSearch onClick={() => navigateTo("/search", "Search")} className="icon" />
