@@ -1,8 +1,8 @@
 /* Stile per il contenitore dell'immagine */
 .image-upload-container {
-    height: 120px;
+    height: 110px;
     /* Altezza del rettangolo */
-    width: 80px;
+    width: 90px;
     /* Larghezza del rettangolo */
     background-color: #acacac;
     /* Colore di sfondo grigio */
@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 /* Stile per il testo + Add */

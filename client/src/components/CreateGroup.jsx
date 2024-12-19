@@ -7,6 +7,7 @@ import {
 import { getAllGroups, addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
+import { Row } from "react-bootstrap";
 
 const CreateGroup = ({ setFooterOption }) => {
   const [formData, setFormData] = useState({
@@ -86,7 +87,7 @@ const CreateGroup = ({ setFooterOption }) => {
       const result = await addGroup(newGroup);
       if (result) {
         alert("Group added successfully!");
-        setFooterOption("Home");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error creating group:", error);
@@ -102,62 +103,71 @@ const CreateGroup = ({ setFooterOption }) => {
 
   // Render the component
   return (
-    <div className="create-group-container p-3">
+    <div className="p-3">
       <div className="d-flex align-items-center mb-3">
-        <h5 className="text-center flex-grow-1 m-0">Create a New Group</h5>
+        <h5 className="text-center flex-grow-1">Create a New Group</h5>
       </div>
 
-      <form onSubmit={handleCreate} className="mb-2 scrollable-form">
+      <form onSubmit={handleCreate}>
         {/* Picture Upload and Group Details */}
-        <div className="row mb-3">
-          <div
-            className="col-md-4 d-flex flex-column align-items-center"
-            style={{ marginTop: "10px" }}
-          >
-            {/* Container per l'immagine */}
+        <div>
+          <div className="row">
             <div
-              className={`form-items border image-upload-container ${
-                imagePreview ? "image-uploaded" : ""
-              }`}
+              className="col-4 d-flex flex-column align-items-right"
+              style={{ marginTop: "14px" }}
             >
-              {!imagePreview && <span className="add-text">+ Add</span>}
+              {/* Container per l'immagine */}
+              <div
+                className={`image-upload-container ${
+                  imagePreview ? "image-uploaded" : ""
+                }`}
+              >
+                {!imagePreview && <span className="add-text">+ Add</span>}
+              </div>
+              <input
+                style={{
+                  fontSize: "13px",
+                  maxWidth: "94px",
+                  paddingTop: "8px",
+                }}
+                type="file"
+                id="group-pic"
+                name="profile_pic"
+                accept=".jpg, .jpeg, .png"
+              />
             </div>
-            <input
-              type="file"
-              id="group-pic"
-              className="form-items "
-              onChange={handleFileChange}
-            />
-          </div>
 
-          <div className="mb-2">
-            <label className="form-items form-label">Group Name*</label>
-            <input
-              type="text"
-              id="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className={`form-items form-control`}
-              placeholder="Enter group name"
-            />
-          </div>
+            <div className="col-7" style={{ paddingRight: "10px" }}>
+              <div className="row mb-2">
+                <label className="form-label">Group Name*</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className={`form-control`}
+                  placeholder="Enter group name"
+                />
+              </div>
 
-          <div className="mb-2">
-            <label htmlFor="university" className="form-items form-label">
-              University*
-            </label>
-            <input
-              type="text"
-              id="university"
-              value={formData.university}
-              onChange={handleInputChange}
-              className={`form-items form-control`}
-              placeholder="Enter university name"
-            />
+              <div className="row mb-3">
+                <label htmlFor="university" className="form-label">
+                  University*
+                </label>
+                <input
+                  type="text"
+                  id="university"
+                  value={formData.university}
+                  onChange={handleInputChange}
+                  className={`form-control`}
+                  placeholder="Enter university name"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Level Selection */}
-          <div className="mb-2">
+          <div className="mb-3">
             <label
               htmlFor="level"
               className="form-items form-label d-flex align-items-center"
@@ -177,7 +187,7 @@ const CreateGroup = ({ setFooterOption }) => {
               id="level"
               value={formData.level}
               onChange={handleInputChange}
-              className={`form-items form-control`}
+              className={`form-control form-select`}
             >
               <option value="">Select level</option>
               <option value="Beginner">Beginner</option>
@@ -187,10 +197,10 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
 
           {/* Special Needs */}
-          <div className="mb-2">
+          <div className="mb-3">
             <label
               htmlFor="specialNeeds"
-              className="form-items form-label d-flex align-items-center"
+              className="form-label d-flex align-items-center"
             >
               Special Needs*
               <FaQuestionCircle
@@ -208,7 +218,7 @@ const CreateGroup = ({ setFooterOption }) => {
               id="specialNeeds"
               value={formData.specialNeeds}
               onChange={handleInputChange}
-              className={`form-items form-control`}
+              className={`form-control form-select`}
             >
               <option value="">Select special need</option>
               <option value="Dyslexia">Dyslexia</option>
@@ -219,18 +229,19 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
 
           {/* Max Participants */}
-          <div className="mb-2">
-            <label
-              htmlFor="maxParticipants"
-              className="form-items form-label mb-0"
-            >
-              Max Number of Participants
-            </label>
+          <div className="mb-3 d-flex align-items-center">
+            <div className="me-3 d-flex flex-column">
+              <label htmlFor="maxParticipants" className="form-label mb-0">
+                Max Number of Participants
+              </label>
+              <small style={{ fontSize: "11px" }}>Set a limit up to 50.</small>
+            </div>
+
             <select
               id="maxParticipants"
               value={formData.maxParticipants}
               onChange={handleInputChange}
-              className="form-items form-select"
+              className="form-select"
               style={{ width: "120px" }}
             >
               <option value={0}>No Limit</option>
@@ -240,9 +251,6 @@ const CreateGroup = ({ setFooterOption }) => {
                 </option>
               ))}
             </select>
-            <small className="form-items" style={{ fontSize: "10px" }}>
-              Set a limit up to 50.
-            </small>
           </div>
 
           {/* Description */}
