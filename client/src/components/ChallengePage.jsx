@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getQuestions, getAnswers } from "/../client/API.mjs";
-import { Link } from "react-router-dom";
 import { FaTrophy } from "react-icons/fa";
 import "../css/challengepage.css";
 
@@ -76,7 +75,6 @@ const ChallengePage = ({ setFooterOption }) => {
       if (selectedAnswer === correctAnswer.text) {
         setFeedback("Correct!");
         setCorrectAnswers(correctAnswers + 1); 
-        console.log(correctAnswers)
       } else {
         setFeedback(correctAnswer.feedback || "Incorrect.");
       }
@@ -93,6 +91,13 @@ const ChallengePage = ({ setFooterOption }) => {
       setFeedback("");
       setIsAnswered(false);
     }
+  };
+
+  const handleGoToRecap = () => {
+    navigate("/challenge-summary", {
+      state: { correctAnswers, challengeTitle: challenge.title },
+    });
+    setFooterOption("SummaryChallenge");
   };
 
   const formatTime = (seconds) => {
@@ -139,28 +144,17 @@ const ChallengePage = ({ setFooterOption }) => {
             ))}
           </div>
 
-          <div>
+          <div className="button-group">
             <button onClick={handleSubmitAnswer}>Submit Answer</button>
-            {feedback && <div className="feedback">{feedback}</div>}
-          </div>
 
-          <div>
             {currentQuestionIndex < questions.length - 1 ? (
               <button onClick={handleNextQuestion}>Next Question</button>
             ) : (
-              isAnswered && (
-                  <button  onClick={() => {
-                    navigate("/challenge-summary", {
-                      state: { correctAnswers, challengeTitle: challenge.title },
-                    });
-                    setFooterOption("SummaryChallenge");
-                    }}>
-                    <FaTrophy className="trophy-icon" />
-                    <span>{challenge.title}</span>
-                  </button>
-              )
+              <button onClick={handleGoToRecap}>Go to Summary</button>
             )}
           </div>
+
+          {feedback && <div className="feedback">{feedback}</div>}
         </>
       )}
     </div>

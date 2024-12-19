@@ -27,6 +27,11 @@ const CreateGroup = ({ setFooterOption }) => {
 
     const [exitModalVisible, setExitModalVisible] = useState(false); // State for exit confirmation modal
 
+    useEffect(() => {
+        setFooterOption("CreateGroup");
+    }, [setFooterOption]);
+    
+
     // Handle form field changes
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -90,12 +95,6 @@ const CreateGroup = ({ setFooterOption }) => {
     return (
         <div className="create-group-container p-3">
             <div className="d-flex align-items-center mb-3">
-                {/* Back arrow for exit */}
-                <FaArrowLeft
-                    className="me-3 back-arrow"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setExitModalVisible(true)}
-                />
                 <h5 className="text-center flex-grow-1 m-0">Create a New Group</h5>
             </div>
 
