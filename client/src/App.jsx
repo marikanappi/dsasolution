@@ -26,48 +26,39 @@ const MobileAppSimulator = () => {
     navigate(path);
   };
 
-  const goBack = () => {  
+  const goBack = () => {
     if (["Chat", "Challenges", "Materials"].includes(footerOption)) {
-      setFooterOption("Group"); 
-      navigate(-1); 
+      setFooterOption("Group");
+      navigate(-1);
     } else if (footerOption === "CreateGroup") {
-      setFooterOption("Home"); 
+      setFooterOption("Home");
       navigate("/");
     } else {
-      navigate(-1); 
+      navigate(-1);
     }
   };
 
   const renderHeader = () => {
-    if (footerOption === "Home" || footerOption === "Search" || footerOption === "Profile") {
-      return (
-        <img
-          src="logo.png"
-          alt="Logo"
-          className="logo"
-          onClick={() => navigateTo("/", "Home")} // Reindirizza sempre alla Home
-          style={{ cursor: "pointer" }}
-        />
-      );
-    }
+    const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
+  
     return (
       <div className="header-group d-flex align-items-center">
-        <FaArrowLeft
-          onClick={goBack} // Usa la funzione per tornare indietro
-          className="icon-back-arrow"
-          style={{ position: "absolute", left: "20px", cursor: "pointer" }}
-        />
+        {!isMainOption && (
+          <FaArrowLeft
+            onClick={goBack}
+            className="icon-back-arrow"
+            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
+          />
+        )}
         <img
           src="logo.png"
           alt="Logo"
           className="logo"
-          onClick={() => navigateTo("/", "Home")} // Reindirizza alla Home se cliccato
-          style={{ cursor: "pointer", position: "center" }}
+          onClick={() => navigateTo("/", "Home")}
         />
       </div>
     );
-  };
-  
+  };    
 
   return (
     <div className="mobile-frame d-flex flex-column">
@@ -78,12 +69,16 @@ const MobileAppSimulator = () => {
         <Routes>
           <Route
             path="/"
-            element={<HomePage setFooterOption={setFooterOption} setGroup={setGroup} />}
+            element={
+              <HomePage setFooterOption={setFooterOption} setGroup={setGroup} />
+            }
           />
           <Route path="/search" element={<SearchPage />} />
           <Route
             path="/group/:id"
-            element={<GroupPage setFooterOption={setFooterOption} group={group} />}
+            element={
+              <GroupPage setFooterOption={setFooterOption} group={group} />
+            }
           />
           <Route
             path="/create-group"
@@ -96,26 +91,44 @@ const MobileAppSimulator = () => {
           />
           <Route
             path="/challenges"
-            element={<Challenges setFooterOption={setFooterOption} group={group} />}
+            element={
+              <Challenges setFooterOption={setFooterOption} group={group} />
+            }
           />
           <Route
             path="/challenge"
-            element={<ChallengePage setFooterOption={setFooterOption} group={group} />}
+            element={
+              <ChallengePage setFooterOption={setFooterOption} group={group} />
+            }
           />
           <Route
             path="/challenge-summary"
-            element={<ChallengeSummary setFooterOption={setFooterOption} group={group} />}
+            element={
+              <ChallengeSummary
+                setFooterOption={setFooterOption}
+                group={group}
+              />
+            }
           />
-          <Route 
-          path="/create-challenge" 
-          element={<NewChallenge group={group} setFooterOption={setFooterOption}/>} />
+          <Route
+            path="/create-challenge"
+            element={
+              <NewChallenge group={group} setFooterOption={setFooterOption} />
+            }
+          />
         </Routes>
       </main>
 
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
         <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
-        <FaSearch onClick={() => navigateTo("/search", "Search")} className="icon" />
-        <FaUser onClick={() => navigateTo("/profile", "Profile")} className="icon" />
+        <FaSearch
+          onClick={() => navigateTo("/search", "Search")}
+          className="icon"
+        />
+        <FaUser
+          onClick={() => navigateTo("/profile", "Profile")}
+          className="icon"
+        />
       </footer>
     </div>
   );
