@@ -95,9 +95,10 @@ export function joinGroup(db, idGroup) {
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
     return new Promise((resolve, reject) => {
+        const joinedInt = joined ? 1 : 0;
         let query = "INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
-        db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joined], function(err) {
+        db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt], function(err) {
             if (err) {
                 return reject(err); // Rifiutiamo la Promise se c'è un errore
             }
@@ -231,6 +232,44 @@ export function getAnswers(db, questionId) {
             const answers = rows.map(row => new Answer(row.answer_id, row.text, row.is_correct, row.feedback));
 
             resolve(answers); // Restituiamo l'array di oggetti Answer
+        });
+    });
+}
+
+export function createChallenge(db, title, groupId, topic_id) {
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO challenges (title, group_id, topic_id) VALUES (?, ?, ?)";
+
+        db.run(query, [title, groupId, topic_id], function(err) {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Rifiutiamo la Promise in caso di errore
+            }
+
+            resolve(this.lastID); // Restituiamo l'ID dell'ultimo record inserito
+        });
+    });
+}
+
+export function getTopics(db, study_group_id) {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT topic_id, name FROM topics WHERE study_group_id = ?";
+        db.all(query, [study_group_id], (err, rows) => {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Reject the Promise in case of error
+            }
+
+            if (!rows || rows.length === 0) {
+                return reject(new Error("Topics not found"));
+            }
+
+            // Map the results to get an array of topic objects with topic_id and name
+            const topics = rows.map(row => ({
+                topic_id: row.topic_id,
+                name: row.name
+            }));
+            resolve(topics); // Return the array of topic objects
         });
     });
 }

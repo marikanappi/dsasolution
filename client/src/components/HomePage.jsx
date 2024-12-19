@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
-import { getAllGroups } from "../../api"; // Assicurati di avere l'import corretto per le API
+import { getAllGroups } from "../../API.mjs"; // Assicurati di avere l'import corretto per le API
 import { useNavigate, Link } from "react-router-dom"; // Importa correttamente Link
 import "./../css/homepage.css"; // Il tuo file CSS per lo stile
 

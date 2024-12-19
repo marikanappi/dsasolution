@@ -12,7 +12,7 @@ import ChatPage from "./components/ChatPage";
 import Challenges from "./components/Challenges";
 import ChallengePage from "./components/ChallengePage";
 import ChallengeSummary from "./components/ChallengeSummary";
-import NewChallenge from "./components/NewChallenge";
+import NewChallenge from "./components/CreateChallenge";
 
 import { useNavigate } from "react-router-dom";
 
@@ -93,7 +93,9 @@ const MobileAppSimulator = () => {
             path="/challenge-summary"
             element={<ChallengeSummary setFooterOption={setFooterOption} group={group} />}
           />
-          <Route path="/new-challenge" element={<NewChallenge />} />
+          <Route 
+          path="/create-challenge" 
+          element={<NewChallenge group={group} setFooterOption={setFooterOption}/>} />
         </Routes>
       </main>
       

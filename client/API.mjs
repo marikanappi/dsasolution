@@ -70,7 +70,7 @@ async function leaveGroup(id) {
 // Function to add a new group
 async function addGroup(group) {
   try {
-    const response = await fetch(`${BASE_URL}/groups`, {
+    const response = await fetch(`${BASE_URL}/group`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -198,6 +198,43 @@ async function addMessage(message) {
   }
 }
 
+async function createChallenge(challenge) {
+  try {
+    const response = await fetch(`${BASE_URL}/create-challenge`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(challenge),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to create challenge');
+    }
+    const result = await response.json();
+    console.log('Challenge created:', result);
+    return result;
+    } catch (err) {
+    console.error(err);
+    return null;
+}
+}
+
+async function getTopics (study_group_id) {
+  try {
+    const response = await fetch(`${BASE_URL}/topics/${study_group_id}`);
+    console.log('Group id:', study_group_id);
+    console.log('Response:', response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch topics');
+    }
+    const topics = await response.json();
+    return topics;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export {
   getAllGroups,
   getGroupsByLabel,
@@ -211,6 +248,8 @@ export {
   getAnswers,
   getMessages,
   addMessage,
+  createChallenge,
+  getTopics,
 };
 
 

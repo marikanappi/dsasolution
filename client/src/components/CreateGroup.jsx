@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaExclamationCircle, FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
-import { getAllGroups, addGroup } from "../../api"; // Import API functions
+import { getAllGroups, addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
 

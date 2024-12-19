@@ -15,7 +15,8 @@ import {
   getGroupBySLD, 
   getChallenges,
   getQuestions,
-  getAnswers
+  getAnswers,
+  getTopics,
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -81,10 +82,11 @@ app.post('/groups/leave/:id', async (req, res) => {
 });
 
 // Add group
-app.post('/groups', async (req, res) => {
+app.post('/group', async (req, res) => {
   const { name, level, university, SLD, description, picture, number_of_participants, joined } = req.body;
   try {
     const groupId = await addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined);
+    console.log(req.body);
     res.status(201).json({ groupId });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -160,6 +162,24 @@ app.post('/messages', (req, res) => {
   messages.push(newMessage);
   res.status(201).json(newMessage);
 });
+
+app.post('/create-challenge', (req, res) => {
+  console.log('Received request to create challenge');
+  const challenge = req.body;
+  console.log('Challenge created:', challenge);
+  res.status(201).json(challenge);
+});
+
+app.get('/topics/:study_group_id', async (req, res) => {
+  const study_group_id = req.params.study_group_id; 
+  try {
+      const topics = await getTopics(db, study_group_id); // Recuperiamo i topic dal database
+      res.json(topics); // Inviamo i topic come risposta JSON
+  } catch (err) {
+      res.status(500).json({ error: err.message }); // Gestione degli errori
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

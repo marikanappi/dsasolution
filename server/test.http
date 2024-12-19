@@ -1,1 +1,7 @@
-curl -X GET "http://localhost:3001/answers/1"
+curl -X POST "http://localhost:3001/create-challenge" \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Challenge Title",
+  "groupId": 1,
+  "topic_id": 2
+}'
