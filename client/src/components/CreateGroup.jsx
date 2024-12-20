@@ -24,8 +24,7 @@ const CreateGroup = ({ setFooterOption }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageName, setImageName] = useState("");
   const [error, setError] = useState(false);
-  const [isMandatoryWarningVisible, setMandatoryWarningVisible] =
-    useState(false);
+  const [isMandatoryWarningVisible, setMandatoryWarningVisible] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
     text: "",
@@ -35,7 +34,7 @@ const CreateGroup = ({ setFooterOption }) => {
 
   useEffect(() => {
     setFooterOption("CreateGroup");
-  }, [setFooterOption]);
+  }, []);
 
   // Handle form field changes
   const handleInputChange = (e) => {

@@ -3,11 +3,16 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaTrophy } from "react-icons/fa";
 import "./../css/challengesummary.css";
+import { useEffect } from "react";
 
-const ChallengeSummary = () => {
+const ChallengeSummary = ({ setFooterOption }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { correctAnswers, challengeTitle } = location.state || {}; // Aggiungi 'totalQuestions' qui
+
+  useEffect(() => {
+    setFooterOption("ChallengeSummary");
+  }, []);
 
   console.log("Correct Answers:", correctAnswers);
   return (
@@ -34,7 +39,6 @@ const ChallengeSummary = () => {
         onClick={() => {
           navigate("/challenges")
           setFooterOption("Challenges");
-          setGroup(null);
         }}
       >
         Return to Groups

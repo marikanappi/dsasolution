@@ -20,6 +20,10 @@ const ChallengePage = ({ setFooterOption }) => {
   const totalTime = 120 * (questions.length || 1); // 2min for each question => Total time in seconds
 
   useEffect(() => {
+    setFooterOption("ChallengePage");
+  }, []);
+
+  useEffect(() => {
     const fetchQuestions = async () => {
       if (challenge) {
         const questionsData = await getQuestions(challenge.id);

@@ -23,10 +23,10 @@ const SearchGroup = ({ setGroup }) => {
       try {
         const groups = await getAllGroups();
         const suggested = groups.filter(
-          (group) => group.university === "Politecnico di Torino"
+          (group) => group.university === "Politecnico di Torino" && group.joined === 0
         );
         const others = groups.filter(
-          (group) => group.university !== "Politecnico di Torino"
+          (group) => group.university !== "Politecnico di Torino" && group.joined === 0
         );
 
         setSuggestedGroups(suggested);
@@ -169,21 +169,15 @@ const SearchGroup = ({ setGroup }) => {
   );
 
   const Modal = ({ group, onClose, onConfirmJoin }) => (
-    <div className="modal-overlay">
+    <div className="modal">
       <div className="modal-content">
         <p>
           Are you sure you want to join <strong>{group.name}</strong>?
         </p>
         {group.level && <p>Level: {group.level}</p>}
         {group.SLD && <p>SLD: {group.SLD}</p>}
-        <div className="modal-actions">
-          <button className="btn btn-danger" onClick={onClose}>
-            Cancel
-          </button>
-          <button className="btn btn-success" onClick={() => onConfirmJoin(group)}>
-            Join
-          </button>
-        </div>
+          <button className="btn btn-success" onClick={() => onConfirmJoin(group)}>Join</button>
+          <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

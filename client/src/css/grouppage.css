@@ -8,7 +8,7 @@
 }
 
 .group-card {
-  background-color: #6b00a0;
+  background: linear-gradient(135deg, #51009c, #6d0092);
   border-radius: 12px;
   padding: 20px;
   margin: 20px auto;
@@ -63,7 +63,7 @@
   background: linear-gradient(135deg, #306f2a, #77e47b);
   border-radius: 20px;
   padding: 10%;
-  
+  font-size: 17px;
 }
 
 .chat-btn:hover {
@@ -79,7 +79,7 @@
   background: linear-gradient(135deg, #230e9a, #7cc0fb);
   border-radius: 20px;
   padding: 10%;
-
+  font-size: 17px;
 }
 
 .challenge-btn:hover {
@@ -96,6 +96,7 @@
   background: linear-gradient(135deg, #ed6509, #f3d16d); /* Arancione */
   border-radius: 20px;
   padding: 10%;
+  font-size: 17px;
 }
 
 .materials-btn:hover {
