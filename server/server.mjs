@@ -15,7 +15,9 @@ import {
   getGroupBySLD, 
   getChallenges,
   getQuestions,
-  getAnswers
+  getAnswers,
+  addMaterials,
+  getImage,
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -165,7 +167,7 @@ app.post('/messages', (req, res) => {
 //aggiungi immagine in material 
 app.post('/material', (req, res) => {
   const newMaterial = req.body;
-  materials.push(newMaterial);
+  material.push(newMaterial);
   res.status(201).json(newMaterial);
 });
 

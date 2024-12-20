@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./../css/materialpage.css";
 import { FaImage, FaFileAlt, FaMusic } from "react-icons/fa";
+import { addMaterial} from "../../api";
 
 
 const MaterialPage = ({ setFooterOption, setGroup }) => {
@@ -14,6 +15,24 @@ const MaterialPage = ({ setFooterOption, setGroup }) => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // handle per il caricamento di un'immagine e chiamo api per aggiungere image in material
+  const handleImageUpload = async () => {
+    if (!image) {
+      setUploadStatus("Please select an image to upload");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const response = await addMaterial(formData);
+    if (response) {
+      setUploadStatus("Image uploaded successfully");
+    } else {
+      setUploadStatus("Failed to upload image");
+    }
   };
 
 
@@ -31,11 +50,11 @@ const MaterialPage = ({ setFooterOption, setGroup }) => {
       <button className="button">
     <FaImage /> Image
       </button>
-        <button className="button" onClick={() => setSelectedType("document")}>
+        <button className="button">
           <FaFileAlt /> 
           Document
         </button>
-        <button className="button" onClick={() => setSelectedType("audio")}>
+        <button className="button">
           <FaMusic /> 
           Audio
         </button>
@@ -55,7 +74,7 @@ const MaterialPage = ({ setFooterOption, setGroup }) => {
             accept="image/*"
             // Gestisce la selezione di un'immagine
           />
-          <button>Upload Image</button> {/* Carica l'immagine */}
+          <button onClick={handleImageUpload}>Upload Image</button> {/* Carica l'immagine */}
         </div>
 
         {/* Sezione per caricare documento */}

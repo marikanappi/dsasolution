@@ -198,6 +198,43 @@ async function addMessage(message) {
   }
 }
 
+//carica material 
+async function addMaterial(material) {
+  try {
+    const response = await fetch(`${BASE_URL}/material`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(material),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add material');
+    }
+    const result = await response.json();
+    console.log('Material added with ID:', result.materialId);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+//ottieni immagini 
+async function getImage(group_id) {
+  try {
+    const response = await fetch(`${BASE_URL}/material/${group_id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch material');
+    }
+    const material = await response.json();
+    return material;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export {
   getAllGroups,
   getGroupsByLabel,
@@ -211,6 +248,8 @@ export {
   getAnswers,
   getMessages,
   addMessage,
+  addMaterial, 
+  getImage,
 };
 
 
