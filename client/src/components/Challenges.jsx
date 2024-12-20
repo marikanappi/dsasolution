@@ -10,6 +10,10 @@ const Challenges = ({ setFooterOption, group }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setFooterOption("Challenges");
+  }, []);
+  
+  useEffect(() => {
     const loadChallenges = async () => {
       console.log("Loading challenges for group:", group.id);
       const challengesData = await getChallenge(group.id);

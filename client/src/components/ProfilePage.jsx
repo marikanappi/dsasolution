@@ -25,9 +25,6 @@ const ProfilePage = ({ setFooterOption, setGroup }) => {
             alt="Immagine del profilo"
             className="profile-image"
           />
-          <button className="edit-button" title="Modifica Profilo">
-            <FaEdit />
-          </button>
         </div>
         <div className="profile-info">
           <p>

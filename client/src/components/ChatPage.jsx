@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import '../css/chatpage.css'; // Import del file CSS per lo stile
 import { FaMicrophone, FaStop } from 'react-icons/fa'; // Icone del microfono
+import { useEffect } from 'react';
 
-const Chat = ({ group }) => {
+const Chat = ({ setFooterOption, group }) => {
   // Messaggi statici
   const [messages, setMessages] = useState([
     { text: 'Does anyone have the concept maps from the last meeting?', isUserMessage: false },
@@ -12,6 +13,10 @@ const Chat = ({ group }) => {
   const [newMessage, setNewMessage] = useState('');
   const [error, setError] = useState(null);
   const [isRecording, setIsRecording] = useState(false); // Stato per la registrazione del messaggio vocale
+
+  useEffect(() => {
+    setFooterOption('Chat');
+  }, []);
 
   const handleSend = () => {
     if (!newMessage.trim()) {

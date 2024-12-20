@@ -8,6 +8,9 @@ const GroupPage = ({ setFooterOption, group, joinedGroup, setJoinedGroups }) => 
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    setFooterOption("GroupPage");
+  }, []);
 
   const handleNavigate = (path) => {
     navigate(path); // Naviga verso le rispettive pagine (chat, challenge, materials)
@@ -57,17 +60,16 @@ const GroupPage = ({ setFooterOption, group, joinedGroup, setJoinedGroups }) => 
       </div>
 
       {showModal && (
-        <div className="modal-overlay">
+        <div className="modal">
           <div className="modal-content">
-            <p>Are you sure you want to leave the group?</p>
-            <div className="modal-buttons">
-              <button onClick={handleLeaveGroup} className="confirm-btn">
+            <h3>Are you sure you want to leave the group?</h3>
+            <p>You can join it again whenever you want.</p>
+              <button onClick={handleLeaveGroup} className="btn btn-danger">
                 Yes
               </button>
-              <button onClick={() => setShowModal(false)} className="cancel-btn">
+              <button onClick={() => setShowModal(false)} className="btn btn-secondary">
                 Cancel
               </button>
-            </div>
           </div>
         </div>
       )}
