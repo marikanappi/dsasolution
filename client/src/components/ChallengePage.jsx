@@ -14,16 +14,18 @@ const ChallengePage = ({ setFooterOption }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0); 
-  const [elapsedTime, setElapsedTime] = useState(0); // Elapsed time in seconds
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
-  const totalTime = 120 * (questions.length || 1); // 2min for each question => Total time in seconds
+  const totalQuestions = 4;
+  const totalTime = 120 * totalQuestions; // 2min for each question => Total time in seconds
 
   useEffect(() => {
     const fetchQuestions = async () => {
       if (challenge) {
         const questionsData = await getQuestions(challenge.id);
         setQuestions(questionsData || []);
+        setAnswers([]);
       }
     };
     fetchQuestions();
@@ -74,7 +76,7 @@ const ChallengePage = ({ setFooterOption }) => {
     if (correctAnswer) {
       if (selectedAnswer === correctAnswer.text) {
         setFeedback("Correct!");
-        setCorrectAnswers(correctAnswers + 1); 
+        setCorrectAnswers(correctAnswers + 1);
       } else {
         setFeedback(correctAnswer.feedback || "Incorrect.");
       }
@@ -111,7 +113,7 @@ const ChallengePage = ({ setFooterOption }) => {
       <div className="progress-bar">
         <div
           className="progress"
-          style={{ width: `${(elapsedTime / totalTime) * 100}%` }}
+          style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
         ></div>
       </div>
       <div className="time-info">
@@ -130,7 +132,7 @@ const ChallengePage = ({ setFooterOption }) => {
 
           <div className="answers-container">
             {answers.map((answer, index) => (
-              <div key={index}>
+              <div key={index} className="answer-option">
                 <input
                   type="radio"
                   id={`answer-${index}`}
@@ -139,7 +141,10 @@ const ChallengePage = ({ setFooterOption }) => {
                   checked={selectedAnswer === answer.text}
                   onChange={handleAnswerChange}
                 />
-                <label htmlFor={`answer-${index}`}>{answer.text}</label>
+                <label htmlFor={`answer-${index}`}>
+                  <span className="answer-label">{String.fromCharCode(65 + index)}. </span>
+                  {answer.text}
+                </label>
               </div>
             ))}
           </div>

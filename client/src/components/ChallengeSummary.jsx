@@ -37,7 +37,7 @@ const ChallengeSummary = () => {
           setGroup(null);
         }}
       >
-        Return to Groups
+        Return to Challenges
       </button>
     </div>
   );
