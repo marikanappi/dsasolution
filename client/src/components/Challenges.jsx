@@ -50,7 +50,7 @@ const Challenges = ({ setFooterOption, group }) => {
       </div>
       <div className="generate-button-container">
         <button
-          className="generate-button btn"
+          className="generate-button"
           onClick={() => {
             navigate('/create-challenge');
             setFooterOption("NewChallenge");
