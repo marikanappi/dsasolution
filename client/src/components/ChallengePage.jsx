@@ -15,7 +15,10 @@ const ChallengePage = ({ setFooterOption }) => {
   const [feedback, setFeedback] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [skippedQuestions, setSkippedQuestions] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [wrongAnswer, setWrongAnswer] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const totalQuestions = 4;
   const totalTime = 120 * totalQuestions; // 2min for each question => Total time in seconds
@@ -54,7 +57,7 @@ const ChallengePage = ({ setFooterOption }) => {
         if (prev + 1 >= totalTime) {
           clearInterval(timer);
           navigate("/challenge-summary", {
-            state: { correctAnswers, challengeTitle: challenge.title },
+            state: { correctAnswers, skippedQuestions, challengeTitle: challenge.title },
           });
           setFooterOption("SummaryChallenge");
           return totalTime;
@@ -73,6 +76,7 @@ const ChallengePage = ({ setFooterOption }) => {
   const handleSubmitAnswer = () => {
     if (!selectedAnswer) {
       setFeedback("Please select an answer!");
+      setShowModal(true);
       return;
     }
 
@@ -81,27 +85,35 @@ const ChallengePage = ({ setFooterOption }) => {
       if (selectedAnswer === correctAnswer.text) {
         setFeedback("Correct!");
         setCorrectAnswers(correctAnswers + 1);
+        setWrongAnswer(null);
       } else {
         setFeedback(correctAnswer.feedback || "Incorrect.");
+        setWrongAnswer(selectedAnswer);
       }
     } else {
       setFeedback("No correct answer provided for this question.");
     }
+    setShowModal(true);
     setIsAnswered(true);
   };
 
   const handleNextQuestion = () => {
+    setShowModal(false);
+    if (!isAnswered) {
+      setSkippedQuestions(skippedQuestions + 1);
+    }
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setFeedback("");
+      setWrongAnswer(null);
       setIsAnswered(false);
     }
   };
 
   const handleGoToRecap = () => {
     navigate("/challenge-summary", {
-      state: { correctAnswers, challengeTitle: challenge.title },
+      state: { correctAnswers, skippedQuestions, challengeTitle: challenge.title },
     });
     setFooterOption("SummaryChallenge");
   };
@@ -136,7 +148,10 @@ const ChallengePage = ({ setFooterOption }) => {
 
           <div className="answers-container">
             {answers.map((answer, index) => (
-              <div key={index} className="answer-option">
+              <div
+                key={index}
+                className={`answer-option ${wrongAnswer === answer.text ? "wrong-answer" : ""}`}
+              >
                 <input
                   type="radio"
                   id={`answer-${index}`}
@@ -163,7 +178,16 @@ const ChallengePage = ({ setFooterOption }) => {
             )}
           </div>
 
-          {feedback && <div className="feedback">{feedback}</div>}
+          {showModal && (
+            <div className="modal-overlay">
+              <div className="modal">
+                <p>
+                <p>{feedback}</p>
+                <p><button onClick={handleNextQuestion}>OK</button></p>
+                </p>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
