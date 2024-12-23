@@ -120,7 +120,20 @@ h4 {
     border: 1px solid #ddd;
   }
 
+  .joined-btn {
+    background-color: green; /* Colore verde */
+    border-radius: 50%; /* Cerchio */
+    width: 30px; /* Dimensione del cerchio */
+    height: 40px; /* Dimensione del cerchio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
+  .joined-btn svg {
+    color: white; /* Colore della spunta */
+    font-size: 18px; /* Dimensione della spunta */
+  }
 
   .group-image-container {
     position: relative;
@@ -134,7 +147,7 @@ h4 {
     color: white;
     font-size: 20px;
     width: 30px;
-    height: 30px;
+    height: 40px;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -148,8 +161,8 @@ h4 {
     background-color: #6e00ad;  /* Colore viola */
     color: white;  /* Testo bianco */
     font-size: 20px;  /* Dimensione del testo */
-    width: 35px;  /* Dimensione uniforme per il cerchio */
-    height: 35px;  /* Dimensione uniforme per il cerchio */
+    width: 30px;  /* Dimensione uniforme per il cerchio */
+    height: 40px;  /* Dimensione uniforme per il cerchio */
     border-radius: 50%;  /* Per ottenere la forma circolare */
     display: flex;
     justify-content: center;

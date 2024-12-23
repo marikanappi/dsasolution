@@ -116,9 +116,9 @@
 .leave-group {
   bottom: 0%;
   display: flex;
-  align-items: center;
-  color: #000;
-  
+  justify-content: center;
+  font-weight: bold;
+  color: #b70000;
 }
 
 .confirm-btn{

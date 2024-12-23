@@ -33,8 +33,6 @@ const GroupPage = ({ setFooterOption, group, joinedGroup, setJoinedGroups }) => 
     }
   };
 
-
-
   return (
     <div className="group-page">
       <div className="group-card">

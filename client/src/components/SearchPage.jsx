@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { getAllGroups, joinGroup } from "../../api"; // Import API
 import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa"; // Icona spunta verde
 
 const SearchGroup = ({ setGroup }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
   const [otherGroups, setOtherGroups] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
-  const [joinedGroups, setJoinedGroups] = useState([]);
+  const [joinedGroups, setJoinedGroups] = useState([]); // Contiene i gruppi a cui l'utente è iscritto
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedSLD, setSelectedSLD] = useState("");
@@ -81,7 +82,7 @@ const SearchGroup = ({ setGroup }) => {
     try {
       const response = await joinGroup(group.id);
       if (response) {
-        setJoinedGroups((prev) => [...prev, group.name]);
+        setJoinedGroups((prev) => [...prev, group.id]); // Aggiungi l'ID del gruppo a quelli già uniti
       }
     } catch (error) {
       console.error("Errore durante la join del gruppo:", error);
@@ -106,15 +107,21 @@ const SearchGroup = ({ setGroup }) => {
           alt={`${group.name} Icon`}
           className="group-icon"
         />
-        <button
-          className="join-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleJoinGroup(group);
-          }}
-        >
-          +
-        </button>
+        {joinedGroups.includes(group.id) ? (
+          <button className="joined-btn">
+            <FaCheck color="green" />
+          </button>
+        ) : (
+          <button
+            className="join-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleJoinGroup(group);
+            }}
+          >
+            +
+          </button>
+        )}
       </div>
       <div>
         <div className="group-name">{group.name}</div>
@@ -138,7 +145,12 @@ const SearchGroup = ({ setGroup }) => {
         <div className="group-university">{group.university}</div>
         {isSuggested && <div className="group-level">{group.level}</div>}
       </div>
-      <button
+      {joinedGroups.includes(group.id) ? (
+        <button className="joined-btn" disabled>
+          ✓
+        </button>
+      ) : (
+        <button
           className="plus-btn"
           onClick={(e) => {
             e.stopPropagation();
@@ -147,6 +159,7 @@ const SearchGroup = ({ setGroup }) => {
         >
           +
         </button>
+      )}
     </li>
   );
 
@@ -176,8 +189,12 @@ const SearchGroup = ({ setGroup }) => {
         </p>
         {group.level && <p>Level: {group.level}</p>}
         {group.SLD && <p>SLD: {group.SLD}</p>}
-          <button className="btn btn-success" onClick={() => onConfirmJoin(group)}>Join</button>
-          <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
+        <button className="btn btn-success" onClick={() => onConfirmJoin(group)}>
+          Join
+        </button>
+        <button className="btn btn-secondary" onClick={onClose}>
+          Cancel
+        </button>
       </div>
     </div>
   );
