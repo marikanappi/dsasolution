@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
-import { getAllGroups } from "../../api"; // Assicurati di avere l'import corretto per le API
+import { getAllGroups } from "../../API.mjs"; // Assicurati di avere l'import corretto per le API
 import { useNavigate, Link } from "react-router-dom"; // Importa correttamente Link
 import "./../css/homepage.css"; // Il tuo file CSS per lo stile
 
@@ -14,15 +14,17 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   const toggleCollapse = () => {
     const newCollapsedState = !isCollapsed;
     setIsCollapsed(newCollapsedState);
-    onCollapseChange(newCollapsedState);
   };
 
   // Fetch dei gruppi con joined = 1
   useEffect(() => {
+    setFooterOption("Home");
     const fetchGroups = async () => {
       try {
         const fetchedGroups = await getAllGroups(); // Recupera tutti i gruppi
-        const joinedGroups = fetchedGroups.filter((group) => group.joined === 1); // Filtra solo quelli con joined = 1
+        const joinedGroups = fetchedGroups.filter(
+          (group) => group.joined === 1
+        ); // Filtra solo quelli con joined = 1
         setGroups(joinedGroups);
       } catch (error) {
         console.error("Error fetching groups:", error);
@@ -40,16 +42,19 @@ const HomePage = ({ setFooterOption, setGroup }) => {
     <div className="home-page-container">
       {/* Sezione Notifiche */}
       <div className="notifications-container" onClick={toggleCollapse}>
-        <h5> Recent Notifications
-        </h5>
+        <h5> Recent Notifications</h5>
         {!isCollapsed && (
           <div className="card-body">
             {groups.length > 0 ? (
               <div>
                 {groups.map((group, index) => (
                   <div className="notification" key={index}>
-                    <span className="notif-text">You just joined the group!</span>
-                    <span className="notification-group-name">{group.name}</span>
+                    <span className="notif-text">
+                      You just joined the group!
+                    </span>
+                    <span className="notification-group-name">
+                      {group.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -72,7 +77,7 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                 onClick={() => {
                   setFooterOption("Group");
                   setGroup(group);
-                  group = {group}; 
+                  group = { group };
                 }}
               >
                 <Link

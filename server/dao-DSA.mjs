@@ -95,17 +95,25 @@ export function joinGroup(db, idGroup) {
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
     return new Promise((resolve, reject) => {
-        let query = "INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    
-        db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joined], function(err) {
-            if (err) {
-                return reject(err); // Rifiutiamo la Promise se c'è un errore
-            }
-        
-            resolve(this.lastID); // Risolviamo la Promise con l'ID dell'ultimo gruppo inserito
-        });
+      const joinedInt = joined ? 1 : 0;
+      const query = `
+        INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      console.log('Executing query:', query);
+      console.log('With values:', [name, level, university, SLD, description, picture, number_of_participants, joinedInt]);
+  
+      db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt], function (err) {
+        if (err) {
+          console.error('Database insert error:', err.message);
+          return reject(err);
+        }
+  
+        console.log('Inserted ID:', this.lastID); // Log the ID of the inserted record
+        resolve(this.lastID); // Return the ID of the inserted record
+      });
     });
-}
+  }  
 
 // Funzione per ottenere un gruppo per un determinato ID
 export function getGroupById(db, name) {
@@ -235,42 +243,41 @@ export function getAnswers(db, questionId) {
     });
 }
 
-//aggiunta immagine nella tabella material 
-export function addImages(db, groupId, nome, tipo) {
+export function createChallenge(db, challenge) {
     return new Promise((resolve, reject) => {
-        let query = "INSERT INTO material (group_id, nome, tipo) VALUES (?, ?, ?, ?)";
-    
-        db.run(query, [groupId, nome, tipo], function(err) {
+        console.log("DAO: challenge:",challenge);
+        const query = "INSERT INTO challenges (group_id, title, topic_id) VALUES (?, ?, ?)";
+
+        db.run(query, [challenge.group_id,challenge.title,challenge.topic_id], function(err) {
             if (err) {
-                return reject(err); 
+                console.error('Database error: ', err);
+                return reject(err); // Rifiutiamo la Promise in caso di errore
             }
-        
-            resolve(this.lastID); 
+
+            resolve(this.lastID); // Restituiamo l'ID dell'ultimo record inserito
         });
     });
 }
 
-//prendi immagini da material nel gruppo 
-export function getImages(db, groupId) {
+export function getTopics(db, study_group_id) {
     return new Promise((resolve, reject) => {
-        let query = "SELECT material_id, nome, tipo FROM material WHERE group_id = ?";
-    
-        db.all(query, [groupId], (err, rows) => {
+        const query = "SELECT topic_id, name FROM topics WHERE study_group_id = ?";
+        db.all(query, [study_group_id], (err, rows) => {
             if (err) {
-                return reject(err); 
+                console.error('Database error: ', err);
+                return reject(err); // Reject the Promise in case of error
             }
-        
-            const images = rows.map(row => {
-                return {
-                    id: row.material_id,
-                    nome: row.nome,
-                    tipo: row.tipo
-                };
-            });
-        
-            resolve(images); 
+
+            if (!rows || rows.length === 0) {
+                return reject(new Error("Topics not found"));
+            }
+
+            // Map the results to get an array of topic objects with topic_id and name
+            const topics = rows.map(row => ({
+                topic_id: row.topic_id,
+                name: row.name
+            }));
+            resolve(topics); // Return the array of topic objects
         });
     });
 }
-
-  

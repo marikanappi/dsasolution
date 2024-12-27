@@ -1,15 +1,20 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaTrophy } from "react-icons/fa";
 import "./../css/challengesummary.css";
 
-const ChallengeSummary = () => {
+const ChallengeSummary = ({ setFooterOption }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { correctAnswers, challengeTitle } = location.state || {}; // Aggiungi 'totalQuestions' qui
+  const { correctAnswers, skippedQuestions, challengeTitle } = location.state || {};
 
-  console.log("Correct Answers:", correctAnswers);
+  useEffect(() => {
+    setFooterOption("ChallengeSummary");
+  }, []);
+
+  const wrongAnswers = 4 - correctAnswers - skippedQuestions;
+  const score = Math.round((correctAnswers / 4) * 100);
+
   return (
     <div className="challenge-summary">
       <h1>Challenge Summary</h1>
@@ -18,26 +23,30 @@ const ChallengeSummary = () => {
           <p>Challenge: {challengeTitle}</p>
         </div>
         <div className="summary-item">
-          <p>Total Questions: 4 </p>
+          <p>Total Questions: {4}</p>
         </div>
         <div className="summary-item">
-          <FaTrophy className="summary-icon" />
           <p>Correct Answers: {correctAnswers}</p>
         </div>
         <div className="summary-item">
+          <p>Skipped Questions: {skippedQuestions}</p>
+        </div>
+        <div className="summary-item">
+          <p>Wrong Answers: {wrongAnswers}</p>
+        </div>
+        <div className="summary-item">
           <FaTrophy className="summary-icon" />
-          <p>Score: {Math.round((correctAnswers / 4) * 100)}%</p>
+          <p>Score: {score}%</p>
         </div>
       </div>
       <button
         className="return-button"
         onClick={() => {
-          navigate("/challenges")
+          navigate("/challenges");
           setFooterOption("Challenges");
-          setGroup(null);
         }}
       >
-        Return to Groups
+        Return to Challenges
       </button>
     </div>
   );

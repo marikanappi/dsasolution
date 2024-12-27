@@ -1,8 +1,8 @@
 /* Stile per il contenitore dell'immagine */
 .image-upload-container {
-    height: 120px;
+    height: 110px;
     /* Altezza del rettangolo */
-    width: 80px;
+    width: 90px;
     /* Larghezza del rettangolo */
     background-color: #acacac;
     /* Colore di sfondo grigio */
@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 /* Stile per il testo + Add */
@@ -75,18 +76,6 @@
     color: #6700bb;
 }
 
-.exit-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 350px;
-    width: 100%;
-}
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -99,10 +88,5 @@
 
     .custom-button {
         font-size: 14px;
-    }
-
-    .tooltip-modal,
-    .mandatory-warning-modal {
-        max-width: 90%;
     }
 }

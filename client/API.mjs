@@ -70,7 +70,7 @@ async function leaveGroup(id) {
 // Function to add a new group
 async function addGroup(group) {
   try {
-    const response = await fetch(`${BASE_URL}/groups`, {
+    const response = await fetch(`${BASE_URL}/group`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -198,44 +198,42 @@ async function addMessage(message) {
   }
 }
 
-//carica immagine in material
-async function addImage(groupId, nome, tipo) {
+async function createChallenge(challenge) {
+  console.log(challenge);
   try {
-    const response = await fetch(`${BASE_URL}/material`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ groupId, nome, tipo }),
+    const response = await fetch(`${BASE_URL}/create-challenge`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(challenge),  
     });
     if (!response.ok) {
-      throw new Error('Failed to add image');
+        throw new Error('Failed to create challenge');
     }
     const result = await response.json();
-    console.log('Image added with ID:', result.imageId);
     return result;
-  } catch (err) {
+    } catch (err) {
     console.error(err);
     return null;
-  }
+}
 }
 
-//filtra per immagini in material 
-async function getImage(groupId) {
-  console.log("groupId", groupId);
+async function getTopics (study_group_id) {
   try {
-    const response = await fetch(`${BASE_URL}/material/${groupId}`);
+    const response = await fetch(`${BASE_URL}/topics/${study_group_id}`);
+    console.log('Group id:', study_group_id);
+    console.log('Response:', response);
     if (!response.ok) {
-      throw new Error('Failed to fetch images');
+      throw new Error('Failed to fetch topics');
     }
-    const images = await response.json();
-    return images;
+    const topics = await response.json();
+    return topics;
   } catch (err) {
     console.error(err);
     return null;
   }
 }
-
 
 export {
   getAllGroups,
@@ -250,8 +248,8 @@ export {
   getAnswers,
   getMessages,
   addMessage,
-  addImage, 
-  getImage,
+  createChallenge,
+  getTopics,
 };
 
 

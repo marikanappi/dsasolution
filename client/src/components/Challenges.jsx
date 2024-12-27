@@ -10,6 +10,10 @@ const Challenges = ({ setFooterOption, group }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setFooterOption("Challenges");
+  }, []);
+  
+  useEffect(() => {
     const loadChallenges = async () => {
       console.log("Loading challenges for group:", group.id);
       const challengesData = await getChallenge(group.id);
@@ -46,8 +50,11 @@ const Challenges = ({ setFooterOption, group }) => {
       </div>
       <div className="generate-button-container">
         <button
-          className="generate-button btn"
-          onClick={() => setFooterOption("NewChallenge")}
+          className="generate-button"
+          onClick={() => {
+            navigate('/create-challenge');
+            setFooterOption("NewChallenge");
+            group = { group };}}
         >
           Generate Challenge
         </button>

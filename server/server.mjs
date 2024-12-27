@@ -16,9 +16,8 @@ import {
   getChallenges,
   getQuestions,
   getAnswers,
-  addImages,
-  getImages,
-  
+  getTopics,
+  createChallenge  
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -84,12 +83,30 @@ app.post('/groups/leave/:id', async (req, res) => {
 });
 
 // Add group
-app.post('/groups', async (req, res) => {
-  const { name, level, university, SLD, description, picture, number_of_participants, joined } = req.body;
+app.post('/group', async (req, res) => {
+  console.log(req.body);
+  const { name, level, university, specialNeeds, description, maxParticipants, picture, joined } = req.body;
+
+  // Map `specialNeeds` to `SLD` and `maxParticipants` to `number_of_participants`
+  const SLD = specialNeeds;
+  const number_of_participants = parseInt(maxParticipants, 10) || 0;
+
   try {
-    const groupId = await addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined);
+    const groupId = await addGroup(
+      db,
+      name,
+      level,
+      university,
+      SLD,
+      description,
+      picture,
+      number_of_participants,
+      joined
+    );
+    console.log(req.body);
     res.status(201).json({ groupId });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -164,29 +181,22 @@ app.post('/messages', (req, res) => {
   res.status(201).json(newMessage);
 });
 
-//aggiungi una nuova image in material 
-app.post('/material', async (req, res) => {
-  const { groupId, nome, tipo} = req.body;
-  try {
-    const imageId = await addImages(db, groupId, nome, tipo);
-    res.status(201).json({ imageId });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+app.post('/create-challenge', (req, res) => {
+  const challenge = req.body;
+  console.log("Server challenge:",challenge);
+  createChallenge(db, challenge);
+  res.status(201).json(challenge);
 });
 
-//prendi immagini in material dal gruppo 
-app.get('/material/:materialId', async (req, res) => {
-  const groupId = req.params.groupId;
+app.get('/topics/:study_group_id', async (req, res) => {
+  const study_group_id = req.params.study_group_id; 
   try {
-    const images = await getImages(db, materialId);
-    res.json(images);
+      const topics = await getTopics(db, study_group_id); // Recuperiamo i topic dal database
+      res.json(topics); // Inviamo i topic come risposta JSON
   } catch (err) {
-    res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message }); // Gestione degli errori
   }
 });
-
-
 
 
 app.listen(port, () => {
