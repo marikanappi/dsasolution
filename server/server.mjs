@@ -16,8 +16,9 @@ import {
   getChallenges,
   getQuestions,
   getAnswers,
-  addMaterials,
-  getImage,
+  addImages,
+  getImages,
+  
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -163,24 +164,29 @@ app.post('/messages', (req, res) => {
   res.status(201).json(newMessage);
 });
 
-
-//aggiungi immagine in material 
-app.post('/material', (req, res) => {
-  const newMaterial = req.body;
-  material.push(newMaterial);
-  res.status(201).json(newMaterial);
-});
-
-//ottieni immagini in material 
-app.get('/material', async (req, res) => {
+//aggiungi una nuova image in material 
+app.post('/material', async (req, res) => {
+  const { groupId, nome, tipo} = req.body;
   try {
-    const material = await getImage(db);
-    res.json(material);
+    const imageId = await addImages(db, groupId, nome, tipo);
+    res.status(201).json({ imageId });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-  
+
+//prendi immagini in material dal gruppo 
+app.get('/material/:materialId', async (req, res) => {
+  const groupId = req.params.groupId;
+  try {
+    const images = await getImages(db, materialId);
+    res.json(images);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 
 app.listen(port, () => {

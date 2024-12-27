@@ -1,175 +1,79 @@
-/* General reset for padding, margins, and box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+/* Styles for MaterialPage */
+
+.material-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.material-header {
+  width: 100%;
+  height: 60px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.material-filters {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #6e00ad;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-btn.active {
+  background-color: #6e00ad;
   
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7fc;
-    color: #333;
-  }
-  
-  /* Set up the app container */
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 30px;
-    background-color: #f4f7fc;
-  }
-  
-  /* Heading style */
-  h2 {
-    color: #333;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  /* Toolbar styling */
-  .toolbar {
-    justify-content: space-evenly; /* Disporre i pulsanti sulla stessa riga con spazio tra loro */
-    gap: 20px; /* Spazio tra i pulsanti */
-    margin-bottom: 30px;
-    width: 100%;
-    max-width: 800px; /* Limita la larghezza massima */
-    
-  }
-  
-  /* Pulsanti della toolbar */
-  .button {
-    background-color: #6e00ad;
-    color: white;
-    font-size: 1.1rem;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Spazio tra l'icona e il testo */
-  }
-  
-  .button:hover {
-    background-color: #560089; /* Cambia colore al passaggio del mouse */
-  }
-  
-  .button:active {
-    transform: scale(0.98); /* Effetto clic */
-  }
-  
-  /* Icone nei pulsanti */
-  .toolbar .button svg {
-    font-size: 1.5rem;
-  }
-  
-  /* Main content section styling */
-  .main-content {
-    width: 100%;
-    max-width: 800px;
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  /* File upload section */
-  .file-upload {
-    margin-bottom: 25px;
-  }
-  
-  .file-upload label {
-    display: block;
-    color: #555;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  
-  .file-upload input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .file-upload input:focus {
-    border-color: #6e00ad;
-    outline: none;
-  }
-  
-  /* Status message styling */
-  p {
-    text-align: center;
-    color: #d9534f;
-    font-size: 1.1rem;
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  /* Style for the file upload button */
-  button {
-    width: 100%;
-    background-color: #6e00ad;
-    color: white;
-    font-size: 1.1rem;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: #560089; /* Cambia colore al passaggio del mouse */
-  }
-  
-  button:active {
-    transform: scale(0.98); /* Effetto clic */
-  }
-  
-  /* Media queries per migliorare la responsività */
-  @media (max-width: 768px) {
-    /* Migliora la larghezza della main-content su schermi piccoli */
-    .main-content {
-      width: 90%;
-      padding: 15px;
-    }
-  
-    /* Stile dei pulsanti della toolbar */
-    .button {
-      width: 100%; /* Ogni pulsante occupa tutta la larghezza disponibile */
-      margin-bottom: 15px;
-    }
-  
-    /* File upload section */
-    .file-upload {
-      margin-bottom: 15px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    /* Migliora la larghezza della main-content su schermi molto piccoli */
-    .main-content {
-      width: 100%;
-      padding: 10px;
-    }
-    
-    /* Toolbar: rendi i pulsanti stackati su schermi molto piccoli */
-    .toolbar {
-      flex-direction: column; /* Disporre i pulsanti verticalmente */
-      gap: 10px;
-    }
-  }
-  
+}
+
+.filter-btn:hover {
+  background-color: #000;
+}
+
+.upload-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.upload-box {
+  border: 2px dashed #6e00ad;
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: #6e00ad;
+}
+
+.file-label {
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #6e00ad;
+  text-decoration: underline;
+}
+
+.submit-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #6e00ad;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #6e00ad;
+}

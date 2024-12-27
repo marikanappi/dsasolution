@@ -235,47 +235,42 @@ export function getAnswers(db, questionId) {
     });
 }
 
-//funzione per caricare immagine nella table materials
-export function addMaterials(db, group_id, type, url, description) {
+//aggiunta immagine nella tabella material 
+export function addImages(db, groupId, nome, tipo) {
     return new Promise((resolve, reject) => {
-      
-        let query = "INSERT INTO Materials (group_id, type, url, description) VALUES (?, ?, ?, ?)";
+        let query = "INSERT INTO material (group_id, nome, tipo) VALUES (?, ?, ?, ?)";
     
-        db.run(query, [group_id, type, url, description], function(err) {
+        db.run(query, [groupId, nome, tipo], function(err) {
             if (err) {
-                return reject(err); // Rifiutiamo la Promise se c'è un errore
+                return reject(err); 
             }
         
-            resolve(this.lastID); // Risolviamo la Promise con l'ID dell'ultimo materiale inserito
+            resolve(this.lastID); 
         });
     });
 }
 
-
-//funzione per ottenere immagine dal db secondo type = png o jpg
-export function getImage(db, group_id) {
+//prendi immagini da material nel gruppo 
+export function getImages(db, groupId) {
     return new Promise((resolve, reject) => {
-        let query = "SELECT * FROM Materials WHERE group_id = ? AND type = 'image'";
-
-        db.get(query, [group_id], (err, row) => {
+        let query = "SELECT material_id, nome, tipo FROM material WHERE group_id = ?";
+    
+        db.all(query, [groupId], (err, rows) => {
             if (err) {
-                return reject(err); // Rifiutiamo la Promise se c'è un errore
+                return reject(err); 
             }
         
-            if (row === undefined) {
-                reject(new Error("Not found")); // Rifiutiamo la Promise se non troviamo il materiale
-            }
+            const images = rows.map(row => {
+                return {
+                    id: row.material_id,
+                    nome: row.nome,
+                    tipo: row.tipo
+                };
+            });
         
-            let material = new Material(
-                row.id, 
-                row.group_id, 
-                row.type, 
-                row.url, 
-                row.description
-            );
-        
-            resolve(material); // Risolviamo la Promise con il materiale ottenuto
+            resolve(images); 
         });
     });
 }
-    
+
+  

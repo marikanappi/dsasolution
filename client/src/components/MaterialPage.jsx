@@ -1,112 +1,150 @@
-import React, { useState } from "react";
-import "./../css/materialpage.css";
-import { FaImage, FaFileAlt, FaMusic } from "react-icons/fa";
-import { addMaterial} from "../../api";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiUpload } from "react-icons/fi"; // Importa l'icona di upload
+import "./../css/materialpage.css"; // File CSS per lo stile
+import { getGroupByName, addImage, getImage } from "../../api";
 
 
-const MaterialPage = ({ setFooterOption, setGroup }) => {
-  const [groups, setGroups] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState(null);
-  const [image, setImage] = useState(null);
-  const [documentFile, setDocumentFile] = useState(null);
-  const [audioFile, setAudioFIle] = useState(null);
-  const [selectedType, setSelectedType] = useState("");
+const MaterialPage = ({ setFooterOption, group }) => {
+  const [groupName, setGroupName] = useState("");
+  const [selectedType, setSelectedType] = useState("image"); // Default: immagini
+  const [materials, setMaterials] = useState([]); // Stato per i materiali
+  const [modalData, setModalData] = useState({ nome: "", file: null });
+  const [modalVisible, setModalVisible] = useState(false); // Stato per la visibilità della modal
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  // Funzione per ottenere i materiali dal gruppo
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      if (material) {
+        try {
+          const materialsData = await getImage(material.id); 
+          const filteredMaterials = materialsData.filter((item) => item.tipo === selectedType);
+          setMaterials(filteredMaterials); 
+        } catch (err) {
+          console.error("Error fetching materials:", err);
+          alert("Error fetching materials.");
+        }
+      }
+    };
+    
+    fetchMaterials();
+  }, [group, selectedType]);
+  
+  const closeModal = () => {
+    setModalVisible(false);
+    setModalData({ nome: "", file: null }); 
   };
 
-  // handle per il caricamento di un'immagine e chiamo api per aggiungere image in material
-  const handleImageUpload = async () => {
-    if (!image) {
-      setUploadStatus("Please select an image to upload");
+  // Funzione per gestire l'invio del form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!modalData.file) {
+      alert("Please select a file to upload.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("image", image);
+    try {
+      const fileType = modalData.file.type;
+      const validImageTypes = ["image/png", "image/jpeg", "image/jpg"];
+      const validDocumentTypes = ["application/pdf", "text/plain"];
+      const validAudioTypes = ["audio/mpeg", "audio/wav"];
 
-    const response = await addMaterial(formData);
-    if (response) {
-      setUploadStatus("Image uploaded successfully");
-    } else {
-      setUploadStatus("Failed to upload image");
+      let tipo = "";
+      if (validImageTypes.includes(fileType)) {
+        tipo = "image";
+      } else if (validDocumentTypes.includes(fileType)) {
+        tipo = "document";
+      } else if (validAudioTypes.includes(fileType)) {
+        tipo = "audio";
+      } else {
+        alert("Unsupported file type.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("group", group);
+      formData.append("nome", modalData.nome);
+      formData.append("file", modalData.file);
+      formData.append("tipo", tipo);
+
+      const result = await addImage(formData); // Presuppone che addImage supporti FormData
+      alert(`${tipo} added successfully with ID: ` + result.imageId);
+      closeModal(); // Chiude la modal dopo l'invio
+      fetchMaterials(group); // Aggiorna i materiali
+    } catch (err) {
+      console.error(`Failed to add file:`, err);
+      alert(`Error adding file.`);
     }
   };
 
-
-
-
-
   return (
-    <div className="app-container">
-      
-        <div>{groups.name}</div>
-      
-
-      {/* Toolbar */}
-      <div className="toolbar">
-      <button className="button">
-    <FaImage /> Image
-      </button>
-        <button className="button">
-          <FaFileAlt /> 
-          Document
+    <div className="material-page">
+      <div className="material-filters">
+        <button
+          className={`filter-btn ${selectedType === "image" ? "active" : ""}`}
+          onClick={() => setSelectedType("image")}
+        >
+          Images
         </button>
-        <button className="button">
-          <FaMusic /> 
+        <button
+          className={`filter-btn ${selectedType === "document" ? "active" : ""}`}
+          onClick={() => setSelectedType("document")}
+        >
+          Documents
+        </button>
+        <button
+          className={`filter-btn ${selectedType === "audio" ? "active" : ""}`}
+          onClick={() => setSelectedType("audio")}
+        >
           Audio
         </button>
       </div>
 
       
-       {/* Main Content */}
-       <div className="main-content">
-        <h2>Upload Files</h2>
+      <div className="material-list">
+        {materials.length === 0 ? (
+          <p>No materials found.</p>
+        ) : (
+          materials.map((material) => (
+            <div key={material.id} className="material-item">
+              {selectedType === "image" && (
+                //material ha id, groupId,nome e tipo 
+                <img
+                  
+                  alt={material.nome}
+                  className="material-image"/>
+                
+              )}
+              <p>{material.nome}</p>
+            </div>
+          ))
+        )}
+      </div>
 
-        {/* Sezione per caricare immagine */}
-        <div className="file-upload">
-          <label htmlFor="image-upload">Select Image</label>
+      
+      <div className="upload-section">
+        <div className="upload-box">
+          <FiUpload className="upload-icon" />
+          <p>Drag and drop your file here or</p>
           <input
-            id="image-upload"
             type="file"
-            accept="image/*"
-            // Gestisce la selezione di un'immagine
+            id="material-file"
+            onChange={(e) =>
+              setModalData((prevState) => ({
+                ...prevState,
+                file: e.target.files[0],
+              }))
+            }
           />
-          <button onClick={handleImageUpload}>Upload Image</button> {/* Carica l'immagine */}
         </div>
-
-        {/* Sezione per caricare documento */}
-        <div className="file-upload">
-          <label htmlFor="document-upload">Select Document</label>
-          <input
-            id="document-upload"
-            type="file"
-            accept=".pdf,.doc,.docx,.txt"
-            // Gestisce la selezione di un documento
-          />
-          <button>Upload Document</button> {/* Carica il documento */}
-        </div>
-
-        {/* Sezione per caricare file audio */}
-        <div className="file-upload">
-          <label htmlFor="audio-upload">Select Audio</label>
-          <input
-            id="audio-upload"
-            type="file"
-            accept="audio/*"
-            // Gestisce la selezione di un file audio
-          />
-          <button>Upload Audio</button> {/* Carica il file audio */}
-        </div>
-
-        {/* Messaggio di stato */}
-        {uploadStatus && <p>{uploadStatus}</p>}
+        <button onClick={handleSubmit} className="submit-btn">
+          Upload
+        </button>
       </div>
     </div>
   );
 };
-      
 
 export default MaterialPage;

@@ -198,21 +198,21 @@ async function addMessage(message) {
   }
 }
 
-//carica material 
-async function addMaterial(material) {
+//carica immagine in material
+async function addImage(groupId, nome, tipo) {
   try {
     const response = await fetch(`${BASE_URL}/material`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(material),
+      body: JSON.stringify({ groupId, nome, tipo }),
     });
     if (!response.ok) {
-      throw new Error('Failed to add material');
+      throw new Error('Failed to add image');
     }
     const result = await response.json();
-    console.log('Material added with ID:', result.materialId);
+    console.log('Image added with ID:', result.imageId);
     return result;
   } catch (err) {
     console.error(err);
@@ -220,20 +220,22 @@ async function addMaterial(material) {
   }
 }
 
-//ottieni immagini 
-async function getImage(group_id) {
+//filtra per immagini in material 
+async function getImage(groupId) {
+  console.log("groupId", groupId);
   try {
-    const response = await fetch(`${BASE_URL}/material/${group_id}`);
+    const response = await fetch(`${BASE_URL}/material/${groupId}`);
     if (!response.ok) {
-      throw new Error('Failed to fetch material');
+      throw new Error('Failed to fetch images');
     }
-    const material = await response.json();
-    return material;
+    const images = await response.json();
+    return images;
   } catch (err) {
     console.error(err);
     return null;
   }
 }
+
 
 export {
   getAllGroups,
@@ -248,7 +250,7 @@ export {
   getAnswers,
   getMessages,
   addMessage,
-  addMaterial, 
+  addImage, 
   getImage,
 };
 
