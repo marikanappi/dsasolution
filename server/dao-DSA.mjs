@@ -281,3 +281,44 @@ export function getTopics(db, study_group_id) {
         });
     });
 }
+
+//aggiungi immagine in material 
+export function addImage(db, group_id, name, type) {
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO material (group_id, name, type) VALUES (?, ?, ?)";
+        db.run(query, [group_id, name, type], function(err) {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Reject the Promise in case of error
+            }
+
+            resolve(this.lastID); // Return the ID of the last inserted record
+        });
+    });
+}
+
+
+//filtro per image 
+export function getImages(db, group_id) {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT material_id, name FROM material WHERE group_id = ? AND type = 'image'";
+        db.all(query, [group_id], (err, rows) => {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err); // Reject the Promise in case of error
+            }
+
+            if (!rows || rows.length === 0) {
+                return reject(new Error("Images not found"));
+            }
+
+            // Map the results to get an array of image objects with material_id and name
+            const images = rows.map(row => ({
+                material_id: row.material_id,
+                name: row.name
+            }));
+            resolve(images); // Return the array of image objects
+        });
+    });
+}
+

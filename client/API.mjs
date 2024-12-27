@@ -234,6 +234,42 @@ async function getTopics (study_group_id) {
     return null;
   }
 }
+//function to add image from pc
+async function addImage(formData) {
+  try {
+    const response = await fetch(`${BASE_URL}/material`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add image');
+    }
+    const result = await response.json();
+    console.log('Image added with ID:', result.imageId);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+
+async function getImage(group_id) {
+  try {
+    const response = await fetch(`${BASE_URL}/material/${group_id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch images');
+    }
+    const images = await response.json();
+    return images;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+
+
 
 export {
   getAllGroups,
@@ -250,6 +286,8 @@ export {
   addMessage,
   createChallenge,
   getTopics,
+  addImage,
+  getImage,
 };
 
 
