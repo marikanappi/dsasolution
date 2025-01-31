@@ -57,7 +57,11 @@ const ChallengePage = ({ setFooterOption }) => {
         if (prev + 1 >= totalTime) {
           clearInterval(timer);
           navigate("/challenge-summary", {
-            state: { correctAnswers, skippedQuestions, challengeTitle: challenge.title },
+            state: {
+              correctAnswers,
+              skippedQuestions,
+              challengeTitle: challenge.title,
+            },
           });
           setFooterOption("SummaryChallenge");
           return totalTime;
@@ -80,7 +84,7 @@ const ChallengePage = ({ setFooterOption }) => {
       return;
     }
 
-    const correctAnswer = answers.find(answer => answer.is_correct);
+    const correctAnswer = answers.find((answer) => answer.is_correct);
     if (correctAnswer) {
       if (selectedAnswer === correctAnswer.text) {
         setFeedback("Correct!");
@@ -113,7 +117,11 @@ const ChallengePage = ({ setFooterOption }) => {
 
   const handleGoToRecap = () => {
     navigate("/challenge-summary", {
-      state: { correctAnswers, skippedQuestions, challengeTitle: challenge.title },
+      state: {
+        correctAnswers,
+        skippedQuestions,
+        challengeTitle: challenge.title,
+      },
     });
     setFooterOption("SummaryChallenge");
   };
@@ -129,7 +137,7 @@ const ChallengePage = ({ setFooterOption }) => {
       <div className="progress-bar">
         <div
           className="progress"
-          style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
+          style={{ width: `${(elapsedTime / totalTime) * 100}%` }}
         ></div>
       </div>
       <div className="time-info">
@@ -137,6 +145,26 @@ const ChallengePage = ({ setFooterOption }) => {
       </div>
     </div>
   );
+
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setElapsedTime((prev) => {
+        if (prev + 1 >= totalTime) {
+          clearInterval(timer);
+          navigate("/challenge-summary", {
+            state: { correctAnswers, skippedQuestions, challengeTitle: challenge.title },
+          });
+          setFooterOption("SummaryChallenge");
+          return totalTime;
+        }
+        return prev + 1;
+      });
+    }, 1000);
+  
+    return () => clearInterval(timer);
+  }, [totalTime, setFooterOption]);
+  
 
   return (
     <div className="challenge-page">
@@ -150,7 +178,9 @@ const ChallengePage = ({ setFooterOption }) => {
             {answers.map((answer, index) => (
               <div
                 key={index}
-                className={`answer-option ${wrongAnswer === answer.text ? "wrong-answer" : ""}`}
+                className={`answer-option ${
+                  wrongAnswer === answer.text ? "wrong-answer" : ""
+                }`}
               >
                 <input
                   type="radio"
@@ -161,7 +191,9 @@ const ChallengePage = ({ setFooterOption }) => {
                   onChange={handleAnswerChange}
                 />
                 <label htmlFor={`answer-${index}`}>
-                  <span className="answer-label">{String.fromCharCode(65 + index)}. </span>
+                  <span className="answer-label">
+                    {String.fromCharCode(65 + index)}.{" "}
+                  </span>
                   {answer.text}
                 </label>
               </div>
@@ -182,8 +214,10 @@ const ChallengePage = ({ setFooterOption }) => {
             <div className="modal-overlay">
               <div className="modal">
                 <p>
-                <p>{feedback}</p>
-                <p><button onClick={handleNextQuestion}>OK</button></p>
+                  <p>{feedback}</p>
+                  <p>
+                    <button onClick={handleNextQuestion}>OK</button>
+                  </p>
                 </p>
               </div>
             </div>
