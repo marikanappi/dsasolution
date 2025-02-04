@@ -107,11 +107,19 @@ const SearchGroup = ({ setGroup }) => {
           alt={`${group.name} Icon`}
           className="group-icon"
         />
-        {joinedGroups.includes(group.id) ? (
-          <button className="joined-btn">
-            <FaCheck color="green" />
-          </button>
-        ) : (
+
+{joinedGroups.includes(group.id) ? (
+        <button className="joined-btn" disabled>
+          ✓
+        </button>
+      ) : 
+
+        // {joinedGroups.includes(group.id) ? (
+        //   <button className="joined-btn">
+        //     <FaCheck color="green" />
+        //   </button>
+        // ) : 
+        (
           <button
             className="join-btn"
             onClick={(e) => {
@@ -132,7 +140,7 @@ const SearchGroup = ({ setGroup }) => {
   );
 
   const OtherGroupCard = ({ group, onClick, isSuggested }) => (
-    <li className="group-item" onClick={onClick}>
+    <li className="other-group" onClick={onClick}>
       <div className="group-image-container">
         <img
           src={group.picture}
@@ -140,16 +148,17 @@ const SearchGroup = ({ setGroup }) => {
           className="group-icon"
         />
       </div>
-      <div>
+      <div className="group-info">
         <div className="group-name">{group.name}</div>
         <div className="group-university">{group.university}</div>
-        {isSuggested && <div className="group-level">{group.level}</div>}
+        <div className="group-level">{group.level}</div>
       </div>
       {joinedGroups.includes(group.id) ? (
         <button className="joined-btn" disabled>
           ✓
         </button>
       ) : (
+        <div className="join-btn-container">
         <button
           className="plus-btn"
           onClick={(e) => {
@@ -159,6 +168,7 @@ const SearchGroup = ({ setGroup }) => {
         >
           +
         </button>
+        </div>
       )}
     </li>
   );

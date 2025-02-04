@@ -1,35 +1,38 @@
 /* Contenitore principale per centrare il contenuto */
 .group-page {
-  max-height: 720px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
 }
 
 .group-card {
   background: linear-gradient(135deg, #51009c, #6d0092);
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px auto;
+  margin-bottom: 1rem;
   text-align: center;
   width: 100%;
-  max-width: 600px;
-  height: 180px;
+  position: relative;
+  height: 220px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra per un effetto di profondità */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: left;
+  border-radius: 0% 0% 40% 0%;
+}
+
+.group-card span {
+  color: #a47cba;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .group-card-title {
-  font-size: 26px;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #ffffff;
-  margin: 0;
-  padding: 10px 20px;
+  margin-bottom: 1rem;
   border-radius: 8px;
 }
 
@@ -37,10 +40,11 @@
 .action-buttons {
   display: flex;
   flex-direction: column; 
-  width: 100%; 
-  max-width: 600px; 
-  margin: 0 auto; 
-  
+  width: 90%; 
+  gap: 1rem;
+  justify-content: center;
+  align-self: center;
+  padding: 1rem 1rem 1rem 1rem;
 }
 
 .action-btn {
@@ -84,7 +88,6 @@
 
 .challenge-btn:hover {
   background: linear-gradient(135deg,#61a8e6, #230e9a);
-
 }
 
 .challenge-btn svg {
@@ -114,7 +117,7 @@
 }
 
 .leave-group {
-  bottom: 0%;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   font-weight: bold;
@@ -128,7 +131,6 @@
 .cancel-btn{
   background-color: #6e00ad;
 }
-
 
 
 /* Adattamento per dispositivi piccoli */

@@ -6,18 +6,36 @@ body {
 }
 
 .challenges-container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  width: 100%;
 }
 
+.challenge-title {
+  background-color: #f7f7f7;
+  z-index: 1000;
+  margin-bottom: 2.6rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  height: 190px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra per un effetto di profondità */
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 30px;
+  text-align: left;
+  border-radius: 0% 0% 40% 0%;
+  color: #230e9a;
+}
+
+
 .challenge-group-name {
-  font-size: 2rem;
-  color: #007bff;
-  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: #230e9a;
+  font-weight: bold;
+
 }
 
 .challenge-grid {
@@ -27,11 +45,10 @@ body {
 }
 
 .challenge-card {
-  background-color: #28a745;
+  background: linear-gradient(135deg, #ac00b6 1.4rem, #6d00ad 100%);
   color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  width: 250px;
+  padding: 1.6rem;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,17 +56,35 @@ body {
   cursor: pointer;
   transition: transform 0.3s, background-color 0.3s;
   border: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.challenge-card:hover {
-  background-color: #218838;
-  transform: scale(1.05);
+
+.generate-button {
+  background-color: #230e9a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.08rem;
+  transition: background-color 0.3s;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 15px;
 }
+
+
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
 
 .trophy-icon {
   font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
 }
 
 .challenge-card span {
@@ -58,24 +93,16 @@ body {
 }
 
 .generate-button-container {
-  text-align: center;
+  display: flex;
   margin-top: 2rem;
+  margin-bottom: 10rem;
+  justify-content: center;
 }
 
-.generate-button {
-  background-color: #ffc107;
-  color: #333;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+
 
 .generate-button:hover {
-  background-color: #e0a800;
+  background-color: #540084;
 }
 
 /* Responsive design */
@@ -90,7 +117,11 @@ body {
     margin-bottom: 1rem;
   }
 
-  .generate-button {
-    width: 100%;
-  }
+}
+
+.scrollable-challenges {
+  margin-top: 220px;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1rem;
 }
