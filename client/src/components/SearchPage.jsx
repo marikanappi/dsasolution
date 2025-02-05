@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { getAllGroups, joinGroup } from "../../api"; // Import API
 import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
-import { FaCheck } from "react-icons/fa"; // Icona spunta verde
+import { FaCheck, FaQuestionCircle } from "react-icons/fa"; // Icona spunta verde
 
 const SearchGroup = ({ setGroup }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -17,6 +17,8 @@ const SearchGroup = ({ setGroup }) => {
   const [slds, setSlds] = useState([]);
   const filtersRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [tooltipModal, setTooltipModal] = useState({ visible: false, text: "" });
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch dei gruppi all'avvio
   useEffect(() => {
@@ -92,10 +94,18 @@ const SearchGroup = ({ setGroup }) => {
   };
 
   // Filtraggio dei gruppi in base ai selettori
-  const filteredGroups = suggestedGroups.filter(
+  const filteredSuggestedGroups = suggestedGroups.filter(
     (group) =>
       (selectedLevel ? group.level === selectedLevel : true) &&
-      (selectedSLD ? group.SLD === selectedSLD : true)
+      (selectedSLD ? group.SLD === selectedSLD : true) &&
+      group.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredOtherGroups = otherGroups.filter(
+    (group) =>
+      (selectedLevel ? group.level === selectedLevel : true) &&
+      (selectedSLD ? group.SLD === selectedSLD : true) &&
+      group.name.toLowerCase().includes(searchTerm.toLowerCase()) // 🔥 Filtra per nome
   );
 
   // Componenti riutilizzabili
@@ -108,28 +118,21 @@ const SearchGroup = ({ setGroup }) => {
           className="group-icon"
         />
 
-{joinedGroups.includes(group.id) ? (
-        <button className="joined-btn" disabled>
-          ✓
-        </button>
-      ) : 
-
-        // {joinedGroups.includes(group.id) ? (
-        //   <button className="joined-btn">
-        //     <FaCheck color="green" />
-        //   </button>
-        // ) : 
-        (
-          <button
-            className="join-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleJoinGroup(group);
-            }}
-          >
-            +
+        {joinedGroups.includes(group.id) ? (
+          <button className="joined-btn" disabled>
+            ✓
           </button>
-        )}
+        ) : (
+            <button
+              className="join-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleJoinGroup(group);
+              }}
+            >
+              +
+            </button>
+          )}
       </div>
       <div>
         <div className="group-name">{group.name}</div>
@@ -159,15 +162,15 @@ const SearchGroup = ({ setGroup }) => {
         </button>
       ) : (
         <div className="join-btn-container">
-        <button
-          className="plus-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleJoinGroup(group);
-          }}
-        >
-          +
-        </button>
+          <button
+            className="plus-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleJoinGroup(group);
+            }}
+          >
+            +
+          </button>
         </div>
       )}
     </li>
@@ -218,6 +221,8 @@ const SearchGroup = ({ setGroup }) => {
           className="form-control"
           placeholder="Search for groups..."
           style={{ flex: 1 }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
           className="btn btn-light filter-btn"
@@ -226,12 +231,10 @@ const SearchGroup = ({ setGroup }) => {
           <FaFilter />
         </button>
       </div>
+
       {/* Filtri */}
       {filtersVisible && (
-        <div
-          className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`}
-          ref={filtersRef}  // Riferimento alla tendina dei filtri
-        >
+        <div className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`} ref={filtersRef} >
           <FilterDropdown
             label="Level"
             options={levels}
@@ -248,32 +251,56 @@ const SearchGroup = ({ setGroup }) => {
       )}
 
       {/* Gruppi Suggeriti */}
-      <h4>Suggested for You</h4>
+      <h4>Suggested for You
+        <FaQuestionCircle
+          className="help-icon ms-2"
+          style={{ cursor: "pointer" }}
+          onClick={() =>
+            setTooltipModal({
+              visible: true,
+              text: "These groups are suggested for you based on the university you attend.",
+            })
+          }
+        /></h4>
       {isLoading ? (
         <p>Loading...</p>
-      ) : filteredGroups.length > 0 ? (
-        <ul className="scrollable-cards">
-          {filteredGroups.map((group) => (
-            <SuggestedGroupCard
-              key={group.id}
-              group={group}
-              onClick={() => handleJoinGroup(group)}
-              isSuggested={true}
-            />
-          ))}
-        </ul>
       ) : (
-        <p>No suggested groups found.</p>
+        <>
+        <ul className="scrollable-cards">
+          {filteredSuggestedGroups.length > 0 ? (
+            filteredSuggestedGroups.map((group) => (
+              <SuggestedGroupCard
+                key={group.id}
+                group={group}
+                onClick={() => handleJoinGroup(group)}
+                isSuggested={true} />
+            ))
+          ) : (
+            <p>No groups found.</p>
+          )}
+        </ul>
+      </>
       )}
 
       {/* Altri Gruppi */}
-      <h4>Other Groups</h4>
+      <h4>Other Groups
+        <FaQuestionCircle
+          className="help-icon ms-2"
+          style={{ cursor: "pointer" }}
+          onClick={() =>
+            setTooltipModal({
+              visible: true,
+              text: "These groups are from other universities.",
+            })
+          }
+        />
+      </h4>
       <div className="other-groups-container">
         {isLoading ? (
           <p>Loading...</p>
-        ) : otherGroups.length > 0 ? (
+        ) : filteredOtherGroups.length > 0 ? (
           <ul>
-            {otherGroups.map((group) => (
+            {filteredOtherGroups.map((group) => (
               <OtherGroupCard
                 key={group.id}
                 group={group}
@@ -286,6 +313,20 @@ const SearchGroup = ({ setGroup }) => {
           <p>No other groups found.</p>
         )}
       </div>
+
+
+      {/* Tooltip Modal */}
+      {tooltipModal.visible && (
+        <div className="tooltip-modal">
+          <p>{tooltipModal.text}</p>
+          <button
+            className="create-group-button"
+            onClick={() => setTooltipModal({ visible: false, text: "" })}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {modalOpen && selectedGroup && (

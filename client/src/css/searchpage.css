@@ -67,8 +67,7 @@ h4 {
   .other-groups-container::-webkit-scrollbar-thumb {
     background-color: #6d00ad3a;
     border-radius: 8px; 
-  }
-  
+  }  
   
   .filters-container {
     position: relative;
@@ -76,43 +75,58 @@ h4 {
   }
   
   .filter-btn {
-    font-size: large;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #6e00ad;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-left: 10px;
-    color: #fff;
+    transition: background-color 0.3s;
+    color: white;
+  }
+  
+  
+  .filter-btn:hover {
+    background-color: #6e00ad;
+    color: white;
   }
 
   .filter-dropdown-container {
-    position: fixed; /* Posiziona il dropdown rispetto alla finestra */
-    top: 130px; /* Regola la distanza dal top della finestra */
-    left: 10;
-    width: 90%; /* Occupa tutta la larghezza della finestra */
-    background-color: rgb(240, 240, 240); /* Un grigio più chiaro per un aspetto più elegante */
-    border-radius: 10px; /* Rendi i bordi più morbidi */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata per farla risaltare */
-    padding: 20px; /* Più spazio interno per una disposizione più ordinata */
+    position: fixed;
+    top: 130px;
+    left: 10px;
+    width: 90%;
+    max-width: 400px; /* Limita la larghezza su schermi grandi */
+    background-color: rgb(245, 245, 245); /* Colore più chiaro e moderno */
+    border-radius: 12px; /* Bordo più morbido */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Ombra più elegante */
+    padding: 16px; /* Spazio interno più equilibrato */
     z-index: 1000;
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Effetti di transizione morbidi */
+    transition: opacity 0.3s ease, transform 0.3s ease-in-out;
     opacity: 0;
-    transform: translateY(-10px); /* Partenza dalla parte superiore per un effetto di "salita" */
+    transform: translateY(-15px); /* Effetto di scorrimento fluido */
 }
 
 .filter-dropdown-container.visible {
-  opacity: 1; /* Quando la tendina è visibile */
-  transform: translateY(0); /* La tendina arriva nella sua posizione finale */
+    opacity: 1;
+    transform: translateY(0);
 }
-  .filter-dropdown {
-    margin-bottom: 10px;
-  }
-  
-  .filter-dropdown select {
+
+/* Miglioramento dello stile dei select */
+.filter-dropdown select {
     width: 100%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 16px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.filter-dropdown select:focus {
+    border-color: #6e00ad; /* Viola per evidenziare il focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(110, 0, 173, 0.3);
+}
 
   .joined-btn {
     background-color: green; /* Colore verde */

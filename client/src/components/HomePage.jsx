@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaExclamationCircle } from "react-icons/fa";
+import { FaExclamationCircle, FaQuestionCircle } from "react-icons/fa";
 import { getAllGroups } from "../../API.mjs"; // Assicurati di avere l'import corretto per le API
 import { useNavigate, Link } from "react-router-dom"; // Importa correttamente Link
 import "./../css/homepage.css"; // Il tuo file CSS per lo stile
@@ -7,6 +7,10 @@ import "./../css/homepage.css"; // Il tuo file CSS per lo stile
 const HomePage = ({ setFooterOption, setGroup }) => {
   const [groups, setGroups] = useState([]); // Gruppi con joined = 1
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [tooltipModal, setTooltipModal] = useState({
+        visible: false,
+        text: "",
+      });
 
   const navigate = useNavigate(); // Usa il hook per la navigazione
 
@@ -102,6 +106,18 @@ const HomePage = ({ setFooterOption, setGroup }) => {
           <p>Nessun gruppo trovato. Crea un nuovo gruppo!</p>
         )}
       </div>
+
+      {tooltipModal.visible && (
+        <div className="tooltip-modal">
+          <p>{tooltipModal.text}</p>
+          <button
+            className="create-group-button"
+            onClick={() => setTooltipModal({ visible: false, text: "" })}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
       {/* Pulsante per creare un nuovo gruppo */}
       <button className="create-group-button" onClick={handleCreateGroup}>

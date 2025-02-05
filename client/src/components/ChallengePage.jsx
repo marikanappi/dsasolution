@@ -259,7 +259,7 @@ const ChallengePage = ({ setFooterOption }) => {
             </div>
           </div>
 
-          <div className="button-group">
+          <div className="challenge-button-group">
             {selectedAnswer && (
               <button onClick={handleSubmitAnswer}>Confirm</button>
             )}

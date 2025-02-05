@@ -107,20 +107,20 @@ input[type="radio"] {
 }
 
 /* Buttons */
-.button-group {
+.challenge-button-group {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.button-group button {
+.challenge-button-group button {
   padding: 0.8rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.button-group button:hover {
+.challenge-button-group button:hover {
   opacity: 0.9;
 }
 
@@ -194,17 +194,3 @@ input[type="radio"] {
   padding: 0.1rem;
 }
 
-/* Button Styling */
-.modal button {
-  background-color: #007bff;
-  color: white;
-  font-size: large;
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.modal button:hover {
-  background-color: #0056b3;
-}
