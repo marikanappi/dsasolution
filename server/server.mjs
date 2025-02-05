@@ -19,7 +19,8 @@ import {
   getTopics,
   createChallenge,
   addImage,
-  getImages,  
+  getImages, 
+  updateGroup 
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -120,6 +121,22 @@ app.get('/groups/sld/:SLD', async (req, res) => {
     const group = await getGroupBySLD(db, SLD);
     res.json(group);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/groups/:id', async (req, res) => {
+  const { id } = req.params;
+  const group = req.body;
+  
+  console.log("Before DAO call");
+  try {
+    console.log("Calling DAO with:", { id, ...group });
+    await updateGroup(db, { id, ...group });
+    console.log("After DAO call");
+    res.status(200).json({ message: 'Group updated successfully' });
+  } catch (err) {
+    console.error("Route error:", err);
     res.status(500).json({ error: err.message });
   }
 });

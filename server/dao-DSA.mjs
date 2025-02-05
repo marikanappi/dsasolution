@@ -175,6 +175,25 @@ export function getGroupBySLD(db, SLD) {
     });
 }
 
+export function updateGroup(db, group) {
+    return new Promise((resolve, reject) => {
+        console.log("DAO received:", group);
+        const query = "UPDATE StudyGroups SET name = ?, SLD = ?, level = ? WHERE id = ?";
+        const params = [group.name, group.SLD, group.level, group.id];
+        console.log("Query:", query);
+        console.log("Params:", params);
+        
+        db.run(query, params, function(err) {
+            if (err) {
+                console.error("SQL Error:", err);
+                reject(err);
+                return;
+            }
+            resolve(this.changes);
+        });
+    });
+}
+
 export function getChallenges (db, groupId) {
 
     return new Promise((resolve, reject) => {

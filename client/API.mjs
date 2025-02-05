@@ -197,6 +197,26 @@ async function addMessage(message) {
   }
 }
 
+async function updateGroup(groupId, groupData) {
+  try {
+    const response = await fetch(`http://localhost:3001/groups/${groupId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(groupData)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update group');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error('Failed to update group');
+  }
+}
+
 async function createChallenge(challenge) {
   console.log(challenge);
   try {
@@ -287,6 +307,7 @@ export {
   getTopics,
   addImage,
   getImage,
+  updateGroup
 };
 
 
