@@ -34,18 +34,7 @@ app.use(express.static('public'));
 app.get('/groups', async (req, res) => {
   try {
     const groups = await getAllGroups(db);
-    console.log(groups);
     res.json(groups);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Get all users
-app.get('/users', async (req, res) => {
-  try {
-    const users = await getUsers(db);
-    res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -1,4 +1,4 @@
-function group(id, name, level, university, SLD, description, picture, numberOfPartecipants, joined) {
+function group(id, name, level, university, SLD, description, picture, numberOfPartecipants, joined, usercreate) {
     this.id = id;
     this.name = name;
     this.level = level;
@@ -8,6 +8,7 @@ function group(id, name, level, university, SLD, description, picture, numberOfP
     this.picture = picture;
     this.numberOfPartecipants = numberOfPartecipants;
     this.joined = joined;
+    this.usercreate = usercreate;
 }
 
 function Challenge(id, title, group_id, topic_id) {

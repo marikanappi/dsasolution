@@ -1,14 +1,13 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import {
-  FaExclamationCircle,
   FaQuestionCircle,
-  FaArrowLeft,
 } from "react-icons/fa";
-import { getAllGroups, addGroup } from "../../API.mjs"; // Import API functions
+import { addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
-import { Row } from "react-bootstrap";
 
+// eslint-disable-next-line react/prop-types
 const CreateGroup = ({ setFooterOption }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,10 +20,10 @@ const CreateGroup = ({ setFooterOption }) => {
 
   const navigate = useNavigate(); // Use the navigate hook
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [imageName, setImageName] = useState("");
+  const [imagePreview] = useState(null);
+  const [imageName] = useState("");
   const [error, setError] = useState(false);
-  const [isMandatoryWarningVisible, setMandatoryWarningVisible] = useState(false);
+  const [setMandatoryWarningVisible] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
     text: "",
@@ -34,7 +33,7 @@ const CreateGroup = ({ setFooterOption }) => {
 
   useEffect(() => {
     setFooterOption("CreateGroup");
-  }, []);
+  }, [setFooterOption]);
 
   // Handle form field changes
   const handleInputChange = (e) => {
@@ -45,18 +44,7 @@ const CreateGroup = ({ setFooterOption }) => {
     }));
   };
 
-  // Handle file upload
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type === "image/png") {
-      const reader = new FileReader();
-      reader.onload = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
-      setImageName(file.name); // Store image file name
-    } else {
-      alert("Please upload a PNG file.");
-    }
-  };
+
 
   // Handle group creation
   const handleCreate = async (e) => {

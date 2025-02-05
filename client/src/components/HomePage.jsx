@@ -65,9 +65,8 @@ const HomePage = ({ setFooterOption, setGroup }) => {
         )}
       </div>
 
-      {/* Sezione My Groups */}
       <div className="my-groups-container">
-        <h4>My Groups</h4>
+        <h4>My Groups </h4>
         {groups.length > 0 ? (
           <ul>
             {groups.map((group) => (
@@ -81,12 +80,12 @@ const HomePage = ({ setFooterOption, setGroup }) => {
                 }}
               >
                 <Link
-                  to={`/group/${group.name}`}
+                  to={`/group/${group.id}`}
                   state={{ group }}
                   className="group-link"
                 >
                   <img
-                    src={group.picture} // Immagine di default se non disponibile
+                    src={group.picture} 
                     alt={`${group.name} Icon`}
                     className="group-icon"
                   />

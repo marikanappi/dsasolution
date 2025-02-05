@@ -81,7 +81,6 @@ async function addGroup(group) {
       throw new Error('Failed to add group');
     }
     const result = await response.json();
-    console.log('Group added with ID:', result.groupId);
     return result;
   } catch (err) {
     console.error(err);

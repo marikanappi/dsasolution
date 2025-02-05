@@ -1,6 +1,6 @@
 // Group.js
 class Group {
-    constructor(name, level, university, SLD, description, picture, numberOfParticipants, joined) {
+    constructor(name, level, university, SLD, description, picture, numberOfParticipants, joined, usercreate) {
       this.name = name;
       this.level = level;
       this.university = university;
@@ -9,6 +9,7 @@ class Group {
       this.picture = picture;
       this.numberOfParticipants = numberOfParticipants;
       this.joined = joined;
+      this.usercreate = usercreate;
     }
   }
   
