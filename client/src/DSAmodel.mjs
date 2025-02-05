@@ -28,6 +28,14 @@ function Answer (id, text, is_correct, feedback) {
     this.is_correct = is_correct;
     this.feedback = feedback;
 }
+
+function Material (id, group_id, type, url, description){
+    this.id = id;
+    this.group_id = group_id;
+    this.type = type;
+    this.url = url;
+    this.description = description;
+}
 export default group;
 
-export { Challenge, Question, Answer };
+export { Challenge, Question, Answer, Material };

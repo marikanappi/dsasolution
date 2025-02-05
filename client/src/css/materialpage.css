@@ -1,0 +1,151 @@
+
+
+.material-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.material-header {
+  width: 100%;
+  height: 60px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.material-filters {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #6e00ad;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-btn.active {
+  background-color: #6e00ad;
+  
+}
+
+.filter-btn:hover {
+  background-color: #000;
+}
+
+.upload-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.upload-box {
+  border: 2px dashed #6e00ad;
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: #6e00ad;
+}
+
+.file-label {
+  display: inline-block;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #6e00ad;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.submit-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 25px;
+  background-color: #6e00ad !important;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #6e00ad;
+}
+
+
+.material-filters {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.folder-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.folder-btn span {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #000;
+}
+
+.folder-icon {
+  font-size: 40px;
+  color: #6e00ad;
+}
+
+.active-folder {
+  background-color: #ae31f6; /* Colore evidenziato */
+  color:#6e00ad
+}
+
+.active-folder .folder-icon {
+  color: white;
+}
+
+.inactive-folder {
+  background-color: #f0f0f0;
+  color: #6e00ad
+}
+
+.folder-btn:hover {
+  transform: scale(1.1);
+  background-color: #ffffff;
+}
+
+
+.custom-file-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 14px;
+  background-color: #fff; /* Pulsante bianco */
+  color: #000; /* Testo in nero */
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 2px solid #000; /* Bordo nero */
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover effetto */
+.custom-file-btn:hover {
+  background-color: #f1f1f1; /* Cambia colore al passaggio del mouse */
+  border-color: #ae31f6; /* Cambia colore del bordo al passaggio del mouse */
+}
+

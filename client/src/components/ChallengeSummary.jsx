@@ -6,13 +6,12 @@ import "./../css/challengesummary.css";
 const ChallengeSummary = ({ setFooterOption }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { correctAnswers, skippedQuestions, challengeTitle } = location.state || {};
+  const { correctAnswers, skippedQuestions, wrongAnswers, challengeTitle } = location.state || {};
 
   useEffect(() => {
     setFooterOption("ChallengeSummary");
   }, []);
 
-  const wrongAnswers = 4 - correctAnswers - skippedQuestions;
   const score = Math.round((correctAnswers / 4) * 100);
 
   return (

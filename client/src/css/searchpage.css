@@ -1,9 +1,8 @@
 .search-group-container {
-  max-height: 720px;
+  height: 100%;
   padding: 20px;
-  display: flex;
+  display: fixed;
   flex-direction: column;
-  gap: 8px;
 }
 
 .scrollable-cards {
@@ -11,7 +10,7 @@
   gap: 10px;
   overflow-x: auto; /* Scroll orizzontale */
   white-space: nowrap; /* Impedisce che le carte si disponano su più righe */
-  padding: 10px 0;
+  padding: 8px;
   flex-shrink: 0; /* Assicura che il contenitore non venga compresso */
   scroll-behavior: smooth; /* Scorrimento fluido */
 }
@@ -22,14 +21,11 @@
 }
 
 .scrollable-cards::-webkit-scrollbar-thumb {
-  background: rgb(110, 0, 173);
-  border-radius: 5px;
+  background: rgba(109, 0, 173, 0.238);
+  border-radius: 8px;
   border: 0.3px solid #f0f0f0;
 }
 
-.scrollable-cards::-webkit-scrollbar-thumb:hover {
-  background: #ac00b6;
-}
 
 .scrollable-cards li {
   list-style: none;
@@ -38,28 +34,29 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
+  padding: 16px;
   transition: transform 0.3s ease;
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 10px;
   color: #6e00ad;
 }
 
 .other-groups-container {
+    margin-top: 20px;
     background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-height: 400px; /* Cambia a seconda dello spazio disponibile */
+    /* padding: 14px; */
+    max-height: 45vh;
+    padding: 10px 0px 0px 0px;
     overflow-y: auto;
   }
 
 /* Stile per la barra di scorrimento */
 .other-groups-container::-webkit-scrollbar {
-    width: 12px; /* Imposta la larghezza della scrollbar */
+    width: 7px; 
   }
   
   .other-groups-container::-webkit-scrollbar-track {
@@ -68,14 +65,10 @@ h4 {
   }
   
   .other-groups-container::-webkit-scrollbar-thumb {
-    background-color: #6e00ad; /* Colore del pollice (thumb) */
-    border-radius: 8px; /* Bordo arrotondato per il thumb */
-    border: 3px solid #f0f0f0; /* Spaziatura intorno al thumb */
+    background-color: #6d00ad3a;
+    border-radius: 8px; 
   }
   
-  .other-groups-container::-webkit-scrollbar-thumb:hover {
-    background-color: #540084; /* Colore del thumb quando l'utente passa sopra */
-  }
   
   .filters-container {
     position: relative;
@@ -84,10 +77,11 @@ h4 {
   
   .filter-btn {
     font-size: large;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s;
     margin-left: 10px;
+    color: #fff;
   }
 
   .filter-dropdown-container {
@@ -120,7 +114,20 @@ h4 {
     border: 1px solid #ddd;
   }
 
+  .joined-btn {
+    background-color: green; /* Colore verde */
+    border-radius: 100%; /* Cerchio */
+    width: 30px; /* Dimensione del cerchio */
+    height: 30px; /* Dimensione del cerchio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
+  .joined-btn svg {
+    color: white; /* Colore della spunta */
+    font-size: 18px; /* Dimensione della spunta */
+  }
 
   .group-image-container {
     position: relative;
@@ -134,9 +141,9 @@ h4 {
     color: white;
     font-size: 20px;
     width: 30px;
-    height: 30px;
+    height: 40px;
     border: none;
-    border-radius: 50%;
+    border-radius: 100%;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -148,18 +155,40 @@ h4 {
     background-color: #6e00ad;  /* Colore viola */
     color: white;  /* Testo bianco */
     font-size: 20px;  /* Dimensione del testo */
-    width: 35px;  /* Dimensione uniforme per il cerchio */
-    height: 35px;  /* Dimensione uniforme per il cerchio */
-    border-radius: 50%;  /* Per ottenere la forma circolare */
+    width: 30px;  /* Dimensione uniforme per il cerchio */
+    height: 40px;  /* Dimensione uniforme per il cerchio */
+    border-radius: 100%;  /* Per ottenere la forma circolare */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border: none;  /* Nessun bordo */
     transition: background-color 0.3s ease;  /* Transizione per l'effetto hover */
   }
   
   /* Cambia colore al passaggio del mouse */
   .plus-btn:hover {
     background-color: #5b0079;  /* Colore più scuro quando l'utente passa sopra */
+  }
+
+  /* .join-btn-container {
+    background-color: red;
+    
+    gap: 20px;
+
+  } */
+
+  .group-info {
+    width: 206px;
+  }
+
+  .other-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-right: 4px;
+    margin-left: -12px;
+  }
+
+  .group-level {
+    font-size: small;
   }

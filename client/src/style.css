@@ -48,7 +48,7 @@ h6 {
 .mobile-frame {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Imposta l'altezza al 100% della finestra */
+  height: 100vh;
 }
 
 .mobile-content {
@@ -124,8 +124,7 @@ h6 {
 .group-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  list-style: none;
+  margin-bottom: 16px;
 }
 
 .group-link {

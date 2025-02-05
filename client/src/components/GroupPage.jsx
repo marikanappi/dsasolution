@@ -10,6 +10,7 @@ const GroupPage = ({ setFooterOption, group, joinedGroup, setJoinedGroups }) => 
 
   useEffect(() => {
     setFooterOption("GroupPage");
+    console.log("GroupPage: ", group);
   }, []);
 
   const handleNavigate = (path) => {
@@ -33,12 +34,11 @@ const GroupPage = ({ setFooterOption, group, joinedGroup, setJoinedGroups }) => 
     }
   };
 
-
-
   return (
     <div className="group-page">
       <div className="group-card">
         <h2 className="group-card-title">{group.name}</h2>
+        <span>{group.SLD} - {group.level}</span>
       </div>
       <div className="action-buttons">
         <button className="chat-btn" onClick={() => { handleNavigate("/chat"), setFooterOption("Chat"), group = { group } }}>

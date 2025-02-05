@@ -17,7 +17,9 @@ import {
   getQuestions,
   getAnswers,
   getTopics,
-  createChallenge  
+  createChallenge,
+  addImage,
+  getImages,  
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -197,6 +199,29 @@ app.get('/topics/:study_group_id', async (req, res) => {
       res.status(500).json({ error: err.message }); // Gestione degli errori
   }
 });
+
+
+app.post('/material', async (req, res) => {
+  const material = req.body;
+  console.log("Server material:",material);
+  addImage(db, material.group_id, material.name, material.type);
+  res.status(201).json(material);
+});
+
+
+
+
+app.get('/material/:group_id', async (req, res) => {
+  const group_id = req.params.group_id; 
+  try {
+      const images = await getImages(db, group_id); 
+      res.json(images); 
+  } catch (err) {
+      res.status(500).json({ error: err.message }); 
+  }
+});
+
+
 
 
 app.listen(port, () => {

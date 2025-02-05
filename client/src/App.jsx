@@ -13,8 +13,10 @@ import Challenges from "./components/Challenges";
 import ChallengePage from "./components/ChallengePage";
 import ChallengeSummary from "./components/ChallengeSummary";
 import NewChallenge from "./components/CreateChallenge";
+import MaterialPage from "./components/MaterialPage";
 
 import { useNavigate } from "react-router-dom";
+
 
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
@@ -143,6 +145,10 @@ const MobileAppSimulator = () => {
               <NewChallenge group={group} setFooterOption={setFooterOption} />
             }
           />
+          <Route 
+          path="/materials" 
+          element={
+          <MaterialPage group={group} setFooterOption={setFooterOption} />} />
         </Routes>
       </main>
 
