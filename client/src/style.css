@@ -7,7 +7,6 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -48,14 +47,14 @@ h6 {
 .mobile-frame {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  background-color: white;
 }
 
 .mobile-content {
   flex-grow: 1; /* Spinge il footer verso il basso */
   overflow-y: auto; /* Rende scrollabile il contenuto principale se necessario */
-  padding-top: 60px; /* Distanza per non coprire l'header */
-  padding-bottom: 60px; /* Distanza per non coprire il footer */
+  padding-top: 40px; /* Distanza per non coprire l'header */
+  padding-bottom: 40px; /* Distanza per non coprire il footer */
   margin: 0; /* Assicurati che non ci siano margini */
 }
 

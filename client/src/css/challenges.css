@@ -8,45 +8,45 @@ body {
 .challenges-container {
   overflow-x: hidden;
   width: 100%;
+  padding-top: 20px;
+  height: 88vh;
 }
 
 .challenge-title {
-  background-color: #f7f7f7;
+  background: linear-gradient(135deg, #51009c, #6d0092);
   z-index: 1000;
-  margin-bottom: 2.6rem;
-  text-align: center;
   align-items: center;
   justify-content: center;
   width: 100%;
   position: fixed;
-  height: 190px;
+  height: 220px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra per un effetto di profondità */
   display: flex;
   gap: 20px;
-  justify-content: center;
   padding: 30px;
   text-align: left;
   border-radius: 0% 0% 40% 0%;
-  color: #230e9a;
+  color: white;
 }
 
 
 .challenge-group-name {
   font-size: 1.2rem;
-  color: #230e9a;
+  color: white;
   font-weight: bold;
 
 }
 
 .challenge-grid {
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .challenge-card {
-  background: linear-gradient(135deg, #ac00b6 1.4rem, #6d00ad 100%);
-  color: white;
+  background-color: #ffde81;
+  color: #230e9a;
   padding: 1.6rem;
   border-radius: 20px;
   display: flex;

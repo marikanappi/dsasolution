@@ -3,8 +3,14 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { getAllGroups } from "../../API.mjs"; // Assicurati di avere l'import corretto per le API
 import { useNavigate, Link } from "react-router-dom"; // Importa correttamente Link
 import "./../css/homepage.css"; // Il tuo file CSS per lo stile
+import Notification from "./Notification";
 
-const HomePage = ({ setFooterOption, setGroup }) => {
+const HomePage = ({
+  setFooterOption,
+  setGroup,
+  notifications,
+  setNotifications,
+}) => {
   const [groups, setGroups] = useState([]); // Gruppi con joined = 1
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -41,33 +47,28 @@ const HomePage = ({ setFooterOption, setGroup }) => {
   return (
     <div className="home-page-container">
       {/* Sezione Notifiche */}
-      <div className="notifications-container" onClick={toggleCollapse}>
-        <h5> Recent Notifications</h5>
-        {!isCollapsed && (
-          <div className="card-body">
-            {groups.length > 0 ? (
-              <div>
-                {groups.map((group, index) => (
-                  <div className="notification" key={index}>
-                    <span className="notif-text">
-                      You just joined the group!
-                    </span>
-                    <span className="notification-group-name">
-                      {group.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center">No notifications available</p>
-            )}
-          </div>
-        )}
-      </div>
+      {(notifications.length > 0 || !isCollapsed) && (
+  <div className={`notifications-container ${notifications.length === 0 ? "hide-notifications" : "show-notifications"}`}>
+    <div className="notifications-header" onClick={toggleCollapse}>
+      <div>Recent Notifications</div>
+      <span className="notif-badge">{notifications.length}</span>
+    </div>
+
+    {/* Keep Notification in the DOM for smooth collapse */}
+    <div className={`notifications-content ${isCollapsed ? "hide" : "show"}`}>
+      <Notification
+        notifications={notifications}
+        setNotifications={setNotifications}
+        groups={groups}
+      />
+    </div>
+  </div>
+)}
+
 
       {/* Sezione My Groups */}
       <div className="my-groups-container">
-        <h4>My Groups</h4>
+        <h5>My Groups</h5>
         {groups.length > 0 ? (
           <ul>
             {groups.map((group) => (
@@ -104,9 +105,11 @@ const HomePage = ({ setFooterOption, setGroup }) => {
       </div>
 
       {/* Pulsante per creare un nuovo gruppo */}
-      <button className="create-group-button" onClick={handleCreateGroup}>
-        Create Group
-      </button>
+      <div className="create-group-container">
+        <button className="create-group-button" onClick={handleCreateGroup}>
+          Create Group
+        </button>
+      </div>
     </div>
   );
 };

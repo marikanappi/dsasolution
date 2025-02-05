@@ -8,6 +8,8 @@ body {
   max-width: 800px;
   margin: 0.8rem auto;
   padding: 0.8rem 1.4rem 1.4rem;
+  padding-top: 20px;
+  height: 88vh;
 }
 
 .challenge-page h1 {

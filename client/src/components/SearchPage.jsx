@@ -4,7 +4,7 @@ import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa"; // Icona spunta verde
 
-const SearchGroup = ({ setGroup }) => {
+const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
   const [otherGroups, setOtherGroups] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,10 +24,12 @@ const SearchGroup = ({ setGroup }) => {
       try {
         const groups = await getAllGroups();
         const suggested = groups.filter(
-          (group) => group.university === "Politecnico di Torino" && group.joined === 0
+          (group) =>
+            group.university === "Politecnico di Torino" && group.joined === 0
         );
         const others = groups.filter(
-          (group) => group.university !== "Politecnico di Torino" && group.joined === 0
+          (group) =>
+            group.university !== "Politecnico di Torino" && group.joined === 0
         );
 
         setSuggestedGroups(suggested);
@@ -83,6 +85,10 @@ const SearchGroup = ({ setGroup }) => {
       const response = await joinGroup(group.id);
       if (response) {
         setJoinedGroups((prev) => [...prev, group.id]); // Aggiungi l'ID del gruppo a quelli già uniti
+        setNotifications((prev) => [
+          ...prev,
+          { id: group.id, text: "You joined group." },
+        ]);
       }
     } catch (error) {
       console.error("Errore durante la join del gruppo:", error);
@@ -108,18 +114,16 @@ const SearchGroup = ({ setGroup }) => {
           className="group-icon"
         />
 
-{joinedGroups.includes(group.id) ? (
-        <button className="joined-btn" disabled>
-          ✓
-        </button>
-      ) : 
-
-        // {joinedGroups.includes(group.id) ? (
-        //   <button className="joined-btn">
-        //     <FaCheck color="green" />
-        //   </button>
-        // ) : 
-        (
+        {joinedGroups.includes(group.id) ? (
+          <button className="joined-btn" disabled>
+            ✓
+          </button>
+        ) : (
+          // {joinedGroups.includes(group.id) ? (
+          //   <button className="joined-btn">
+          //     <FaCheck color="green" />
+          //   </button>
+          // ) :
           <button
             className="join-btn"
             onClick={(e) => {
@@ -150,7 +154,6 @@ const SearchGroup = ({ setGroup }) => {
       </div>
       <div className="group-info">
         <div className="group-name">{group.name}</div>
-        <div className="group-university">{group.university}</div>
         <div className="group-level">{group.level}</div>
       </div>
       {joinedGroups.includes(group.id) ? (
@@ -159,15 +162,15 @@ const SearchGroup = ({ setGroup }) => {
         </button>
       ) : (
         <div className="join-btn-container">
-        <button
-          className="plus-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleJoinGroup(group);
-          }}
-        >
-          +
-        </button>
+          <button
+            className="plus-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleJoinGroup(group);
+            }}
+          >
+            +
+          </button>
         </div>
       )}
     </li>
@@ -199,7 +202,10 @@ const SearchGroup = ({ setGroup }) => {
         </p>
         {group.level && <p>Level: {group.level}</p>}
         {group.SLD && <p>SLD: {group.SLD}</p>}
-        <button className="btn btn-success" onClick={() => onConfirmJoin(group)}>
+        <button
+          className="btn btn-success"
+          onClick={() => onConfirmJoin(group)}
+        >
           Join
         </button>
         <button className="btn btn-secondary" onClick={onClose}>
@@ -211,81 +217,88 @@ const SearchGroup = ({ setGroup }) => {
 
   return (
     <div className="search-group-container">
-      {/* Search Bar and Filter Button */}
-      <div className="d-flex mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search for groups..."
-          style={{ flex: 1 }}
-        />
-        <button
-          className="btn btn-light filter-btn"
-          onClick={toggleFilters}
-        >
-          <FaFilter />
-        </button>
-      </div>
-      {/* Filtri */}
-      {filtersVisible && (
-        <div
-          className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`}
-          ref={filtersRef}  // Riferimento alla tendina dei filtri
-        >
-          <FilterDropdown
-            label="Level"
-            options={levels}
-            selected={selectedLevel}
-            onSelect={setSelectedLevel}
+      <div className="search-and-filter-container">
+        {/* Search Bar and Filter Button */}
+        <div className="d-flex mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search for groups..."
+            style={{ flex: 1 }}
           />
-          <FilterDropdown
-            label="SLD"
-            options={slds}
-            selected={selectedSLD}
-            onSelect={setSelectedSLD}
-          />
+          <button className="filter-icon" onClick={toggleFilters}>
+            <FaFilter />
+          </button>
         </div>
-      )}
-
-      {/* Gruppi Suggeriti */}
-      <h4>Suggested for You</h4>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : filteredGroups.length > 0 ? (
-        <ul className="scrollable-cards">
-          {filteredGroups.map((group) => (
-            <SuggestedGroupCard
-              key={group.id}
-              group={group}
-              onClick={() => handleJoinGroup(group)}
-              isSuggested={true}
+        {/* Filtri */}
+        {filtersVisible && (
+          <div
+            className={`filter-dropdown-container ${
+              filtersVisible ? "visible" : "hidden"
+            }`}
+            ref={filtersRef} // Riferimento alla tendina dei filtri
+          >
+            <FilterDropdown
+              label="Level"
+              options={levels}
+              selected={selectedLevel}
+              onSelect={setSelectedLevel}
             />
-          ))}
-        </ul>
-      ) : (
-        <p>No suggested groups found.</p>
-      )}
-
-      {/* Altri Gruppi */}
-      <h4>Other Groups</h4>
-      <div className="other-groups-container">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : otherGroups.length > 0 ? (
-          <ul>
-            {otherGroups.map((group) => (
-              <OtherGroupCard
-                key={group.id}
-                group={group}
-                onClick={() => handleJoinGroup(group)}
-                isSuggested={false}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p>No other groups found.</p>
+            <FilterDropdown
+              label="SLD"
+              options={slds}
+              selected={selectedSLD}
+              onSelect={setSelectedSLD}
+            />
+          </div>
         )}
       </div>
+
+
+        <div className="suggested-groups-container">
+          {/* Gruppi Suggeriti */}
+
+          <h4>Suggested for You</h4>
+
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : filteredGroups.length > 0 ? (
+            <ul className="scrollable-cards">
+              {filteredGroups.map((group) => (
+                <SuggestedGroupCard
+                  key={group.id}
+                  group={group}
+                  onClick={() => handleJoinGroup(group)}
+                  isSuggested={true}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p>No suggested groups found.</p>
+          )}
+        </div>
+
+        {/* Altri Gruppi */}
+        <h4 className="other-title">Other Groups</h4>
+
+        <div className="other-groups-container">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : otherGroups.length > 0 ? (
+            <ul>
+              {otherGroups.map((group) => (
+                <OtherGroupCard
+                  key={group.id}
+                  group={group}
+                  onClick={() => handleJoinGroup(group)}
+                  isSuggested={false}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p>No other groups found.</p>
+          )}
+        </div>
 
       {/* Modal */}
       {modalOpen && selectedGroup && (
