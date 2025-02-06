@@ -14,6 +14,9 @@ import ChallengePage from "./components/ChallengePage";
 import ChallengeSummary from "./components/ChallengeSummary";
 import NewChallenge from "./components/CreateChallenge";
 import MaterialPage from "./components/MaterialPage";
+import AudioPage from "./components/AudioPage";
+import ImagePage from "./components/ImagePage";
+import DocumentPage from "./components/DocumentPage";
 
 import { useNavigate } from "react-router-dom";
 
@@ -30,41 +33,33 @@ const MobileAppSimulator = () => {
     navigate(path);
   };
 
-  const goBack = () => {
-    if (footerOption === "GroupPage") {
-      setFooterOption("Home");
-      navigate("/");
-    } else if (["Chat", "Challenges", "Materials"].includes(footerOption)) {
-      setFooterOption("Group");
-      navigate("/group/:id");
-    } else if (footerOption === "ChallengeSummary") {
-      setFooterOption("Challenges");
-      navigate("/challenges");
-    } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") {
-      setShowModal(true);
-    } else if (footerOption === "CreateGroup") {
-      setShowModal(true);
-    } else {
-      navigate(-1);
-    }
-  };
+  const goBack = () => {    if (footerOption === "GroupPage") {
+    setFooterOption("Home");      navigate("/");
+  } else if (["Chat", "Challenges", "Materials"].includes(footerOption)) {      setFooterOption("Group");
+    navigate("/group/:id");    } else if (footerOption === "ChallengeSummary") {
+    setFooterOption("Challenges");      navigate("/challenges");
+  }else if (footerOption === "Images") {      setFooterOption("Materials");
+    navigate("/materials");    }else if (footerOption === "Documents") {
+    setFooterOption("Documents");      navigate("/materials");
+  } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") {      setShowModal(true); // Trigger modal when navigating from ChallengePage or NewChallenge
+  } else if (footerOption === "CreateGroup") {      setShowModal(true); // Trigger modal when navigating from CreateGroup
+  } else {      navigate(-1); // Go back in history
+  }  };
 
-  const handleExit = () => {
-    setShowModal(false); // Chiudi il modal
-    if (footerOption === "CreateGroup") {
-      setFooterOption("Home"); // Imposta footerOption su Home
-      navigate("/"); // Naviga alla home
-    } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") {
-      setFooterOption("Challenges"); // Imposta footerOption su Challenges
-      navigate("/challenges"); // Naviga alla pagina delle Challenges
-    }
-  };  
-
-  // Funzione per annullare (chiudere il modal senza fare nulla)
-  const handleCancel = () => {
-    setShowModal(false); // Chiudi il modal senza fare nulla
+  const handleExit = () => { 
+    setShowModal(false); // Close the modal 
+    if (footerOption === "CreateGroup") { 
+      setFooterOption("Home"); 
+      navigate("/"); // Navigate to home 
+    } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") { 
+      setFooterOption("Challenges"); 
+      navigate("/challenges"); // Navigate to challenges page 
+    } 
+  }; 
+ 
+  const handleCancel = () => { 
+    setShowModal(false); // Close the modal without any action 
   };
-  
 
   const renderHeader = () => {
     const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
@@ -150,26 +145,51 @@ const MobileAppSimulator = () => {
           path="/materials" 
           element={
           <MaterialPage group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/materials" element={<MaterialPage group={group} setFooterOption={setFooterOption} />} /> 
+          <Route path="/images" element={<ImagePage group={group} setFooterOption={setFooterOption} />} /> 
+          <Route path="/documents" element={<DocumentPage group={group} setFooterOption={setFooterOption} />} /> 
+          <Route path="/audio" element={<AudioPage group={group} setFooterOption={setFooterOption} />} />
         </Routes>
       </main>
 
-      <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
-        <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
-        <FaSearch
-          onClick={() => navigateTo("/search", "Search")}
-          className="icon"
-        />
-        <FaUser
-          onClick={() => navigateTo("/profile", "Profile")}
-          className="icon"
-        />
+      <footer className="mobile-footer text-white d-flex justify-content-around align-items-center"> 
+        <FaHome 
+          onClick={() => { 
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) { 
+              goBack(); // Handle the "goBack" case if it's one of the special pages 
+            } else { 
+              navigateTo("/", "Home"); // Navigate to home 
+            } 
+          }} 
+          className="icon" 
+        /> 
+        <FaSearch 
+          onClick={() => { 
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) { 
+              goBack(); // Handle the "goBack" case if it's one of the special pages 
+            } else { 
+              navigateTo("/search", "Search"); // Navigate to search page 
+            } 
+          }} 
+          className="icon" 
+        /> 
+        <FaUser 
+          onClick={() => { 
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) { 
+              goBack(); // Handle the "goBack" case if it's one of the special pages 
+            } else { 
+              navigateTo("/profile", "Profile"); // Navigate to profile page 
+            } 
+          }} 
+          className="icon" 
+        /> 
       </footer>
 
       {/* Modal di conferma per uscire */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Are you sure to exit?</h3>
+            <h3>Are you sure you want to exit?</h3>
             <p>All your changes will be discarded.</p>
             <button className="btn btn-danger" onClick={handleExit}>Exit</button>
             <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>

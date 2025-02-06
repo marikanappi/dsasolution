@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import '../css/chatpage.css'; // Import del file CSS per lo stile
-import { FaMicrophone, FaStop } from 'react-icons/fa'; // Icone del microfono
+import { FaMicrophone, FaStop, FaPaperclip, FaCamera } from 'react-icons/fa';
 import { useEffect } from 'react';
-
+import { useRef } from 'react';
+import { addMaterial } from '../../API.mjs'; // Import della funzione per aggiungere un nuovo materiale
 const Chat = ({ setFooterOption, group }) => {
   // Messaggi statici
   const [messages, setMessages] = useState([
@@ -11,6 +12,56 @@ const Chat = ({ setFooterOption, group }) => {
     { text: `Welcome to ${group?.name} chat`, isUserMessage: false },
   ]);
   const [newMessage, setNewMessage] = useState('');
+  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+
+  const handleAttachment = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    let type;
+    if (file.type.startsWith('image/')) type = 'image';
+    else if (file.type.startsWith('audio/')) type = 'audio';
+    else type = 'document';
+
+    try {
+      await addMaterial({
+        group_id: group.id,
+        name: file.name,
+        type: type,
+        file: file
+      });
+
+      setMessages(prev => [...prev, 
+        { text: `Attached: ${file.name}`, isUserMessage: true },
+        { text: "I'll check this attachment later. Thanks!", isUserMessage: false }
+      ]);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  const handleCamera = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      await addMaterial({
+        group_id: group.id,
+        name: file.name,
+        type: 'image',
+        file: file
+      });
+
+      setMessages(prev => [...prev, 
+        { text: "📸 Photo sent", isUserMessage: true },
+        { text: "I'll take a look at this photo later, but thank you very much!", isUserMessage: false }
+      ]);
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+    }
+  };
+
   const [error, setError] = useState(null);
   const [isRecording, setIsRecording] = useState(false); // Stato per la registrazione del messaggio vocale
 
@@ -92,12 +143,19 @@ const Chat = ({ setFooterOption, group }) => {
         )}
       </div>
       <div className="input-container">
-      <div 
-          className="microphone-icon"
-          onClick={handleMicrophoneClick}
-          style={{ cursor: 'pointer' }}
-        >
-          {isRecording ? <FaStop size={24} color="red" /> : <FaMicrophone size={24} color="blue" />}
+        <div className="action-icons">
+          <FaMicrophone 
+            onClick={handleMicrophoneClick} 
+            color={isRecording ? "red" : "blue"} 
+          />
+          <FaPaperclip 
+            onClick={() => fileInputRef.current.click()} 
+            color="blue" 
+          />
+          <FaCamera 
+            onClick={() => cameraInputRef.current.click()} 
+            color="blue" 
+          />
         </div>
         <input
           type="text"
@@ -105,9 +163,24 @@ const Chat = ({ setFooterOption, group }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Write a message..."
         />
-        <button onClick={handleSend}>Invia</button>
+        <button onClick={handleSend}>Send</button>
+        
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleAttachment}
+          style={{ display: 'none' }}
+          accept="image/*,audio/*,.pdf,.doc,.docx"
+        />
+        <input
+          type="file"
+          ref={cameraInputRef}
+          onChange={handleCamera}
+          accept="image/*"
+          capture="environment"
+          style={{ display: 'none' }}
+        />
       </div>
-      {error && <p className="error">{error}</p>}
     </div>
   );
 };

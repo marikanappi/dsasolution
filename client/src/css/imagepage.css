@@ -1,0 +1,31 @@
+.images-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Layout a griglia flessibile */ 
+    gap: 10px; /* Spazio tra le immagini */ 
+    padding: 10px; 
+  } 
+   
+  .image-card { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background: #f8f8f8; /* Sfondo leggero */ 
+    border-radius: 10px; 
+    padding: 10px; 
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
+  } 
+   
+  .image-thumbnail { 
+    width: 100%; /* L'immagine si adatta alla card */ 
+    height: auto; /* Mantiene il rapporto d'aspetto */ 
+    max-width: 300px; /* Limita la dimensione massima */ 
+    object-fit: cover; /* Adatta l'immagine senza distorsione */ 
+    border-radius: 5px; 
+  } 
+   
+  .image-details p { 
+    font-size: 14px; 
+    text-align: center; 
+    margin-top: 5px; 
+    color: #555; 
+  }

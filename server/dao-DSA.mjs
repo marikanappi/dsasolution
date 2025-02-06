@@ -298,43 +298,79 @@ export function getTopics(db, study_group_id) {
     });
 }
 
-//aggiungi immagine in material 
-export function addImage(db, group_id, name, type) {
-    return new Promise((resolve, reject) => {
-        const query = "INSERT INTO material (group_id, name, type) VALUES (?, ?, ?)";
-        db.run(query, [group_id, name, type], function(err) {
-            if (err) {
-                console.error('Database error: ', err);
-                return reject(err); // Reject the Promise in case of error
-            }
 
-            resolve(this.lastID); // Return the ID of the last inserted record
-        });
-    });
+export function getImages(db, group_id) { 
+    console.log("group_id DAO images:",group_id); 
+    return new Promise((resolve, reject) => { 
+        const query = "SELECT material_id, name FROM material WHERE group_id = ? AND type = 'image'"; 
+        db.all(query, [group_id], (err, rows) => { 
+            if (err) { 
+                console.error('Database error: ', err); 
+                return reject(err); // Reject the Promise in case of error 
+            } 
+ 
+            if (!rows || rows.length === 0) { 
+                return reject(new Error("Images not found")); 
+            } 
+ 
+            // Map the results to get an array of image objects with material_id and name 
+            const images = rows.map(row => ({ 
+                material_id: row.material_id, 
+                name: `http://localhost:3001/${row.name}`,  
+            })); 
+ 
+            //create a map of strings 
+            console.log("images DAO:",images); 
+            resolve(images); // Return the array of image objects 
+        }); 
+    }); 
+} 
+ 
+export function getDocuments(db, group_id) { 
+    return new Promise((resolve, reject) => { 
+        const query = "SELECT material_id, name FROM material WHERE group_id = ? AND type = 'document'"; 
+        db.all(query, [group_id], (err, rows) => { 
+            if (err) { 
+                console.error('Database error: ', err); 
+                return reject(err); // Reject the Promise in case of error 
+            } 
+ 
+            if (!rows || rows.length === 0) { 
+                return reject(new Error("Documents not found")); 
+            } 
+ 
+            // Map the results to get an array of document objects with material_id and name 
+            console.log("rows DAO documents:",rows); 
+            const documents = rows.map(row => ({ 
+                material_id: row.material_id, 
+                name: `http://localhost:3001/${row.name}`,  
+            })); 
+ 
+            resolve(documents); // Return the array of document objects 
+        }); 
+    }); 
+} 
+ 
+export function getAudio(db, group_id) { 
+    return new Promise((resolve, reject) => { 
+        const query = "SELECT material_id, name FROM material WHERE group_id = ? AND type = 'audio'"; 
+        db.all(query, [group_id], (err, rows) => { 
+            if (err) { 
+                console.error('Database error: ', err); 
+                return reject(err); // Reject the Promise in case of error 
+            } 
+ 
+            if (!rows || rows.length === 0) { 
+                return reject(new Error("Audios not found")); 
+            } 
+ 
+            // Map the results to get an array of audio objects with material_id and name 
+            const audios = rows.map(row => ({ 
+                material_id: row.material_id, 
+                name: `http://localhost:3001/${row.name}`,  
+            })); 
+ 
+            resolve(audios); // Return the array of audio objects 
+        }); 
+    }); 
 }
-
-
-//filtro per image 
-export function getImages(db, group_id) {
-    return new Promise((resolve, reject) => {
-        const query = "SELECT material_id, name FROM material WHERE group_id = ? AND type = 'image'";
-        db.all(query, [group_id], (err, rows) => {
-            if (err) {
-                console.error('Database error: ', err);
-                return reject(err); // Reject the Promise in case of error
-            }
-
-            if (!rows || rows.length === 0) {
-                return reject(new Error("Images not found"));
-            }
-
-            // Map the results to get an array of image objects with material_id and name
-            const images = rows.map(row => ({
-                material_id: row.material_id,
-                name: row.name
-            }));
-            resolve(images); // Return the array of image objects
-        });
-    });
-}
-

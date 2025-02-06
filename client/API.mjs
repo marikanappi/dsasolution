@@ -260,42 +260,73 @@ async function getTopics (study_group_id) {
     return null;
   }
 }
-//function to add image from pc
-async function addImage(formData) {
+
+
+async function getImage(group_id) { 
+  try { 
+    console.log(`Fetching images for group ID: ${group_id}`); 
+    const response = await fetch(`${BASE_URL}/material/images/${group_id}`); 
+    if (!response.ok) { 
+      throw new Error(`Failed to fetch images: ${response.statusText}`); 
+    } 
+    const images = await response.json(); 
+    console.log('Images:', images); 
+    return images; 
+  } catch (err) { 
+    console.error('Error fetching images:', err); 
+    return null; 
+  } 
+} 
+ 
+async function getDocument(group_id) { 
+  try { 
+    console.log(`Fetching document for group ID: ${group_id}`); 
+    const response = await fetch(`${BASE_URL}/material/documents/${group_id}`); 
+    if (!response.ok) { 
+      throw new Error(`Failed to fetch document: ${response.statusText}`); 
+    } 
+    const document = await response.json(); 
+    console.log('Document:', document); 
+    return document; 
+  } catch (err) { 
+    console.error('Error fetching document:', err); 
+    return null; 
+  } 
+} 
+ 
+async function getAudio(group_id) { 
+  try { 
+    console.log(`Fetching audio for group ID: ${group_id}`); 
+    const response = await fetch(`${BASE_URL}/material/${group_id}`); 
+    if (!response.ok) { 
+      throw new Error(`Failed to fetch audio: ${response.statusText}`); 
+    } 
+    const audio = await response.json(); 
+    console.log('Audio:', audio); 
+    return audio; 
+  } catch (err) { 
+    console.error('Error fetching audio:', err); 
+    return null; 
+  } 
+}
+
+async function addMaterial(materialData) {
+  const formData = new FormData();
+  Object.keys(materialData).forEach(key => {
+    formData.append(key, materialData[key]);
+  });
+  
   try {
     const response = await fetch(`${BASE_URL}/material`, {
       method: 'POST',
-      body: formData,
+      body: formData
     });
-    if (!response.ok) {
-      throw new Error('Failed to add image');
-    }
-    const result = await response.json();
-    console.log('Image added with ID:', result.imageId);
-    return result;
+    return await response.json();
   } catch (err) {
     console.error(err);
     return null;
   }
 }
-
-
-async function getImage(group_id) {
-  try {
-    const response = await fetch(`${BASE_URL}/material/${group_id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch images');
-    }
-    const images = await response.json();
-    return images;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
-
-
-
 
 export {
   getAllGroups,
@@ -312,8 +343,10 @@ export {
   addMessage,
   createChallenge,
   getTopics,
-  addImage,
   getImage,
+  getDocument,
+  getAudio,
+  addMaterial,
   updateGroup
 };
 
