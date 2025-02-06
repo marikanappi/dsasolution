@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { getAllGroups, joinGroup } from "../../api"; // Import API
 import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
-import { FaCheck } from "react-icons/fa"; // Icona spunta verde
+import { FaCheck, FaQuestionCircle } from "react-icons/fa"; // Icona spunta verde
 
 const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -17,6 +17,8 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const [slds, setSlds] = useState([]);
   const filtersRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [tooltipModal, setTooltipModal] = useState({ visible: false, text: "" });
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch dei gruppi all'avvio
   useEffect(() => {
@@ -88,10 +90,18 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   };
 
   // Filtraggio dei gruppi in base ai selettori
-  const filteredGroups = suggestedGroups.filter(
+  const filteredSuggestedGroups = suggestedGroups.filter(
     (group) =>
       (selectedLevel ? group.level === selectedLevel : true) &&
-      (selectedSLD ? group.SLD === selectedSLD : true)
+      (selectedSLD ? group.SLD === selectedSLD : true) &&
+      group.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredOtherGroups = otherGroups.filter(
+    (group) =>
+      (selectedLevel ? group.level === selectedLevel : true) &&
+      (selectedSLD ? group.SLD === selectedSLD : true) &&
+      group.name.toLowerCase().includes(searchTerm.toLowerCase()) // 🔥 Filtra per nome
   );
 
   // Componenti riutilizzabili
@@ -197,75 +207,94 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
   return (
     <div className="search-group-container">
-      <div className="search-and-filter-container">
-        {/* Search Bar and Filter Button */}
-        <div className="d-flex mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search for groups..."
-            style={{ flex: 1 }}
-          />
-          <button className="filter-icon" onClick={toggleFilters}>
-            <FaFilter />
-          </button>
-        </div>
-        {/* Filtri */}
-        {filtersVisible && (
-          <div
-            className={`filter-dropdown-container ${
-              filtersVisible ? "visible" : "hidden"
-            }`}
-            ref={filtersRef} // Riferimento alla tendina dei filtri
-          >
-            <FilterDropdown
-              label="Level"
-              options={levels}
-              selected={selectedLevel}
-              onSelect={setSelectedLevel}
-            />
-            <FilterDropdown
-              label="SLD"
-              options={slds}
-              selected={selectedSLD}
-              onSelect={setSelectedSLD}
-            />
-          </div>
-        )}
+      {/* Search Bar and Filter Button */}
+      <div className="d-flex mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search for groups..."
+          style={{ flex: 1 }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button
+          className="btn btn-light filter-btn"
+          onClick={toggleFilters}
+        >
+          <FaFilter />
+        </button>
       </div>
 
-      <div className="suggested-groups-container">
-        {/* Gruppi Suggeriti */}
+      {/* Filtri */}
+      {filtersVisible && (
+        <div className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`} ref={filtersRef} >
+          <FilterDropdown
+            label="Level"
+            options={levels}
+            selected={selectedLevel}
+            onSelect={setSelectedLevel}
+          />
+          <FilterDropdown
+            label="SLD"
+            options={slds}
+            selected={selectedSLD}
+            onSelect={setSelectedSLD}
+          />
+        </div>
+      )}
 
-        <h4>Suggested for You</h4>
-
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : filteredGroups.length > 0 ? (
-          <ul className="scrollable-cards">
-            {filteredGroups.map((group) => (
+      {/* Gruppi Suggeriti */}
+      <h4>Suggested for You
+        <FaQuestionCircle
+          className="help-icon ms-2"
+          style={{ cursor: "pointer" }}
+          onClick={() =>
+            setTooltipModal({
+              visible: true,
+              text: "These groups are suggested for you based on the university you attend.",
+            })
+          }
+        /></h4>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+        <ul className="scrollable-cards">
+          {filteredSuggestedGroups.length > 0 ? (
+            filteredSuggestedGroups.map((group) => (
               <SuggestedGroupCard
                 key={group.id}
                 group={group}
                 onClick={() => handleJoinGroup(group)}
-                isSuggested={true}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p>No suggested groups found.</p>
-        )}
-      </div>
+                isSuggested={true} />
+            ))
+          ) : (
+            <p>No groups found.</p>
+          )}
+        </ul>
+      </>
+      )}
 
       {/* Altri Gruppi */}
-      <h4 className="other-title">Other Groups</h4>
+      <h4 className="other-title">Other Groups
+        <FaQuestionCircle
+          className="help-icon ms-2"
+          style={{ cursor: "pointer" }}
+          onClick={() =>
+            setTooltipModal({
+              visible: true,
+              text: "These groups are from other universities.",
+            })
+          }
+        />
+      </h4>
 
       <div className="other-groups-container">
         {isLoading ? (
           <p>Loading...</p>
-        ) : otherGroups.length > 0 ? (
+        ) : filteredOtherGroups.length > 0 ? (
           <ul>
-            {otherGroups.map((group) => (
+            {filteredOtherGroups.map((group) => (
               <OtherGroupCard
                 key={group.id}
                 group={group}
@@ -278,6 +307,20 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           <p>No other groups found.</p>
         )}
       </div>
+
+
+      {/* Tooltip Modal */}
+      {tooltipModal.visible && (
+        <div className="tooltip-modal">
+          <p>{tooltipModal.text}</p>
+          <button
+            className="create-group-button"
+            onClick={() => setTooltipModal({ visible: false, text: "" })}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {confirmJoin && (
