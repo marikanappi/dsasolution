@@ -77,9 +77,12 @@ const HomePage = ({
         </div>
       )}
 
-      {/* Sezione My Groups */}
       <div className="my-groups-container">
+<<<<<<< HEAD
         <h5>My Groups</h5>
+=======
+        <h4>My Groups </h4>
+>>>>>>> francesca
         {groups.length > 0 ? (
           <ul>
             {groups.map((group) => (
@@ -93,12 +96,12 @@ const HomePage = ({
                 }}
               >
                 <Link
-                  to={`/group/${group.name}`}
+                  to={`/group/${group.id}`}
                   state={{ group }}
                   className="group-link"
                 >
                   <img
-                    src={group.picture} // Immagine di default se non disponibile
+                    src={group.picture} 
                     alt={`${group.name} Icon`}
                     className="group-icon"
                   />

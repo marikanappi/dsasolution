@@ -107,7 +107,7 @@ const MobileAppSimulator = () => {
           <Route
             path="/group/:id"
             element={
-              <GroupPage setFooterOption={setFooterOption} group={group} />
+              <GroupPage setFooterOption={setFooterOption} group={group} setGroup={setGroup} />
             }
           />
           <Route
