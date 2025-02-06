@@ -12,11 +12,11 @@ const HomePage = ({
   setNotifications,
 }) => {
   const [groups, setGroups] = useState([]); // Gruppi con joined = 1
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [tooltipModal, setTooltipModal] = useState({
-        visible: false,
-        text: "",
-      });
+    visible: false,
+    text: "",
+  });
 
   const navigate = useNavigate(); // Usa il hook per la navigazione
 
@@ -52,23 +52,30 @@ const HomePage = ({
     <div className="home-page-container">
       {/* Sezione Notifiche */}
       {(notifications.length > 0 || !isCollapsed) && (
-  <div className={`notifications-container ${notifications.length === 0 ? "hide-notifications" : "show-notifications"}`}>
-    <div className="notifications-header" onClick={toggleCollapse}>
-      <div>Recent Notifications</div>
-      <span className="notif-badge">{notifications.length}</span>
-    </div>
+        <div
+          className={`notifications-container ${
+            notifications.length === 0
+              ? "hide-notifications"
+              : "show-notifications"
+          }`}
+        >
+          <div className="notifications-header" onClick={toggleCollapse}>
+            <div>Recent Notifications</div>
+            <span className="notif-badge">{notifications.length}</span>
+          </div>
 
-    {/* Keep Notification in the DOM for smooth collapse */}
-    <div className={`notifications-content ${isCollapsed ? "hide" : "show"}`}>
-      <Notification
-        notifications={notifications}
-        setNotifications={setNotifications}
-        groups={groups}
-      />
-    </div>
-  </div>
-)}
-
+          {/* Keep Notification in the DOM for smooth collapse */}
+          <div
+            className={`notifications-content ${isCollapsed ? "hide" : "show"}`}
+          >
+            <Notification
+              notifications={notifications}
+              setNotifications={setNotifications}
+              groups={groups}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Sezione My Groups */}
       <div className="my-groups-container">

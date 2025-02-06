@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./../css/homepage.css";
-
 
 const Notifications = ({ notifications, setNotifications, groups }) => {
   const [swipeStyles, setSwipeStyles] = useState({});
+
+  useEffect(() => {
+    if (groups.length === 0 || notifications.length === 0) return;
+  
+    setNotifications((prev) =>
+      prev.filter((notif) => groups.some((group) => group.id === notif.id))
+    );
+  }, [groups]);
+  
 
   const handleTouchStart = (e, index) => {
     e.currentTarget.dataset.startX = e.touches[0].clientX;
@@ -16,13 +24,19 @@ const Notifications = ({ notifications, setNotifications, groups }) => {
 
     setSwipeStyles((prev) => ({
       ...prev,
-      [index]: { transform: `translateX(${deltaX}px)`, opacity: 1 - Math.abs(deltaX) / 100 },
+      [index]: {
+        transform: `translateX(${deltaX}px)`,
+        opacity: 1 - Math.abs(deltaX) / 100,
+      },
     }));
 
     if (Math.abs(deltaX) > 80) {
       setSwipeStyles((prev) => ({
         ...prev,
-        [index]: { transform: `translateX(${deltaX > 0 ? "100%" : "-100%"})`, opacity: 0 },
+        [index]: {
+          transform: `translateX(${deltaX > 0 ? "100%" : "-100%"})`,
+          opacity: 0,
+        },
       }));
 
       setTimeout(() => {
@@ -34,13 +48,17 @@ const Notifications = ({ notifications, setNotifications, groups }) => {
   const handleTouchEnd = (index) => {
     setSwipeStyles((prev) => ({
       ...prev,
-      [index]: { transform: "translateX(0)", opacity: 1, transition: "transform 0.3s ease, opacity 0.3s ease" },
+      [index]: {
+        transform: "translateX(0)",
+        opacity: 1,
+        transition: "transform 0.3s ease, opacity 0.3s ease",
+      },
     }));
   };
 
   return (
     <div className="card-body">
-      {notifications.length > 0 ? (
+      {notifications.length > 0 && (
         <div>
           {notifications.map((notif, index) => {
             const group = groups.find((group) => group.id === notif.id);
@@ -54,7 +72,11 @@ const Notifications = ({ notifications, setNotifications, groups }) => {
                 style={swipeStyles[index] || {}}
               >
                 <div className="notification-left">
-                  <img src={group.picture} alt={group.name} className="group-image" />
+                  <img
+                    src={group.picture}
+                    alt={group.name}
+                    className="group-image"
+                  />
                 </div>
                 <div className="notification-right">
                   <span className="notification-group-name">{group.name}</span>
@@ -64,12 +86,9 @@ const Notifications = ({ notifications, setNotifications, groups }) => {
             ) : null;
           })}
         </div>
-      ) : (
-        <p className="text-center">No notifications available</p>
       )}
     </div>
   );
 };
 
 export default Notifications;
-

@@ -45,8 +45,8 @@ body {
 }
 
 .challenge-card {
-  background-color: #ffde81;
-  color: #230e9a;
+  background: linear-gradient(135deg, #ffde81, #FFE8CE);
+  color: #2c2c2c;
   padding: 1.6rem;
   border-radius: 20px;
   display: flex;
@@ -60,7 +60,7 @@ body {
 
 
 .generate-button {
-  background-color: #230e9a;
+  background-color: rgb(26, 149, 26);
   color: white;
   border: none;
   border-radius: 10px;

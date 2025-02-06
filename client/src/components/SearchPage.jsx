@@ -17,7 +17,10 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const [slds, setSlds] = useState([]);
   const filtersRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [tooltipModal, setTooltipModal] = useState({ visible: false, text: "" });
+  const [tooltipModal, setTooltipModal] = useState({
+    visible: false,
+    text: "",
+  });
   const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch dei gruppi all'avvio
@@ -71,7 +74,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [filtersVisible]);
 
-
   const handleConfirmJoin = async (group) => {
     try {
       const response = await joinGroup(group.id);
@@ -82,6 +84,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           { id: group.id, text: "You joined group." },
         ]);
       }
+      setConfirmJoin(null);
     } catch (error) {
       console.error("Errore durante la join del gruppo:", error);
     } finally {
@@ -106,34 +109,39 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
   // Componenti riutilizzabili
   const SuggestedGroupCard = ({ group, isSuggested }) => (
-    <li className="group-item" onClick={() => setSelectedGroup(group)}>
-      <div className="group-image-container">
-        <img
-          src={group.picture}
-          alt={`${group.name} Icon`}
-          className="group-icon"
-        />
-      </div>
-      <div>
-        <div className="group-name">{group.name}</div>
-        <div className="info">
-          <div className="group-text">
-            <div className="group-university">{group.university}</div>
-            {isSuggested && <div className="group-level">{group.level}</div>}
-          </div>
-          <button
-            className={`join-btn ${
-              joinedGroups.includes(group.id) ? "joined" : ""
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setConfirmJoin(group);
-            }}
-            disabled={joinedGroups.includes(group.id)}
-          >
-            {joinedGroups.includes(group.id) ? "✔" : "+"}
-          </button>
+    <li
+      className="group-item suggested-item"
+      onClick={() => setSelectedGroup(group)}
+    >
+      {/* First Row: Group Image + Name */}
+      <div className="group-header">
+        <div className="group-image-container">
+          <img
+            src={group.picture}
+            alt={`${group.name} Icon`}
+            className="group-icon"
+          />
         </div>
+        <div className="group-name suggested-group-name">{group.name}</div>
+      </div>
+
+      {/* Second Row: University, Level & Join Button */}
+      <div className="info">
+        <div className="group-text">
+          <div className="group-level">{group.level} - {group.SLD}</div>
+        </div>
+        <button
+          className={`join-btn ${
+            joinedGroups.includes(group.id) ? "joined" : ""
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setConfirmJoin(group);
+          }}
+          disabled={joinedGroups.includes(group.id)}
+        >
+          {joinedGroups.includes(group.id) ? "✔" : "+"}
+        </button>
       </div>
     </li>
   );
@@ -149,7 +157,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       </div>
       <div className="group-info">
         <div className="group-name">{group.name}</div>
-        <div className="group-level">{group.level}</div>
+        <div className="group-level">{group.level} - {group.SLD}</div>
       </div>
       <button
         className={`join-btn ${
@@ -208,77 +216,86 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   return (
     <div className="search-group-container">
       {/* Search Bar and Filter Button */}
-      <div className="d-flex mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search for groups..."
-          style={{ flex: 1 }}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          className="btn btn-light filter-btn"
-          onClick={toggleFilters}
-        >
-          <FaFilter />
-        </button>
+      <div className="search-and-filter-container">
+        <div className="d-flex mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search for groups..."
+            style={{ flex: 1 }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button className="btn btn-light filter-btn" onClick={toggleFilters}>
+            <FaFilter />
+          </button>
+        </div>
+
+        {/* Filtri */}
+        {filtersVisible && (
+          <div
+            className={`filter-dropdown-container ${
+              filtersVisible ? "visible" : "hidden"
+            }`}
+            ref={filtersRef}
+          >
+            <FilterDropdown
+              label="Level"
+              options={levels}
+              selected={selectedLevel}
+              onSelect={setSelectedLevel}
+            />
+            <FilterDropdown
+              label="SLD"
+              options={slds}
+              selected={selectedSLD}
+              onSelect={setSelectedSLD}
+            />
+          </div>
+        )}
       </div>
 
-      {/* Filtri */}
-      {filtersVisible && (
-        <div className={`filter-dropdown-container ${filtersVisible ? 'visible' : 'hidden'}`} ref={filtersRef} >
-          <FilterDropdown
-            label="Level"
-            options={levels}
-            selected={selectedLevel}
-            onSelect={setSelectedLevel}
+      <div className="suggested-groups-container">
+        <h4>
+          Suggested for You
+          <FaQuestionCircle
+            className="help-icon ms-2"
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              setTooltipModal({
+                visible: true,
+                text: "These groups are suggested for you based on the university you attend.",
+              })
+            }
           />
-          <FilterDropdown
-            label="SLD"
-            options={slds}
-            selected={selectedSLD}
-            onSelect={setSelectedSLD}
-          />
-        </div>
-      )}
-
-      {/* Gruppi Suggeriti */}
-      <h4>Suggested for You
-        <FaQuestionCircle
-          className="help-icon ms-2"
-          style={{ cursor: "pointer" }}
-          onClick={() =>
-            setTooltipModal({
-              visible: true,
-              text: "These groups are suggested for you based on the university you attend.",
-            })
-          }
-        /></h4>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-        <ul className="scrollable-cards">
-          {filteredSuggestedGroups.length > 0 ? (
-            filteredSuggestedGroups.map((group) => (
-              <SuggestedGroupCard
-                key={group.id}
-                group={group}
-                onClick={() => handleJoinGroup(group)}
-                isSuggested={true} />
-            ))
-          ) : (
-            <p>No groups found.</p>
-          )}
-        </ul>
-      </>
-      )}
+        </h4>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <ul className="scrollable-cards">
+              {filteredSuggestedGroups.length > 0 ? (
+                filteredSuggestedGroups.map((group) => (
+                  <SuggestedGroupCard
+                    key={group.id}
+                    group={group}
+                    onClick={() => handleJoinGroup(group)}
+                    isSuggested={true}
+                  />
+                ))
+              ) : (
+                <p>No groups found.</p>
+              )}
+            </ul>
+          </>
+        )}
+      </div>
 
       {/* Altri Gruppi */}
-      <h4 className="other-title">Other Groups
+      <h4 className="other-title">
+        Other Groups
         <FaQuestionCircle
-          className="help-icon ms-2"
+          className="help-icon light ms-2"
           style={{ cursor: "pointer" }}
           onClick={() =>
             setTooltipModal({
@@ -307,7 +324,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           <p>No other groups found.</p>
         )}
       </div>
-
 
       {/* Tooltip Modal */}
       {tooltipModal.visible && (
@@ -346,7 +362,10 @@ const SearchGroup = ({ notifications, setNotifications }) => {
             <p className="modal-group-participants">
               Participants: {selectedGroup.numberOfPartecipants}
             </p>
-            <button className="modal-close-btn" onClick={() => setSelectedGroup(null)}>
+            <button
+              className="modal-close-btn"
+              onClick={() => setSelectedGroup(null)}
+            >
               Close
             </button>
           </div>

@@ -2,6 +2,8 @@
   display: fixed;
   flex-direction: column;
   background: linear-gradient(135deg, #51009c, #6d0092 50%);
+  height: 110vh;
+  overflow-y: hidden;
 }
 
 .scrollable-cards {
@@ -19,6 +21,52 @@
   padding: 1px 10px 1px 0px;
   border-radius: 0% 0px 60px 0px;
 }
+
+.suggested-group-name {
+  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.group-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+}
+
+.info {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+}
+.group-text {
+  display: flex;
+  flex-direction: column; /* Stack university and level in two rows */
+}
+
+.group-item.suggested-item {
+  flex-direction: column;
+  width: 300px;
+}
+
+.suggested-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-info {
+  width: 206px;
+}
+
+.group-info div {
+  color: #fff;
+}
+
 
 .scrollable-cards li {
   list-style: none;
@@ -40,7 +88,6 @@ h4 {
 
 .other-groups-container {
   margin-top: 30px;
-  padding-bottom: 20px;
 }
 
 .filters-container {
@@ -101,7 +148,7 @@ h4 {
 
 .join-btn {
   background-color: #FFE8CE;
-  color: black;  
+  color: #2c2c2c;  
   font-weight: bold;
   font-size: 18px;
   width: 35px;
@@ -122,24 +169,6 @@ h4 {
   transform: scale(1.1); /* Slight animation effect */
 }
 
-.info {
-  display: flex;
-  align-items: center; /* Align button vertically */
-  gap: 10px; /* Space between text and button */
-  justify-content: space-between;
-}
-.group-text {
-  display: flex;
-  flex-direction: column; /* Stack university and level in two rows */
-}
-
-.group-info {
-  width: 206px;
-}
-
-.group-info div {
-  color: #fff;
-}
 
 .other-group {
   display: flex;
@@ -152,15 +181,16 @@ h4 {
 }
 
 .search-and-filter-container {
-  padding-top: 40px;
-  padding-right: 10px;
+  padding: 40px 20px 5px 10px;
 }
 
 .other-title {
   color: white;
 }
 
-
+.other-title .light {
+  color: white;
+}
 
 /* Modal Background */
 .modal-overlay {
@@ -194,6 +224,7 @@ h4 {
   height: 80px;
   border-radius: 50%;
   margin-bottom: 10px;
+  align-self: center;
 }
 
 /* Close Button */
