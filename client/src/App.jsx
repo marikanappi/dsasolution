@@ -14,9 +14,10 @@ import ChallengePage from "./components/ChallengePage";
 import ChallengeSummary from "./components/ChallengeSummary";
 import NewChallenge from "./components/CreateChallenge";
 import MaterialPage from "./components/MaterialPage";
-
+import ImagePage from "./components/ImagePage";
+import DocumentPage from "./components/DocumentPage";
+import AudioPage from "./components/AudioPage";
 import { useNavigate } from "react-router-dom";
-
 
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
@@ -39,35 +40,39 @@ const MobileAppSimulator = () => {
     } else if (footerOption === "ChallengeSummary") {
       setFooterOption("Challenges");
       navigate("/challenges");
+    }else if (footerOption === "Images") {
+      setFooterOption("Materials");
+      navigate("/materials");
+    }else if (footerOption === "Documents") {
+      setFooterOption("Documents");
+      navigate("/materials");
     } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") {
-      setShowModal(true);
+      setShowModal(true); // Trigger modal when navigating from ChallengePage or NewChallenge
     } else if (footerOption === "CreateGroup") {
-      setShowModal(true);
+      setShowModal(true); // Trigger modal when navigating from CreateGroup
     } else {
-      navigate(-1);
+      navigate(-1); // Go back in history
     }
   };
 
   const handleExit = () => {
-    setShowModal(false); // Chiudi il modal
+    setShowModal(false); // Close the modal
     if (footerOption === "CreateGroup") {
-      setFooterOption("Home"); // Imposta footerOption su Home
-      navigate("/"); // Naviga alla home
+      setFooterOption("Home");
+      navigate("/"); // Navigate to home
     } else if (footerOption === "ChallengePage" || footerOption === "NewChallenge") {
-      setFooterOption("Challenges"); // Imposta footerOption su Challenges
-      navigate("/challenges"); // Naviga alla pagina delle Challenges
+      setFooterOption("Challenges");
+      navigate("/challenges"); // Navigate to challenges page
     }
-  };  
-
-  // Funzione per annullare (chiudere il modal senza fare nulla)
-  const handleCancel = () => {
-    setShowModal(false); // Chiudi il modal senza fare nulla
   };
-  
+
+  const handleCancel = () => {
+    setShowModal(false); // Close the modal without any action
+  };
 
   const renderHeader = () => {
     const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
-  
+
     return (
       <div className="header-group d-flex align-items-center">
         {!isMainOption && (
@@ -76,8 +81,6 @@ const MobileAppSimulator = () => {
             className="icon-back-arrow"
             style={{ position: "absolute", left: "20px", cursor: "pointer" }}
           />
-
-          
         )}
         <img
           src="logo.png"
@@ -87,7 +90,7 @@ const MobileAppSimulator = () => {
         />
       </div>
     );
-  };    
+  };
 
   return (
     <div className="mobile-frame d-flex flex-column">
@@ -96,86 +99,67 @@ const MobileAppSimulator = () => {
       </header>
       <main className="mobile-content flex-grow-1">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage setFooterOption={setFooterOption} setGroup={setGroup} />
-            }
-          />
+          <Route path="/" element={<HomePage setFooterOption={setFooterOption} setGroup={setGroup} />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route
-            path="/group/:id"
-            element={
-              <GroupPage setFooterOption={setFooterOption} group={group} />
-            }
-          />
-          <Route
-            path="/create-group"
-            element={<CreateGroup setFooterOption={setFooterOption} />}
-          />
+          <Route path="/group/:id" element={<GroupPage setFooterOption={setFooterOption} group={group} />} />
+          <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption} />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route
-            path="/chat"
-            element={<ChatPage setFooterOption={setFooterOption} />}
-          />
-          <Route
-            path="/challenges"
-            element={
-              <Challenges setFooterOption={setFooterOption} group={group} />
-            }
-          />
-          <Route
-            path="/challenge"
-            element={
-              <ChallengePage setFooterOption={setFooterOption} group={group} />
-            }
-          />
-          <Route
-            path="/challenge-summary"
-            element={
-              <ChallengeSummary
-                setFooterOption={setFooterOption}
-                group={group}
-              />
-            }
-          />
-          <Route
-            path="/create-challenge"
-            element={
-              <NewChallenge group={group} setFooterOption={setFooterOption} />
-            }
-          />
-          <Route 
-          path="/materials" 
-          element={
-          <MaterialPage group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/chat" element={<ChatPage setFooterOption={setFooterOption} />} />
+          <Route path="/challenges" element={<Challenges setFooterOption={setFooterOption} group={group} />} />
+          <Route path="/challenge" element={<ChallengePage setFooterOption={setFooterOption} group={group} />} />
+          <Route path="/challenge-summary" element={<ChallengeSummary setFooterOption={setFooterOption} group={group} />} />
+          <Route path="/create-challenge" element={<NewChallenge group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/materials" element={<MaterialPage group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/images" element={<ImagePage group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/documents" element={<DocumentPage group={group} setFooterOption={setFooterOption} />} />
+          <Route path="/audio" element={<AudioPage group={group} setFooterOption={setFooterOption} />} /> 
         </Routes>
       </main>
 
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
-        <FaHome onClick={() => navigateTo("/", "Home")} className="icon" />
+        <FaHome
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/", "Home"); // Navigate to home
+            }
+          }}
+          className="icon"
+        />
         <FaSearch
-          onClick={() => navigateTo("/search", "Search")}
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/search", "Search"); // Navigate to search page
+            }
+          }}
           className="icon"
         />
         <FaUser
-          onClick={() => navigateTo("/profile", "Profile")}
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/profile", "Profile"); // Navigate to profile page
+            }
+          }}
           className="icon"
         />
       </footer>
 
-      {/* Modal di conferma per uscire */}
+      {/* Modal for exit confirmation */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Are you sure to exit?</h3>
+            <h3>Are you sure you want to exit?</h3>
             <p>All your changes will be discarded.</p>
             <button className="btn btn-danger" onClick={handleExit}>Exit</button>
             <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       )}
-
     </div>
   );
 };
