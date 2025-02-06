@@ -7,8 +7,8 @@ import { FaCheck } from "react-icons/fa"; // Icona spunta verde
 const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
   const [otherGroups, setOtherGroups] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [confirmJoin, setConfirmJoin] = useState(null);
   const [joinedGroups, setJoinedGroups] = useState([]); // Contiene i gruppi a cui l'utente è iscritto
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -69,16 +69,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [filtersVisible]);
 
-  // Gestione del modal
-  const handleJoinGroup = (group) => {
-    setSelectedGroup(group);
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedGroup(null);
-  };
 
   const handleConfirmJoin = async (group) => {
     try {
@@ -105,46 +95,41 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   );
 
   // Componenti riutilizzabili
-  const SuggestedGroupCard = ({ group, onClick, isSuggested }) => (
-    <li className="group-item" onClick={onClick}>
+  const SuggestedGroupCard = ({ group, isSuggested }) => (
+    <li className="group-item" onClick={() => setSelectedGroup(group)}>
       <div className="group-image-container">
         <img
           src={group.picture}
           alt={`${group.name} Icon`}
           className="group-icon"
         />
-
-        {joinedGroups.includes(group.id) ? (
-          <button className="joined-btn" disabled>
-            ✓
-          </button>
-        ) : (
-          // {joinedGroups.includes(group.id) ? (
-          //   <button className="joined-btn">
-          //     <FaCheck color="green" />
-          //   </button>
-          // ) :
-          <button
-            className="join-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleJoinGroup(group);
-            }}
-          >
-            +
-          </button>
-        )}
       </div>
       <div>
         <div className="group-name">{group.name}</div>
-        <div className="group-university">{group.university}</div>
-        {isSuggested && <div className="group-level">{group.level}</div>}
+        <div className="info">
+          <div className="group-text">
+            <div className="group-university">{group.university}</div>
+            {isSuggested && <div className="group-level">{group.level}</div>}
+          </div>
+          <button
+            className={`join-btn ${
+              joinedGroups.includes(group.id) ? "joined" : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setConfirmJoin(group);
+            }}
+            disabled={joinedGroups.includes(group.id)}
+          >
+            {joinedGroups.includes(group.id) ? "✔" : "+"}
+          </button>
+        </div>
       </div>
     </li>
   );
 
   const OtherGroupCard = ({ group, onClick, isSuggested }) => (
-    <li className="other-group" onClick={onClick}>
+    <li className="other-group" onClick={() => setSelectedGroup(group)}>
       <div className="group-image-container">
         <img
           src={group.picture}
@@ -156,23 +141,18 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         <div className="group-name">{group.name}</div>
         <div className="group-level">{group.level}</div>
       </div>
-      {joinedGroups.includes(group.id) ? (
-        <button className="joined-btn" disabled>
-          ✓
-        </button>
-      ) : (
-        <div className="join-btn-container">
-          <button
-            className="plus-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleJoinGroup(group);
-            }}
-          >
-            +
-          </button>
-        </div>
-      )}
+      <button
+        className={`join-btn ${
+          joinedGroups.includes(group.id) ? "joined" : ""
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+          setConfirmJoin(group);
+        }}
+        disabled={joinedGroups.includes(group.id)}
+      >
+        {joinedGroups.includes(group.id) ? "✔" : "+"}
+      </button>
     </li>
   );
 
@@ -254,59 +234,80 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         )}
       </div>
 
+      <div className="suggested-groups-container">
+        {/* Gruppi Suggeriti */}
 
-        <div className="suggested-groups-container">
-          {/* Gruppi Suggeriti */}
+        <h4>Suggested for You</h4>
 
-          <h4>Suggested for You</h4>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : filteredGroups.length > 0 ? (
+          <ul className="scrollable-cards">
+            {filteredGroups.map((group) => (
+              <SuggestedGroupCard
+                key={group.id}
+                group={group}
+                onClick={() => handleJoinGroup(group)}
+                isSuggested={true}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p>No suggested groups found.</p>
+        )}
+      </div>
 
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : filteredGroups.length > 0 ? (
-            <ul className="scrollable-cards">
-              {filteredGroups.map((group) => (
-                <SuggestedGroupCard
-                  key={group.id}
-                  group={group}
-                  onClick={() => handleJoinGroup(group)}
-                  isSuggested={true}
-                />
-              ))}
-            </ul>
-          ) : (
-            <p>No suggested groups found.</p>
-          )}
-        </div>
+      {/* Altri Gruppi */}
+      <h4 className="other-title">Other Groups</h4>
 
-        {/* Altri Gruppi */}
-        <h4 className="other-title">Other Groups</h4>
-
-        <div className="other-groups-container">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : otherGroups.length > 0 ? (
-            <ul>
-              {otherGroups.map((group) => (
-                <OtherGroupCard
-                  key={group.id}
-                  group={group}
-                  onClick={() => handleJoinGroup(group)}
-                  isSuggested={false}
-                />
-              ))}
-            </ul>
-          ) : (
-            <p>No other groups found.</p>
-          )}
-        </div>
+      <div className="other-groups-container">
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : otherGroups.length > 0 ? (
+          <ul>
+            {otherGroups.map((group) => (
+              <OtherGroupCard
+                key={group.id}
+                group={group}
+                onClick={() => handleJoinGroup(group)}
+                isSuggested={false}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p>No other groups found.</p>
+        )}
+      </div>
 
       {/* Modal */}
-      {modalOpen && selectedGroup && (
+      {confirmJoin && (
         <Modal
-          group={selectedGroup}
-          onClose={handleCloseModal}
+          group={confirmJoin}
+          onClose={() => setConfirmJoin(null)}
           onConfirmJoin={handleConfirmJoin}
         />
+      )}
+
+      {selectedGroup && (
+        <div className="modal-overlay" onClick={() => setSelectedGroup(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedGroup.picture}
+              alt={selectedGroup.name}
+              className="modal-group-image"
+            />
+            <h2 className="modal-group-name">{selectedGroup.name}</h2>
+            <p className="modal-group-university">{selectedGroup.university}</p>
+            <p className="modal-group-level">{selectedGroup.level}</p>
+            <p className="modal-group-desc">{selectedGroup.description}</p>
+            <p className="modal-group-participants">
+              Participants: {selectedGroup.numberOfPartecipants}
+            </p>
+            <button className="modal-close-btn" onClick={() => setSelectedGroup(null)}>
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
