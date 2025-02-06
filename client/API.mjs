@@ -323,10 +323,11 @@ async function addMaterial(materialData) {
     });
     return await response.json();
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching images:', err);
     return null;
   }
 }
+
 
 export {
   getAllGroups,
@@ -345,8 +346,6 @@ export {
   getTopics,
   getImage,
   getDocument,
-  getAudio,
-  addMaterial,
   updateGroup
 };
 

@@ -20,7 +20,6 @@ import DocumentPage from "./components/DocumentPage";
 
 import { useNavigate } from "react-router-dom";
 
-
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
   const [group, setGroup] = useState();
@@ -63,7 +62,7 @@ const MobileAppSimulator = () => {
 
   const renderHeader = () => {
     const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
-  
+
     return (
       <div className="header-group d-flex align-items-center">
         {!isMainOption && (
@@ -72,8 +71,6 @@ const MobileAppSimulator = () => {
             className="icon-back-arrow"
             style={{ position: "absolute", left: "20px", cursor: "pointer" }}
           />
-
-          
         )}
         <img
           src="logo.png"
@@ -83,7 +80,7 @@ const MobileAppSimulator = () => {
         />
       </div>
     );
-  };    
+  };
 
   return (
     <div className="mobile-frame d-flex flex-column">
@@ -92,23 +89,10 @@ const MobileAppSimulator = () => {
       </header>
       <main className="mobile-content flex-grow-1">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage setFooterOption={setFooterOption} setGroup={setGroup} notifications={notifications} setNotifications={setNotifications} />
-            }
-          />
-          <Route path="/search" element={<SearchPage notifications={notifications} setNotifications={setNotifications} />} />
-          <Route
-            path="/group/:id"
-            element={
-              <GroupPage setFooterOption={setFooterOption} group={group} setGroup={setGroup} />
-            }
-          />
-          <Route
-            path="/create-group"
-            element={<CreateGroup setFooterOption={setFooterOption} />}
-          />
+          <Route path="/" element={<HomePage setFooterOption={setFooterOption} setGroup={setGroup} />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/group/:id" element={<GroupPage setFooterOption={setFooterOption} group={group} />} />
+          <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption} />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/chat"
@@ -185,10 +169,11 @@ const MobileAppSimulator = () => {
         /> 
       </footer>
 
-      {/* Modal di conferma per uscire */}
+      {/* Modal for exit confirmation */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
+            <h3>Are you sure you want to exit?</h3>
             <h3>Are you sure you want to exit?</h3>
             <p>All your changes will be discarded.</p>
             <button className="btn btn-danger" onClick={handleExit}>Exit</button>
@@ -196,7 +181,6 @@ const MobileAppSimulator = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

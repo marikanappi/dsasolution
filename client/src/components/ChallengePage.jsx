@@ -298,6 +298,7 @@ const ChallengePage = ({ setFooterOption }) => {
           )}
         </div>
       )}
+      
     </div>
   );
 };
