@@ -3,7 +3,7 @@ import '../css/chatpage.css'; // Import del file CSS per lo stile
 import { FaMicrophone, FaStop, FaPaperclip, FaCamera } from 'react-icons/fa';
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import { addMaterial } from '../../API.mjs'; // Import della funzione per aggiungere un nuovo materiale
+//import { addMaterial } from '../../API.mjs'; // Import della funzione per aggiungere un nuovo materiale
 const Chat = ({ setFooterOption, group }) => {
   // Messaggi statici
   const [messages, setMessages] = useState([

@@ -310,7 +310,7 @@ async function getAudio(group_id) {
   } 
 }
 
-async function addMaterial(materialData) {
+/*async function addMaterial(materialData) {
   const formData = new FormData();
   Object.keys(materialData).forEach(key => {
     formData.append(key, materialData[key]);
@@ -326,7 +326,7 @@ async function addMaterial(materialData) {
     console.error('Error fetching images:', err);
     return null;
   }
-}
+}*/
 
 
 export {
@@ -346,6 +346,7 @@ export {
   getTopics,
   getImage,
   getDocument,
+  getAudio,
   updateGroup
 };
 
