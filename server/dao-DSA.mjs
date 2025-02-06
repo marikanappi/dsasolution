@@ -97,7 +97,7 @@ export function joinGroup(db, idGroup) {
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
     return new Promise((resolve, reject) => {
-      const joinedInt = joined ? 1 : 0;
+      const joinedInt = 1;
       const userId_temp = 1;
       const query = `
         INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined, usercreate) 

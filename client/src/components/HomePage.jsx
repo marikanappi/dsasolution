@@ -36,6 +36,7 @@ const HomePage = ({
           (group) => group.joined === 1
         ); // Filtra solo quelli con joined = 1
         setGroups(joinedGroups);
+        console.log("Groups fetched:", joinedGroups);
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
@@ -78,11 +79,7 @@ const HomePage = ({
       )}
 
       <div className="my-groups-container">
-<<<<<<< HEAD
         <h5>My Groups</h5>
-=======
-        <h4>My Groups </h4>
->>>>>>> francesca
         {groups.length > 0 ? (
           <ul>
             {groups.map((group) => (

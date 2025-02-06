@@ -20,9 +20,10 @@ const CreateGroup = ({ setFooterOption }) => {
 
   const navigate = useNavigate(); // Use the navigate hook
 
-  const [imagePreview] = useState(null);
-  const [imageName] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState("");
   const [error, setError] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
   const [setMandatoryWarningVisible] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
@@ -45,33 +46,37 @@ const CreateGroup = ({ setFooterOption }) => {
   };
 
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+      setImageFile(file); // Salva il file nello stato
+      const reader = new FileReader();
+      reader.onload = () => setImagePreview(reader.result); // Mostra l'anteprima
+      reader.readAsDataURL(file);
+      setImageName(file.name);
+    } else {
+      alert("Please upload a PNG or JPG file.");
+    }
+  };
+
 
   // Handle group creation
   const handleCreate = async (e) => {
     e.preventDefault();
-
-    // Validation: check if mandatory fields are filled
-    if (
-      !formData.name ||
-      !formData.university ||
-      !formData.level ||
-      !formData.specialNeeds
-    ) {
+  
+    if (!formData.name || !formData.university || !formData.level || !formData.specialNeeds) {
       setError(true);
       setMandatoryWarningVisible(true);
       return;
     }
-
-    // Construct group data object
-    const newGroup = {
+  
+    const groupData = {
       ...formData,
-      picture: imageName ? imageName : "default.png", // Default picture if no image uploaded
-      joined: 1,
+      imageFile: imageFile
     };
-
-    // Call the API to add the group
+  
     try {
-      const result = await addGroup(newGroup);
+      const result = await addGroup(groupData);
       if (result) {
         alert("Group added successfully!");
         navigate("/");
@@ -105,25 +110,34 @@ const CreateGroup = ({ setFooterOption }) => {
             >
               {/* Container per l'immagine */}
               <div
-                className={`image-upload-container ${
-                  imagePreview ? "image-uploaded" : ""
-                }`}
-              >
-                {!imagePreview && <span className="add-text">+ Add</span>}
-              </div>
-              <input
-                style={{
-                  fontSize: "13px",
-                  maxWidth: "94px",
-                  paddingTop: "8px",
-                }}
-                type="file"
-                id="group-pic"
-                name="profile_pic"
-                accept=".jpg, .jpeg, .png"
-              />
+              className={`image-upload-container ${imagePreview ? "image-uploaded" : ""}`}
+              style={{
+                backgroundImage: imagePreview ? `url(${imagePreview})` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                width: '100px',
+                height: '100px',
+                border: '1px solid #ccc',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              {!imagePreview && <span className="add-text">+ Add</span>}
             </div>
-
+            <input
+              type="file"
+              id="group-pic"
+              name="profile_pic"
+              accept=".jpg, .jpeg, .png"
+              onChange={handleFileChange}
+              style={{
+                fontSize: "13px",
+                maxWidth: "94px",
+                paddingTop: "8px",
+              }}
+            />
+            </div>
             <div className="col-7" style={{ paddingRight: "10px" }}>
               <div className="row mb-2">
                 <label className="form-label">Group Name*</label>
