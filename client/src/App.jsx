@@ -24,6 +24,7 @@ const MobileAppSimulator = () => {
   const [group, setGroup] = useState();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [notifications, setNotifications] = useState([{ id: 1, text: "You have one new message" }, { id: 6, text: "You have one new challenge" }]);
 
   const navigateTo = (path, option) => {
     setFooterOption(option);

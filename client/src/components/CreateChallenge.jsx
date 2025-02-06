@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createChallenge, getTopics } from '../../API.mjs';
 import '../css/createChallenge.css';  // Import the CSS file
 import { Challenge } from '../DSAmodel.mjs';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 const NewChallenge = ({ setFooterOption, group }) => {
     const [title, setTitle] = useState('');
@@ -11,6 +12,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
     const [numQuestions, setNumQuestions] = useState(1); // Default to 1 question
     const [topics, setTopics] = useState([]);
     const navigate = useNavigate();
+    const [tooltipModal, setTooltipModal] = useState({ visible: false, text: "" });
 
     useEffect(() => {
         const fetchTopics = async () => {
@@ -53,7 +55,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
             <h2 className="title">Create a New Challenge</h2>
             <form onSubmit={handleSubmit} className="challenge-form">
                 <div className="form-group">
-                    <label htmlFor="title">Title:</label>
+                    <label htmlFor="title">Title</label>
                     <input
                         type="text"
                         id="title"
@@ -64,7 +66,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="topic">Topic:</label>
+                    <label htmlFor="topic">Topic</label>
                     <select
                         id="topic"
                         value={selectedTopic}
@@ -79,7 +81,18 @@ const NewChallenge = ({ setFooterOption, group }) => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="externalMaterial">External Material (PDF or Images):</label>
+                    <label htmlFor="externalMaterial">External Material
+                        <FaQuestionCircle
+                            className="help-icon ms-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                            setTooltipModal({
+                                visible: true,
+                                text: "You can attach PDF files or images.",
+                            })
+                            }
+                        />
+                    </label>
                     <input
                         type="file"
                         id="externalMaterial"
@@ -88,7 +101,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="numQuestions">Number of Questions:</label>
+                    <label htmlFor="numQuestions">Number of Questions</label>
                     <input
                         type="number"
                         id="numQuestions"
@@ -100,6 +113,19 @@ const NewChallenge = ({ setFooterOption, group }) => {
                 </div>
                 <button type="submit" className="submit-button">Create Challenge</button>
             </form>
+
+
+            {tooltipModal.visible && (
+                <div className="tooltip-modal">
+                <p>{tooltipModal.text}</p>
+                <button
+                    className="create-group-button"
+                    onClick={() => setTooltipModal({ visible: false, text: "" })}
+                >
+                    Close
+                </button>
+                </div>
+            )}
         </div>
     );
 };

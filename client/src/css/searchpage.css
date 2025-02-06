@@ -1,8 +1,9 @@
 .search-group-container {
-  height: 100%;
-  padding: 20px;
   display: fixed;
   flex-direction: column;
+  background: linear-gradient(135deg, #51009c, #6d0092 50%);
+  height: 110vh;
+  overflow-y: hidden;
 }
 
 .scrollable-cards {
@@ -15,15 +16,55 @@
   scroll-behavior: smooth; /* Scorrimento fluido */
 }
 
-.scrollable-cards::-webkit-scrollbar {
-  height: 8px;
-  background-color: #f0f0f0; /* Colore di sfondo per la scrollbar */
+.suggested-groups-container {
+  background-color: #f4f4f4;
+  padding: 1px 10px 1px 0px;
+  border-radius: 0% 0px 60px 0px;
 }
 
-.scrollable-cards::-webkit-scrollbar-thumb {
-  background: rgba(109, 0, 173, 0.238);
-  border-radius: 8px;
-  border: 0.3px solid #f0f0f0;
+.suggested-group-name {
+  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.group-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+}
+
+.info {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+}
+.group-text {
+  display: flex;
+  flex-direction: column; /* Stack university and level in two rows */
+}
+
+.group-item.suggested-item {
+  flex-direction: column;
+  width: 300px;
+}
+
+.suggested-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-info {
+  width: 206px;
+}
+
+.group-info div {
+  color: #fff;
 }
 
 
@@ -32,163 +73,183 @@
   flex-shrink: 0;
   flex-basis: 200px; /* O larghezza in % per una resa responsive */
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
   transition: transform 0.3s ease;
 }
 
 h4 {
+  margin-top: 20px;
+  padding-left: 20px;
   font-size: 22px;
   margin-bottom: 10px;
-  color: #6e00ad;
 }
 
 .other-groups-container {
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* padding: 14px; */
-    max-height: 45vh;
-    padding: 10px 0px 0px 0px;
-    overflow-y: auto;
-  }
+  margin-top: 30px;
+}
 
-/* Stile per la barra di scorrimento */
-.other-groups-container::-webkit-scrollbar {
-    width: 7px; 
-  }
-  
-  .other-groups-container::-webkit-scrollbar-track {
-    background: #f0f0f0; /* Colore del track (sfondo della scrollbar) */
-    border-radius: 8px; /* Bordo arrotondato per il track */
-  }
-  
-  .other-groups-container::-webkit-scrollbar-thumb {
-    background-color: #6d00ad3a;
-    border-radius: 8px; 
-  }
-  
-  
-  .filters-container {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .filter-btn {
-    font-size: large;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-left: 10px;
-    color: #fff;
-  }
+.filters-container {
+  position: relative;
+  margin-bottom: 20px;
+}
 
-  .filter-dropdown-container {
-    position: fixed; /* Posiziona il dropdown rispetto alla finestra */
-    top: 130px; /* Regola la distanza dal top della finestra */
-    left: 10;
-    width: 90%; /* Occupa tutta la larghezza della finestra */
-    background-color: rgb(240, 240, 240); /* Un grigio più chiaro per un aspetto più elegante */
-    border-radius: 10px; /* Rendi i bordi più morbidi */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata per farla risaltare */
-    padding: 20px; /* Più spazio interno per una disposizione più ordinata */
-    z-index: 1000;
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Effetti di transizione morbidi */
-    opacity: 0;
-    transform: translateY(-10px); /* Partenza dalla parte superiore per un effetto di "salita" */
+.filter-icon {
+  font-size: large;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: 10px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.812);
+}
+
+.filter-dropdown-container {
+  position: fixed; /* Posiziona il dropdown rispetto alla finestra */
+  top: 130px; /* Regola la distanza dal top della finestra */
+  left: 10;
+  width: 90%; /* Occupa tutta la larghezza della finestra */
+  background-color: rgb(
+    240,
+    240,
+    240
+  ); /* Un grigio più chiaro per un aspetto più elegante */
+  border-radius: 10px; /* Rendi i bordi più morbidi */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata per farla risaltare */
+  padding: 20px; /* Più spazio interno per una disposizione più ordinata */
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Effetti di transizione morbidi */
+  opacity: 0;
+  transform: translateY(
+    -10px
+  ); /* Partenza dalla parte superiore per un effetto di "salita" */
 }
 
 .filter-dropdown-container.visible {
   opacity: 1; /* Quando la tendina è visibile */
   transform: translateY(0); /* La tendina arriva nella sua posizione finale */
 }
-  .filter-dropdown {
-    margin-bottom: 10px;
-  }
-  
-  .filter-dropdown select {
-    width: 100%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-  }
+.filter-dropdown {
+  margin-bottom: 10px;
+}
 
-  .joined-btn {
-    background-color: green; /* Colore verde */
-    border-radius: 100%; /* Cerchio */
-    width: 30px; /* Dimensione del cerchio */
-    height: 30px; /* Dimensione del cerchio */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .joined-btn svg {
-    color: white; /* Colore della spunta */
-    font-size: 18px; /* Dimensione della spunta */
-  }
+.filter-dropdown select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
 
-  .group-image-container {
-    position: relative;
-  }
 
-  .join-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: #6e00ad;
-    color: white;
-    font-size: 20px;
-    width: 30px;
-    height: 40px;
-    border: none;
-    border-radius: 100%;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-  }
+.group-image-container {
+  position: relative;
+}
 
-  .plus-btn {
-    background-color: #6e00ad;  /* Colore viola */
-    color: white;  /* Testo bianco */
-    font-size: 20px;  /* Dimensione del testo */
-    width: 30px;  /* Dimensione uniforme per il cerchio */
-    height: 40px;  /* Dimensione uniforme per il cerchio */
-    border-radius: 100%;  /* Per ottenere la forma circolare */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;  /* Transizione per l'effetto hover */
-  }
-  
-  /* Cambia colore al passaggio del mouse */
-  .plus-btn:hover {
-    background-color: #5b0079;  /* Colore più scuro quando l'utente passa sopra */
-  }
+.join-btn {
+  background-color: #FFE8CE;
+  color: #2c2c2c;  
+  font-weight: bold;
+  font-size: 18px;
+  width: 35px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.2s;
+}
 
-  /* .join-btn-container {
-    background-color: red;
-    
-    gap: 20px;
+/* When group is joined */
+.join-btn.joined {
+  background-color: rgb(26, 149, 26);
+  color: white;
+  transform: scale(1.1); /* Slight animation effect */
+}
 
-  } */
 
-  .group-info {
-    width: 206px;
-  }
+.other-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-  .other-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 18px;
-    padding-right: 4px;
-    margin-left: -12px;
-  }
+.group-level {
+  font-size: small;
+}
 
-  .group-level {
-    font-size: small;
-  }
+.search-and-filter-container {
+  padding: 40px 20px 5px 10px;
+}
+
+.other-title {
+  color: white;
+}
+
+.other-title .light {
+  color: white;
+}
+
+/* Modal Background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Card */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  transform: scale(0.8);
+  animation: popUp 0.3s ease-in-out forwards;
+}
+
+/* Group Image */
+.modal-group-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+/* Close Button */
+.modal-close-btn {
+  background-color: #ff5f5f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.modal-close-btn:hover {
+  background-color: #e04848;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

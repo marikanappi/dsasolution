@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan'; // logging middleware
 import cors from 'cors';
+import multer from 'multer';
+import path from 'path';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
@@ -31,23 +33,39 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors()); // Enable CORS for all routes
 app.use(express.static('public'));
+//app.use('/uploads', express.static('uploads'));
+
+// Configurazione Multer per salvare le immagini nella cartella "uploads"
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+  }
+});
 
 //Get all groups
 app.get('/groups', async (req, res) => {
   try {
     const groups = await getAllGroups(db);
-    console.log(groups);
     res.json(groups);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Get all users
-app.get('/users', async (req, res) => {
-  try {
-    const users = await getUsers(db);
-    res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -86,29 +104,24 @@ app.post('/groups/leave/:id', async (req, res) => {
   }
 });
 
-// Add group
-app.post('/group', async (req, res) => {
-  console.log(req.body);
-  const { name, level, university, specialNeeds, description, maxParticipants, picture, joined } = req.body;
-
-  // Map `specialNeeds` to `SLD` and `maxParticipants` to `number_of_participants`
-  const SLD = specialNeeds;
-  const number_of_participants = parseInt(maxParticipants, 10) || 0;
-
+app.post('/group', upload.single('image'), async (req, res) => {
   try {
+    const { name, level, university, specialNeeds, description, maxParticipants, joined } = req.body;
+    const picture = req.file ? req.file.filename : 'default.png';
+    
     const groupId = await addGroup(
       db,
       name,
       level,
       university,
-      SLD,
+      specialNeeds,
       description,
       picture,
-      number_of_participants,
+      parseInt(maxParticipants) || 0,
       joined
     );
-    console.log(req.body);
-    res.status(201).json({ groupId });
+
+    res.status(201).json({ groupId, message: 'Group created successfully' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -133,6 +146,22 @@ app.get('/groups/sld/:SLD', async (req, res) => {
     const group = await getGroupBySLD(db, SLD);
     res.json(group);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/groups/:id', async (req, res) => {
+  const { id } = req.params;
+  const group = req.body;
+  
+  console.log("Before DAO call");
+  try {
+    console.log("Calling DAO with:", { id, ...group });
+    await updateGroup(db, { id, ...group });
+    console.log("After DAO call");
+    res.status(200).json({ message: 'Group updated successfully' });
+  } catch (err) {
+    console.error("Route error:", err);
     res.status(500).json({ error: err.message });
   }
 });

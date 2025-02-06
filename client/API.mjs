@@ -69,20 +69,26 @@ async function leaveGroup(id) {
 
 // Function to add a new group
 async function addGroup(group) {
+  const formData = new FormData();
+  
+  Object.keys(group).forEach(key => {
+    if (key !== 'imageFile') {
+      formData.append(key, group[key]);
+    }
+  });
+  
+  if (group.imageFile) {
+    formData.append('image', group.imageFile);
+  }
+
   try {
     const response = await fetch(`${BASE_URL}/group`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(group),
+      body: formData
     });
-    if (!response.ok) {
-      throw new Error('Failed to add group');
-    }
-    const result = await response.json();
-    console.log('Group added with ID:', result.groupId);
-    return result;
+    
+    if (!response.ok) throw new Error('Failed to add group');
+    return await response.json();
   } catch (err) {
     console.error(err);
     return null;
@@ -195,6 +201,26 @@ async function addMessage(message) {
   } catch (err) {
     console.error(err);
     return null;
+  }
+}
+
+async function updateGroup(groupId, groupData) {
+  try {
+    const response = await fetch(`http://localhost:3001/groups/${groupId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(groupData)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update group');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error('Failed to update group');
   }
 }
 

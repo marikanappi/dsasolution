@@ -23,7 +23,8 @@ export function getAllGroups(db) {
                     row.description, 
                     `http://localhost:3001/${row.picture}`, 
                     row.number_of_participants, 
-                    row.joined
+                    row.joined,
+                    row.usercreate
                 );
             });
     
@@ -53,7 +54,8 @@ export function getGroupByLabel(db, label) {
                     description: row.description,
                     picture: `http://localhost:3001/${row.picture}`,
                     number_of_participants: row.number_of_participants,
-                    joined: row.joined
+                    joined: row.joined,
+                    usercreate: row.usercreate
                 };
             });
         
@@ -95,21 +97,16 @@ export function joinGroup(db, idGroup) {
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
     return new Promise((resolve, reject) => {
-      const joinedInt = joined ? 1 : 0;
+      const joinedInt = 1;
+      const userId_temp = 1;
       const query = `
-        INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-      console.log('Executing query:', query);
-      console.log('With values:', [name, level, university, SLD, description, picture, number_of_participants, joinedInt]);
-  
-      db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt], function (err) {
+        INSERT INTO StudyGroups (name, level, university, SLD, description, picture, number_of_participants, joined, usercreate) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      db.run(query, [name, level, university, SLD, description, picture, number_of_participants, joinedInt, userId_temp], function (err) {
         if (err) {
           console.error('Database insert error:', err.message);
           return reject(err);
         }
-  
-        console.log('Inserted ID:', this.lastID); // Log the ID of the inserted record
         resolve(this.lastID); // Return the ID of the inserted record
       });
     });
@@ -138,9 +135,9 @@ export function getGroupById(db, name) {
                 row.description, 
                 `http://localhost:3001/${row.picture}`,
                 row.number_of_participants, 
-                row.joined
+                row.joined,
+                row.usercreate
             );
-        
             resolve(group); // Risolviamo la Promise con il gruppo ottenuto
         });
     });
@@ -169,10 +166,30 @@ export function getGroupBySLD(db, SLD) {
                 row.description, 
                 `http://localhost:3001/${row.picture}`, 
                 row.number_of_participants, 
-                row.joined
+                row.joined,
+                row.usercreate
             );
         
             resolve(group); // Risolviamo la Promise con il gruppo ottenuto
+        });
+    });
+}
+
+export function updateGroup(db, group) {
+    return new Promise((resolve, reject) => {
+        console.log("DAO received:", group);
+        const query = "UPDATE StudyGroups SET name = ?, SLD = ?, level = ? WHERE id = ?";
+        const params = [group.name, group.SLD, group.level, group.id];
+        console.log("Query:", query);
+        console.log("Params:", params);
+        
+        db.run(query, params, function(err) {
+            if (err) {
+                console.error("SQL Error:", err);
+                reject(err);
+                return;
+            }
+            resolve(this.changes);
         });
     });
 }
@@ -245,7 +262,6 @@ export function getAnswers(db, questionId) {
 
 export function createChallenge(db, challenge) {
     return new Promise((resolve, reject) => {
-        console.log("DAO: challenge:",challenge);
         const query = "INSERT INTO challenges (group_id, title, topic_id) VALUES (?, ?, ?)";
 
         db.run(query, [challenge.group_id,challenge.title,challenge.topic_id], function(err) {

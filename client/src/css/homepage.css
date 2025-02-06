@@ -1,53 +1,100 @@
 .home-page-container {
-  padding: 20px;
-  display: flex;
+  display: fixed;
   flex-direction: column;
+  background-color: #f4f4f4;
+  height: 88vh;
+}
+
+
+.notifications-container h5 {
+  background-color: #6e00ad;
+  color: #fff; 
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0; 
+  padding: 2px; 
 }
 
 .notifications-container {
-  margin-bottom: 20px; /* Spazio tra le notifiche e la lista dei gruppi */
-  background-color: #fff; /* Sfondo bianco per contrastare con l'header viola */
-  border-radius: 8px; /* Bordo arrotondato */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra */
-  overflow: hidden; /* Nasconde eventuali contenuti che escono dai bordi */
+  position: relative;
+  margin: 20px 20px 30px 20px;
+  border-radius: 8px;
+  width: 310px;
+  align-self: center;
+  justify-self: center;
+  overflow-y: auto;
+  max-height: 250px;
+  top: 20px;
+  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
 }
 
-.notifications-container h5 {
-  background-color: #6e00ad; /* Header viola */
-  color: #fff; /* Testo bianco */
+/* When notifications are visible */
+.show-notifications {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px; /* Adjust as needed */
+}
+
+/* When notifications should disappear */
+.hide-notifications {
+  opacity: 0;
+  transform: translateY(-10px);
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none; /* Prevents interaction when hidden */
+}
+
+
+.notifications-header {
+  position: relative;
+  background-color: #ffde81;
+  color: #fff;
   font-size: 18px;
   font-weight: bold;
-  margin: 0; /* Rimuove margini interni per l'header */
-  padding: 10px; /* Spaziatura interna */
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.notifications-container ul {
-  list-style: none;
-  padding: 10px; /* Aggiunge spaziatura interna */
-  margin: 0; /* Rimuove margini esterni */
+.notifications-header div {
+  color:#2c2c2c;
 }
 
-.notifications-container li {
-  padding: 8px;
-  background-color: #f9f9f9; /* Colore leggero per i singoli elementi */
-  margin-bottom: 5px; /* Spazio tra le notifiche */
-  border-radius: 4px; /* Bordo leggermente arrotondato per gli elementi */
-  transition: background-color 0.3s;
-}
-
-.notifications-container li:hover {
-  background-color: #f0f0f0; /* Colore di hover più scuro */
+.notif-badge {
+  /* background-color: rgb(235, 89, 89); */
+  background-color: #2c2c2c;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 50%;
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  min-height: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 
 .my-groups-container {
-  margin-bottom: 20px; /* Spazio tra la card dei gruppi e il pulsante */
+  padding: 20px;
+  background: linear-gradient(135deg, #51009c, #6d0092 50%);
+  border-radius: 0px 270px 0% 0%;
+  height: 90vh;
 }
 
 .my-groups-container h5 {
-  font-size: 18px;
+  margin-top: 10px;
+  font-size: 1.6rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  color: #fff;
 }
 
 .my-groups-container ul {
@@ -72,7 +119,7 @@
 
 .create-group-button {
   padding: 10px 20px;
-  background-color: #6e00ad;
+  background-color: rgb(26, 149, 26);
   color: white;
   border: none;
   border-radius: 8px;
@@ -86,15 +133,53 @@
   background-color: #540084;
 }
 
+.create-group-container {
+  right: 20px;
+  bottom: 80px;
+  position: absolute;
+}
+
 .notification {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  font-size: 14px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  margin-top: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
 }
+
+.notification-left {
+  flex-shrink: 0;
+}
+
+.group-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-group-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.notif-text {
+  font-size: 12px;
+  color: #666;
+}
+
 
 .notif-text {
   color: #333;
@@ -102,9 +187,9 @@
 
 .notification-group-name {
   font-weight: bold;
-  margin-left: 20px; /* Distanza tra il testo e il nome del gruppo */
   width: 200px;
 }
+
 
 .header-group {
   display: flex;
@@ -115,4 +200,16 @@
 
 .logo {
   cursor: pointer;
+}
+
+.notifications-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.6s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.notifications-content.show {
+  max-height: 300px; 
+  opacity: 1;
 }
