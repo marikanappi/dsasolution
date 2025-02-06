@@ -89,8 +89,8 @@ const MobileAppSimulator = () => {
       </header>
       <main className="mobile-content flex-grow-1">
         <Routes>
-          <Route path="/" element={<HomePage setFooterOption={setFooterOption} setGroup={setGroup} />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/" element={<HomePage setFooterOption={setFooterOption} setGroup={setGroup} notifications={notifications} setNotifications={setNotifications} />} />
+          <Route path="/search" element={<SearchPage notifications={notifications} setNotifications={setNotifications}/>} />
           <Route path="/group/:id" element={<GroupPage setFooterOption={setFooterOption} group={group} />} />
           <Route path="/create-group" element={<CreateGroup setFooterOption={setFooterOption} />} />
           <Route path="/profile" element={<ProfilePage />} />
