@@ -334,8 +334,6 @@ async function addMaterial(groupid, name, type) {
   }
 }
 
-
-
 export {
   getAllGroups,
   getGroupsByLabel,
