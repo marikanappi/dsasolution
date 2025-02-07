@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaComment, FaTrophy, FaFileAlt, FaSignOutAlt, FaEdit } from "react-icons/fa";
+import { FaComment, FaTrophy, FaFileAlt, FaSignOutAlt, FaEdit, FaInfoCircle } from "react-icons/fa";
 import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
 
@@ -8,6 +8,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false); // Stato per mostrare la descrizione del gruppo
   const [editedGroup, setEditedGroup] = useState({ name: group.name, SLD: group.SLD, level: group.level });
 
   useEffect(() => {
@@ -37,8 +38,6 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
 
   const handleEditSubmit = async () => {
     try {
-      console.log(editedGroup);
-      console.log(group.id);
       const response = await updateGroup(group.id, editedGroup);
       if (response) {
         setGroup({ ...group, ...editedGroup });
@@ -53,9 +52,16 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     <div className="group-page">
       <div className="group-card">
         <h2 className="group-card-title">{group.name}</h2>
-        <span>{group.SLD} - {group.level}</span>
-        <span>{group.description}</span>
+       
+        {/* Icona per la descrizione */}
+        <FaInfoCircle 
+          size={25} 
+          className="info-icon" 
+          onClick={() => setShowInfoModal(true)} 
+          style={{ cursor: "pointer", position: "absolute", top: "10px", right: "10px" }}
+        />
       </div>
+
       <div className="action-buttons">
         <button className="chat-btn" onClick={() => { handleNavigate("/chat"); setFooterOption("Chat"); }}>
           <FaComment size={40} />
@@ -81,6 +87,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
         </Link>
       </div>
 
+      {/* Modal per confermare l'uscita dal gruppo */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -92,57 +99,73 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
         </div>
       )}
 
-{showEditModal && (
- <div className="modal">
-   <div className="modal-content">
-     <h3>Edit Group</h3>
-     
-     <label>Group Name:*</label>
-     <input 
-       type="text" 
-       name="name" 
-       value={editedGroup.name} 
-       onChange={handleEditChange}
-       required 
-     />
+      {/* Modal per modificare il gruppo */}
+      {showEditModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Edit Group</h3>
+            
+            <label>Group Name:*</label>
+            <input 
+              type="text" 
+              name="name" 
+              value={editedGroup.name} 
+              onChange={handleEditChange}
+              required 
+            />
 
-     <label>SLD:</label>
-     <select 
-       name="SLD" 
-       value={editedGroup.SLD} 
-       onChange={handleEditChange}
-     >
-       <option value="Dyslexia">Dyslexia</option>
-       <option value="Dysgraphia">Dysgraphia</option>
-       <option value="Dyscalculia">Dyscalculia</option>
-       <option value="ADHD">ADHD</option>
-       <option value="ASD">ASD</option>
-     </select>
+            <label>SLD:</label>
+            <select 
+              name="SLD" 
+              value={editedGroup.SLD} 
+              onChange={handleEditChange}
+            >
+              <option value="Dyslexia">Dyslexia</option>
+              <option value="Dysgraphia">Dysgraphia</option>
+              <option value="Dyscalculia">Dyscalculia</option>
+              <option value="ADHD">ADHD</option>
+              <option value="ASD">ASD</option>
+            </select>
 
-     <label>Level:</label> 
-     <select
-       name="level"
-       value={editedGroup.level}
-       onChange={handleEditChange}
-     >
-       <option value="Beginner">Beginner</option>
-       <option value="Intermediate">Intermediate</option> 
-       <option value="Advanced">Advanced</option>
-     </select>
+            <label>Level:</label> 
+            <select
+              name="level"
+              value={editedGroup.level}
+              onChange={handleEditChange}
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option> 
+              <option value="Advanced">Advanced</option>
+            </select>
 
-     <button 
-       onClick={handleEditSubmit}
-       disabled={!editedGroup.name} 
-       className="btn btn-primary"
-     >
-       Save
-     </button>
-     <button onClick={() => setShowEditModal(false)} className="btn btn-secondary">
-       Cancel
-     </button>
-      </div>
-    </div>
-    )}
+            <button 
+              onClick={handleEditSubmit}
+              disabled={!editedGroup.name} 
+              className="btn btn-primary"
+            >
+              Save
+            </button>
+            <button onClick={() => setShowEditModal(false)} className="btn btn-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal per la descrizione del gruppo */}
+      {showInfoModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Info Group</h3>
+            <p>{group.description}</p>
+            <span>{group.SLD} - {group.level}</span>
+            <span>{group.university} {group.number_of_participants}</span>
+            <button onClick={() => setShowInfoModal(false)} className="btn btn-secondary">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
