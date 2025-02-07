@@ -101,14 +101,12 @@ const CreateGroup = ({ setFooterOption }) => {
       </div>
 
       <form onSubmit={handleCreate}>
-        {/* Picture Upload and Group Details */}
         <div>
           <div className="row">
             <div
               className="col-4 d-flex flex-column align-items-right"
               style={{ marginTop: "14px" }}
             >
-              {/* Container per l'immagine */}
               <div
               className={`image-upload-container ${imagePreview ? "image-uploaded" : ""}`}
               style={{

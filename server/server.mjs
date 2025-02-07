@@ -23,7 +23,8 @@ import {
   getImages, 
   getDocuments,
   getAudio,
-  updateGroup 
+  updateGroup,
+  addMaterial
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -33,7 +34,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors()); // Enable CORS for all routes
 app.use(express.static('public'));
-//app.use('/uploads', express.static('uploads'));
 
 // Configurazione Multer per salvare le immagini nella cartella "uploads"
 const storage = multer.diskStorage({
@@ -48,16 +48,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
   fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png/;
+    // Permettiamo immagini, audio e documenti
+    const filetypes = /jpeg|jpg|png|pdf|doc|docx|mp3|wav/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    cb(new Error('File format not allowed!'));
   }
 });
 
@@ -244,6 +245,7 @@ app.get('/material/images/:group_id', async (req, res) => {
       res.status(500).json({ error: err.message });  
   } 
 }); 
+
 app.get('/material/documents/:group_id', async (req, res) => { 
   const group_id = req.params.group_id;  
   console.log(`Fetching Document for group ID: ${group_id}`); 
@@ -282,6 +284,7 @@ app.get('/material/:group_id', async (req, res) => {
       res.status(500).json({ error: err.message }); 
   }
 });
+
 app.get('/material/documents/:group_id', async (req, res) => {
   const group_id = req.params.group_id; 
   console.log(`Fetching Document for group ID: ${group_id}`);
@@ -305,6 +308,31 @@ app.get('/material/:group_id', async (req, res) => {
   } catch (err) {
       console.error('Error fetching audio:', err);
       res.status(500).json({ error: err.message }); 
+  }
+});
+
+app.post('/material', upload.single('file'), async (req, res) => {
+  try {
+    const { group_id, type } = req.body;
+    const filename = req.file.filename; // Nome del file salvato
+
+    const material = await addMaterial(
+      db, 
+      group_id, 
+      filename, 
+      type
+    );
+
+    res.status(201).json({ 
+      message: 'Material added successfully', 
+      material: {
+        ...material,
+        name: `http://localhost:${port}/${filename}` // URL completo del file
+      }
+    });
+  } catch (err) {
+    console.error("Route error:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 

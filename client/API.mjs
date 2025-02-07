@@ -95,7 +95,7 @@ async function addGroup(group) {
   }
 }
 
-// Function to fetch a group by name
+
 async function getGroupByName(name) {
   try {
     const response = await fetch(`${BASE_URL}/groups/${name}`);
@@ -310,23 +310,30 @@ async function getAudio(group_id) {
   } 
 }
 
-/*async function addMaterial(materialData) {
-  const formData = new FormData();
-  Object.keys(materialData).forEach(key => {
-    formData.append(key, materialData[key]);
-  });
-  
+async function addMaterial(groupid, name, type) {
   try {
+    // Creiamo un FormData per inviare il file
+    const formData = new FormData();
+    formData.append('group_id', groupid);
+    formData.append('name', name);
+    formData.append('type', type);
+
     const response = await fetch(`${BASE_URL}/material`, {
       method: 'POST',
       body: formData
     });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
     return await response.json();
   } catch (err) {
-    console.error('Error fetching images:', err);
+    console.error('Error adding material:', err);
     return null;
   }
-}*/
+}
+
 
 
 export {
@@ -347,7 +354,8 @@ export {
   getImage,
   getDocument,
   getAudio,
-  updateGroup
+  updateGroup,
+  addMaterial
 };
 
 

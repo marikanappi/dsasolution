@@ -374,3 +374,23 @@ export function getAudio(db, group_id) {
         }); 
     }); 
 }
+
+export function addMaterial(db, group_id, name, type) {
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO material (group_id, name, type) VALUES (?, ?, ?)";
+        
+        db.run(query, [group_id, name, type], function(err) {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err);
+            }
+            
+            resolve({ 
+                material_id: this.lastID, 
+                group_id, 
+                name: `http://localhost:3001/${name}`, 
+                type 
+            });
+        });
+    });
+}

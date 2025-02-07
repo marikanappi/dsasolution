@@ -96,7 +96,7 @@ const MobileAppSimulator = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/chat"
-            element={<ChatPage setFooterOption={setFooterOption} />}
+            element={<ChatPage setFooterOption={setFooterOption} group={group} />}
           />
           <Route
             path="/challenges"
