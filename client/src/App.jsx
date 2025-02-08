@@ -29,7 +29,6 @@ const MobileAppSimulator = () => {
     { id: 1, text: "You have one new message" },
     { id: 6, text: "You have one new challenge" },
   ]);
-  const [inApp, setInApp] = useState(false);
 
   const navigateTo = (path, option) => {
     setFooterOption(option);
@@ -85,197 +84,180 @@ const MobileAppSimulator = () => {
   const renderHeader = () => {
     const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
 
-    return (
-      <div className="d-flex align-items-center">
-        {!isMainOption && (
-          <FaArrowLeft
-            onClick={goBack}
-            className="icon-back-arrow"
-            style={{ position: "absolute", left: "20px", cursor: "pointer" }}
-          />
-        )}
-      </div>
-    );
+    if (isMainOption) {
+      return (
+        <img
+          src="logo.png"
+          alt="Logo"
+          className="logo"
+          onClick={() => navigateTo("/", "Home")}
+        />
+      );
+    } else if (!isMainOption) {
+      return (
+        <FaArrowLeft
+          onClick={goBack}
+          className="icon-back-arrow"
+          style={{ position: "absolute", left: "20px", cursor: "pointer" }}
+        />
+      );
+    }
   };
 
   return (
     <div className="mobile-frame d-flex flex-column">
-      {!inApp && (
-        <img
-          src="mobile.PNG"
-          alt="mobile"
-          onClick={() => {setInApp(true)}}
+      <header >
+        {renderHeader()}
+      </header>
+
+      <main className="mobile-content flex-grow-1">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                setFooterOption={setFooterOption}
+                setGroup={setGroup}
+                notifications={notifications}
+                setNotifications={setNotifications}
+              />
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <SearchPage
+                notifications={notifications}
+                setNotifications={setNotifications}
+              />
+            }
+          />
+          <Route
+            path="/group/:id"
+            element={
+              <GroupPage setFooterOption={setFooterOption} group={group} />
+            }
+          />
+          <Route
+            path="/create-group"
+            element={<CreateGroup setFooterOption={setFooterOption} />}
+          />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/chat"
+            element={
+              <ChatPage setFooterOption={setFooterOption} group={group} />
+            }
+          />
+          <Route
+            path="/challenges"
+            element={
+              <Challenges setFooterOption={setFooterOption} group={group} />
+            }
+          />
+          <Route
+            path="/challenge"
+            element={
+              <ChallengePage setFooterOption={setFooterOption} group={group} />
+            }
+          />
+          <Route
+            path="/challenge-summary"
+            element={
+              <ChallengeSummary
+                setFooterOption={setFooterOption}
+                group={group}
+              />
+            }
+          />
+          <Route
+            path="/create-challenge"
+            element={
+              <NewChallenge group={group} setFooterOption={setFooterOption} />
+            }
+          />
+          <Route
+            path="/materials"
+            element={
+              <MaterialPage group={group} setFooterOption={setFooterOption} />
+            }
+          />
+          <Route
+            path="/materials"
+            element={
+              <MaterialPage group={group} setFooterOption={setFooterOption} />
+            }
+          />
+          <Route
+            path="/images"
+            element={
+              <ImagePage group={group} setFooterOption={setFooterOption} />
+            }
+          />
+          <Route
+            path="/documents"
+            element={
+              <DocumentPage group={group} setFooterOption={setFooterOption} />
+            }
+          />
+          <Route
+            path="/audio"
+            element={
+              <AudioPage group={group} setFooterOption={setFooterOption} />
+            }
+          />
+        </Routes>
+      </main>
+
+      <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
+        <FaHome
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/", "Home"); // Navigate to home
+            }
+          }}
+          className="icon"
         />
-      )}
+        <FaSearch
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/search", "Search"); // Navigate to search page
+            }
+          }}
+          className="icon"
+        />
+        <FaUser
+          onClick={() => {
+            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
+              goBack(); // Handle the "goBack" case if it's one of the special pages
+            } else {
+              navigateTo("/profile", "Profile"); // Navigate to profile page
+            }
+          }}
+          className="icon"
+        />
+      </footer>
 
-      {inApp && (
-        <>
-          <main className="mobile-content flex-grow-1">
-            {renderHeader()}
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <HomePage
-                    setFooterOption={setFooterOption}
-                    setGroup={setGroup}
-                    notifications={notifications}
-                    setNotifications={setNotifications}
-                  />
-                }
-              />
-              <Route
-                path="/search"
-                element={
-                  <SearchPage
-                    notifications={notifications}
-                    setNotifications={setNotifications}
-                  />
-                }
-              />
-              <Route
-                path="/group/:id"
-                element={
-                  <GroupPage setFooterOption={setFooterOption} group={group} />
-                }
-              />
-              <Route
-                path="/create-group"
-                element={<CreateGroup setFooterOption={setFooterOption} />}
-              />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route
-                path="/chat"
-                element={
-                  <ChatPage setFooterOption={setFooterOption} group={group} />
-                }
-              />
-              <Route
-                path="/challenges"
-                element={
-                  <Challenges setFooterOption={setFooterOption} group={group} />
-                }
-              />
-              <Route
-                path="/challenge"
-                element={
-                  <ChallengePage
-                    setFooterOption={setFooterOption}
-                    group={group}
-                  />
-                }
-              />
-              <Route
-                path="/challenge-summary"
-                element={
-                  <ChallengeSummary
-                    setFooterOption={setFooterOption}
-                    group={group}
-                  />
-                }
-              />
-              <Route
-                path="/create-challenge"
-                element={
-                  <NewChallenge
-                    group={group}
-                    setFooterOption={setFooterOption}
-                  />
-                }
-              />
-              <Route
-                path="/materials"
-                element={
-                  <MaterialPage
-                    group={group}
-                    setFooterOption={setFooterOption}
-                  />
-                }
-              />
-              <Route
-                path="/materials"
-                element={
-                  <MaterialPage
-                    group={group}
-                    setFooterOption={setFooterOption}
-                  />
-                }
-              />
-              <Route
-                path="/images"
-                element={
-                  <ImagePage group={group} setFooterOption={setFooterOption} />
-                }
-              />
-              <Route
-                path="/documents"
-                element={
-                  <DocumentPage
-                    group={group}
-                    setFooterOption={setFooterOption}
-                  />
-                }
-              />
-              <Route
-                path="/audio"
-                element={
-                  <AudioPage group={group} setFooterOption={setFooterOption} />
-                }
-              />
-            </Routes>
-          </main>
-
-          <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
-            <FaHome
-              onClick={() => {
-                if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-                  goBack(); // Handle the "goBack" case if it's one of the special pages
-                } else {
-                  navigateTo("/", "Home"); // Navigate to home
-                }
-              }}
-              className="icon"
-            />
-            <FaSearch
-              onClick={() => {
-                if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-                  goBack(); // Handle the "goBack" case if it's one of the special pages
-                } else {
-                  navigateTo("/search", "Search"); // Navigate to search page
-                }
-              }}
-              className="icon"
-            />
-            <FaUser
-              onClick={() => {
-                if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-                  goBack(); // Handle the "goBack" case if it's one of the special pages
-                } else {
-                  navigateTo("/profile", "Profile"); // Navigate to profile page
-                }
-              }}
-              className="icon"
-            />
-          </footer>
-
-          {/* Modal for exit confirmation */}
-          {showModal && (
-            <div className="modal">
-              <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
-                <div className="row-buttons-container">
-                  <button className="btn close-btn" onClick={handleExit}>
-                    Exit
-                  </button>
-                  <button className="btn btn-secondary" onClick={handleCancel}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
+      {/* Modal for exit confirmation */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Are you sure you want to exit?</h3>
+            <p>All your changes will be discarded.</p>
+            <div className="row-buttons-container">
+              <button className="btn btn-danger" onClick={handleExit}>
+                Exit
+              </button>
+              <button className="btn btn-secondary" onClick={handleCancel}>
+                Cancel
+              </button>
             </div>
-          )}
-        </>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -22,7 +22,7 @@ const HomePage = ({
 
   // Toggle collapse
   const toggleCollapse = () => {
-    setIsCollapsed(prev => !prev);
+    setIsCollapsed((prev) => !prev);
   };
 
   // Fetch dei gruppi con joined = 1
@@ -51,10 +51,14 @@ const HomePage = ({
   return (
     <div className="home-page-container">
       {/* Overlay when notifications are expanded */}
-      {!isCollapsed && notifications.length !== 0 && <div className="overlay" onClick={toggleCollapse}></div>}
+      {!isCollapsed && notifications.length !== 0 && (
+        <div className="overlay" onClick={toggleCollapse}></div>
+      )}
 
       {/* Notifications Panel */}
-      <div className={`notifications-container ${isCollapsed ? "hide" : "show"}`}>
+      <div
+        className={`notifications-container ${isCollapsed ? "hide" : "show"}`}
+      >
         <div className="notifications-header" onClick={toggleCollapse}>
           <div>Recent Notifications</div>
           <span className="notif-badge">{notifications.length}</span>
@@ -70,37 +74,47 @@ const HomePage = ({
       </div>
 
       {/* Groups List */}
-      <div className="my-groups-container">
-        <h5>My Groups</h5>
-        {groups.length > 0 ? (
-          <ul>
-            {groups.map((group) => (
-              <li
-                key={group.id}
-                className="group-item mine"
-                onClick={() => {
-                  setFooterOption("Group");
-                  setGroup(group);
-                }}
-              >
-                <Link to={`/group/${group.id}`} state={{ group }} className="group-link">
-                  <img src={group.picture} alt={`${group.name} Icon`} className="group-icon" />
-                  <div className="my-group-info">
-                    <div className="group-name">{group.name}</div>
-                    <div className="group-level">{group.level}</div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No group found! You can create a group or join one.</p>
-        )}
-      </div>
+  
+        <h5 className="my-groups-header">My Groups</h5>
+        <div className="my-groups-container">
+          {groups.length > 0 ? (
+            <ul>
+              {groups.map((group) => (
+                <li
+                  key={group.id}
+                  className="group-item mine"
+                  onClick={() => {
+                    setFooterOption("Group");
+                    setGroup(group);
+                  }}
+                >
+                  <Link
+                    to={`/group/${group.id}`}
+                    state={{ group }}
+                    className="group-link"
+                  >
+                    <img
+                      src={group.picture}
+                      alt={`${group.name} Icon`}
+                      className="group-icon"
+                    />
+                    <div className="my-group-info">
+                      <div className="group-name">{group.name}</div>
+                      <div className="group-level">{group.level}</div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No group found! You can create a group or join one.</p>
+          )}
+        </div>
+
 
       {/* Create Group Button */}
-      <div className="create-container group">
-        <button className="create-button group" onClick={handleCreateGroup}>
+      <div className="create-container">
+        <button className="create-button" onClick={handleCreateGroup}>
           Create Group
         </button>
       </div>

@@ -94,8 +94,10 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
           <div className="modal-content">
             <h3>Are you sure you want to leave the group?</h3>
             <p>You can join it again whenever you want.</p>
-            <button onClick={handleLeaveGroup} className="btn btn-danger">Yes</button>
+            <div className="row-buttons-container">
+            <button onClick={handleLeaveGroup} className="btn btn-danger">Leave</button>
             <button onClick={() => setShowModal(false)} className="btn btn-secondary">Cancel</button>
+          </div>
           </div>
         </div>
       )}

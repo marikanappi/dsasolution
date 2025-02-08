@@ -193,7 +193,7 @@ const ChallengePage = ({ setFooterOption }) => {
 
   return (
     <div className="challenge-page">
-      {showStartModal && (
+      {/* {showStartModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>{challenge.title}</h2>
@@ -201,13 +201,13 @@ const ChallengePage = ({ setFooterOption }) => {
             <p>
               Time of Challenge: {Math.ceil((questions.length * 120) / 60)} min
             </p>
-            <button onClick={handleStart}>Start</button>
+            <button className="btn btn-success" onClick={handleStart}>Start</button>
           </div>
         </div>
-      )}
-      {!showStartModal && challenge && questions.length > 0 && (
+      )} */}
+      {showStartModal && challenge && questions.length > 0 && (
         <div>
-          <h1>Challenge: {challenge.title}</h1>
+          <h1>{challenge.title}</h1>
           {renderProgressBar()}
 
           <QuestionNavigation
@@ -266,9 +266,16 @@ const ChallengePage = ({ setFooterOption }) => {
             </div>
           </div>
 
-          <div className="challenge-button-group">
+          <div>
             {selectedAnswer && (
-              <button onClick={handleSubmitAnswer}>Confirm</button>
+              <div className="confirm-btn-container">
+                <button
+                  className="btn confirm-btn"
+                  onClick={handleSubmitAnswer}
+                >
+                  Confirm
+                </button>
+              </div>
             )}
 
             {currentQuestionIndex == questions.length - 1 && (

@@ -1,9 +1,10 @@
 /* Container styling */
 .question-navigation {
+  margin-top: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.5rem;
     padding: 0.9rem;
   }
   

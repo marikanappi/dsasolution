@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #333;
   margin: 0;
   padding: 0;
@@ -10,7 +10,12 @@ body {
   background-color: #f4f4f4;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
   color: #2c2c2c;
 }
@@ -46,17 +51,17 @@ h6 {
 }
 
 .mobile-content {
-  flex-grow: 1;  
-  padding-bottom: 40px; 
-  margin: 0; 
+  flex-grow: 1;
+  padding-bottom: 40px;
+  margin: 0;
 }
 
-.mobile-header{
+.mobile-header {
   height: 60px;
   background-color: #ffffff;
   align-items: center;
   display: flex;
-  box-shadow: 0 2px 5px rgba(126, 12, 130, 0.1); 
+  box-shadow: 0 2px 5px rgba(126, 12, 130, 0.1);
   position: fixed;
   top: 0;
   left: 0;
@@ -81,7 +86,7 @@ h6 {
 
 .icon {
   cursor: pointer;
-  color: #7A55C6;
+  color: #7a55c6;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -104,7 +109,7 @@ h6 {
 }
 
 .card-header {
-  background-color: #7A55C6; 
+  background-color: #7a55c6;
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
@@ -114,14 +119,12 @@ h6 {
 }
 
 .group-item {
- 
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
 
 .group-link {
-  
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -144,7 +147,7 @@ h6 {
 .icon-back-arrow {
   color: white;
   z-index: 3000;
-margin-top: 60px;
+  margin-top: 24px;
   font-size: 1.5rem; /* Puoi regolare la dimensione */
 }
 
@@ -200,7 +203,7 @@ margin-top: 60px;
   width: 8rem;
 }
 
-.close-btn {
+.btn-danger {
   background-color: #ff5f5f;
   color: white;
   padding: 8px 16px;
@@ -210,7 +213,6 @@ margin-top: 60px;
   margin-top: 10px;
   transition: 0.3s;
 }
-
 
 @media screen and (max-width: 1024px) {
   .mobile-frame {
@@ -222,4 +224,24 @@ margin-top: 60px;
   .group-name-header {
     font-size: 1.2rem; /* Riduci la dimensione del font per schermi più piccoli */
   }
+}
+
+.create-button {
+  font-weight: bold;
+  padding: 12px 20px;
+  background-color: #19D4A0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+
+}
+
+.create-container {
+  right: 22px;
+  bottom: 80px;
+  position: fixed;
 }
