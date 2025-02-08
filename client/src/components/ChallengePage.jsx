@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getQuestions, getAnswers } from "/../client/API.mjs";
-import { FaTrophy } from "react-icons/fa";
+import Modal from "./GroupModal.jsx";
 import "../css/challengepage.css";
 import QuestionNavigation from "./QuestionNavigation.jsx";
 
 const ChallengePage = ({ setFooterOption }) => {
+  const [showStartModal, setShowStartModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { challenge } = location.state || {};
@@ -31,14 +32,14 @@ const ChallengePage = ({ setFooterOption }) => {
       if (challenge) {
         const questionsData = await getQuestions(challenge.id);
         setQuestions(questionsData || []);
-        setAnswers([]);
+        setShowStartModal(true); // Show modal after fetching
       }
     };
     fetchQuestions();
   }, [challenge]);
 
   const totalQuestions = questions.length;
-  const totalTime = 300 * totalQuestions; // 2min for each question => Total time in seconds
+  const totalTime = 120 * totalQuestions; // 2min for each question => Total time in seconds
 
   useEffect(() => {
     if (questions.length > 0 && currentQuestionIndex < questions.length) {
@@ -185,20 +186,26 @@ const ChallengePage = ({ setFooterOption }) => {
     setFooterOption,
   ]);
 
-  const handleHello = () => {
-    if (
-      history.length > 0 &&
-      history.some((item) => item.question === currentQuestionIndex)
-    ) {
-      console.log("Historyyyy:", history);
-      console.log("HELLOOOOOOOOOO");
-      console.log("XXX: ", questions[currentQuestionIndex].id);
-    }
+  const handleStart = () => {
+    setShowStartModal(false);
+    setElapsedTime(0);
   };
 
   return (
     <div className="challenge-page">
-      {challenge && questions.length > 0 && (
+      {showStartModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>{challenge.title}</h2>
+            <p>Number of Questions: {questions.length}</p>
+            <p>
+              Time of Challenge: {Math.ceil((questions.length * 120) / 60)} min
+            </p>
+            <button onClick={handleStart}>Start</button>
+          </div>
+        </div>
+      )}
+      {!showStartModal && challenge && questions.length > 0 && (
         <div>
           <h1>Challenge: {challenge.title}</h1>
           {renderProgressBar()}
@@ -298,7 +305,6 @@ const ChallengePage = ({ setFooterOption }) => {
           )}
         </div>
       )}
-      
     </div>
   );
 };

@@ -2,15 +2,13 @@
 .group-page {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 30px;
   position: relative;
   padding-top: 20px;
-  height: 88vh;
-  background-color: #f4f4f4;
 }
 
 .group-card {
-  background: linear-gradient(135deg, #51009c, #6d0092);
+  background: linear-gradient(135deg, #7b54d1, #a77ffc);
   margin-bottom: 10px;
   text-align: center;
   width: 100%;
@@ -42,8 +40,8 @@
 /* Sezione dei tasti di azione */
 .action-buttons {
   display: flex;
-  flex-direction: column; 
-  width: 90%; 
+  flex-direction: column;
+  width: 90%;
   gap: 1rem;
   justify-content: center;
   align-self: center;
@@ -54,7 +52,7 @@
   background-color: #6a5acd;
   color: white;
   border: none;
-  border-radius: 50px; 
+  border-radius: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -64,18 +62,16 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   outline: none;
-} 
+}
 
 .chat-btn {
-  background: linear-gradient(135deg, #306f2a, #77e47b);
+  background: linear-gradient(135deg, #1cb982, #1edba9);
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
+  font-weight: bold;
 }
 
-.chat-btn:hover {
-  background: linear-gradient(135deg, #25b22c, #295a2b); /* Verde più scuro al passaggio del mouse */
-}
 
 .chat-btn svg {
   margin-right: 10px;
@@ -83,14 +79,12 @@
 
 /* Pulsante Challenge */
 .challenge-btn {
-  background: linear-gradient(135deg, #230e9a, #7cc0fb);
+  font-weight: bold;
+  background: linear-gradient(135deg, #63a6fd, #88c1fe);
+  
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
-}
-
-.challenge-btn:hover {
-  background: linear-gradient(135deg,#61a8e6, #230e9a);
 }
 
 .challenge-btn svg {
@@ -99,20 +93,20 @@
 
 /* Pulsante Materials */
 .materials-btn {
-  background: linear-gradient(135deg, #ed6509, #f3d16d); /* Arancione */
+  background: linear-gradient(135deg, #ffa94b, #fccf79);
+  font-weight: bold;
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
 }
 
 .materials-btn:hover {
-  background: linear-gradient(135deg,#fbc46c, #e5640e); 
+  background: linear-gradient(135deg, #fbc46c, #e5640e);
 }
 
 .materials-btn svg {
   margin-right: 10px;
 }
-
 
 /* Effetto focus per l'accessibilità */
 .action-btn:focus {
@@ -127,14 +121,13 @@
   color: #b70000;
 }
 
-.confirm-btn{
+.confirm-btn {
   background-color: #6e00ad;
 }
 
-.cancel-btn{
+.cancel-btn {
   background-color: #6e00ad;
 }
-
 
 /* Adattamento per dispositivi piccoli */
 @media screen and (max-width: 768px) {
@@ -148,7 +141,6 @@
     padding: 14px 0;
     margin-bottom: 15px;
   }
-
 }
 
 /* Aggiungi questo in fondo al CSS esistente */
@@ -164,57 +156,54 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
- }
- 
- .modal-content {
+}
+
+.modal-content {
   background: white;
   padding: 20px;
   border-radius: 10px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
- }
- 
- .modal-content h3 {
+}
+
+.modal-content h3 {
   color: #51009c;
   margin-bottom: 20px;
- }
- 
- .modal-content label {
+}
+
+.modal-content label {
   display: block;
   margin: 10px 0 5px;
   color: #333;
- }
- 
- .modal-content input,
- .modal-content select {
+}
+
+.modal-content input,
+.modal-content select {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
- }
- 
- .modal-content button {
+}
+
+.modal-content button {
   margin: 5px;
   padding: 8px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
- }
- 
- .modal-content button:disabled {
+}
+
+.modal-content button:disabled {
   background: #cccccc;
   cursor: not-allowed;
- }
- 
- .btn-primary {
-  background: #51009c;
+}
+
+
+
+.info-icon {
   color: white;
- }
- 
- .btn-secondary {
-  background: #6d0092;
-  color: white;
- }
+  margin: 5px;
+}

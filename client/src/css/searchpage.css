@@ -1,9 +1,11 @@
 .search-group-container {
+  position: relative;
   display: fixed;
   flex-direction: column;
-  background: linear-gradient(135deg, #51009c, #6d0092 50%);
-  height: 110vh;
-  overflow-y: hidden;
+  background: linear-gradient(135deg, #A77FFC , #7B54D1 );
+  overflow-y: auto;
+  min-height: 88vh;
+  max-height: 88vh;
 }
 
 .scrollable-cards {
@@ -11,15 +13,16 @@
   gap: 10px;
   overflow-x: auto; /* Scroll orizzontale */
   white-space: nowrap; /* Impedisce che le carte si disponano su più righe */
-  padding: 8px;
+  padding: 0px 8px;
   flex-shrink: 0; /* Assicura che il contenitore non venga compresso */
   scroll-behavior: smooth; /* Scorrimento fluido */
 }
 
 .suggested-groups-container {
-  background-color: #f4f4f4;
-  padding: 1px 10px 1px 0px;
-  border-radius: 0% 0px 60px 0px;
+  background-color: white;
+  padding: 1px 4px 1px 0px;
+  border-radius: 0% 0px 80px 0px;
+  overflow-x: hidden;
 }
 
 .suggested-group-name {
@@ -28,6 +31,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  color: #7A55C6;
 }
 
 .group-header {
@@ -49,6 +53,7 @@
 }
 
 .group-item.suggested-item {
+  background-color: #e6ddfa;
   flex-direction: column;
   width: 300px;
 }
@@ -64,7 +69,7 @@
 }
 
 .group-info div {
-  color: #fff;
+  color: #ffffff;
 }
 
 
@@ -80,14 +85,21 @@
 }
 
 h4 {
+  color: #333;
   margin-top: 20px;
   padding-left: 20px;
-  font-size: 22px;
+  font-size: 21px;
   margin-bottom: 10px;
 }
 
 .other-groups-container {
   margin-top: 30px;
+}
+
+.other-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .filters-container {
@@ -147,8 +159,8 @@ h4 {
 }
 
 .join-btn {
-  background-color: #FFE8CE;
-  color: #2c2c2c;  
+  background-color: #ffd079;
+  color: #7B54D1;  
   font-weight: bold;
   font-size: 18px;
   width: 35px;
@@ -164,19 +176,16 @@ h4 {
 
 /* When group is joined */
 .join-btn.joined {
-  background-color: rgb(26, 149, 26);
+  background-color: #19D4A0;
   color: white;
   transform: scale(1.1); /* Slight animation effect */
 }
 
 
-.other-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
+
 
 .group-level {
+  color: #7A55C6;
   font-size: small;
 }
 
@@ -228,19 +237,17 @@ h4 {
 }
 
 /* Close Button */
-.modal-close-btn {
-  background-color: #ff5f5f;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
-}
 
-.modal-close-btn:hover {
-  background-color: #e04848;
+
+
+.form-control.search {
+  border-radius: 10px;
+  border: none;
+}
+.btn-filter {
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
 }
 
 /* Animations */

@@ -1,12 +1,13 @@
 /* General Styles */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #e4e4e4;
   color: #333;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
+  background-color: #f4f4f4;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,18 +45,12 @@ h6 {
   margin-left: 10px;
 }
 
-.mobile-frame {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-}
-
 .mobile-content {
-  flex-grow: 1; /* Spinge il footer verso il basso */
-  overflow-y: auto; /* Rende scrollabile il contenuto principale se necessario */
-  padding-top: 40px; /* Distanza per non coprire l'header */
-  padding-bottom: 40px; /* Distanza per non coprire il footer */
-  margin: 0; /* Assicurati che non ci siano margini */
+  
+  flex-grow: 1;  
+  padding-top: 40px; 
+  padding-bottom: 40px; 
+  margin: 0; 
 }
 
 .mobile-header{
@@ -88,7 +83,7 @@ h6 {
 
 .icon {
   cursor: pointer;
-  color: rgb(110, 0, 173);
+  color: #7A55C6;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -111,7 +106,7 @@ h6 {
 }
 
 .card-header {
-  background-color: rgb(110, 0, 173); 
+  background-color: #7A55C6; 
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
@@ -121,12 +116,14 @@ h6 {
 }
 
 .group-item {
+ 
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
 
 .group-link {
+  
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -147,7 +144,7 @@ h6 {
 }
 
 .icon-back-arrow {
-  color: #6e008d; /* Freccia viola */
+  color: #7A55C6; /* Freccia viola */
   margin-left: -10px;
   font-size: 1.5rem; /* Puoi regolare la dimensione */
 }
@@ -194,6 +191,25 @@ h6 {
   margin: 10px;
   padding: 10px;
   cursor: pointer;
+}
+
+.btn-success {
+  background-color: #1cb982;
+}
+
+.row-buttons-container .btn {
+  width: 8rem;
+}
+
+.close-btn {
+  background-color: #ff5f5f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
 }
 
 

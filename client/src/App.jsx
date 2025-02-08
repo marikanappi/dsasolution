@@ -174,10 +174,11 @@ const MobileAppSimulator = () => {
         <div className="modal">
           <div className="modal-content">
             <h3>Are you sure you want to exit?</h3>
-            <h3>Are you sure you want to exit?</h3>
             <p>All your changes will be discarded.</p>
-            <button className="btn btn-danger" onClick={handleExit}>Exit</button>
+            <div className="row-buttons-container">
+            <button className="btn close-btn" onClick={handleExit}>Exit</button>
             <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+          </div>
           </div>
         </div>
       )}

@@ -22,8 +22,7 @@ const HomePage = ({
 
   // Toggle collapse
   const toggleCollapse = () => {
-    const newCollapsedState = !isCollapsed;
-    setIsCollapsed(newCollapsedState);
+    setIsCollapsed(prev => !prev);
   };
 
   // Fetch dei gruppi con joined = 1
@@ -51,33 +50,26 @@ const HomePage = ({
 
   return (
     <div className="home-page-container">
-      {/* Sezione Notifiche */}
-      {(notifications.length > 0 || !isCollapsed) && (
-        <div
-          className={`notifications-container ${
-            notifications.length === 0
-              ? "hide-notifications"
-              : "show-notifications"
-          }`}
-        >
-          <div className="notifications-header" onClick={toggleCollapse}>
-            <div>Recent Notifications</div>
-            <span className="notif-badge">{notifications.length}</span>
-          </div>
+      {/* Overlay when notifications are expanded */}
+      {!isCollapsed && notifications.length !== 0 && <div className="overlay" onClick={toggleCollapse}></div>}
 
-          {/* Keep Notification in the DOM for smooth collapse */}
-          <div
-            className={`notifications-content ${isCollapsed ? "hide" : "show"}`}
-          >
-            <Notification
-              notifications={notifications}
-              setNotifications={setNotifications}
-              groups={groups}
-            />
-          </div>
+      {/* Notifications Panel */}
+      <div className={`notifications-container ${isCollapsed ? "hide" : "show"}`}>
+        <div className="notifications-header" onClick={toggleCollapse}>
+          <div>Recent Notifications</div>
+          <span className="notif-badge">{notifications.length}</span>
         </div>
-      )}
 
+        <div className="notifications-content">
+          <Notification
+            notifications={notifications}
+            setNotifications={setNotifications}
+            groups={groups}
+          />
+        </div>
+      </div>
+
+      {/* Groups List */}
       <div className="my-groups-container">
         <h5>My Groups</h5>
         {groups.length > 0 ? (
@@ -85,24 +77,15 @@ const HomePage = ({
             {groups.map((group) => (
               <li
                 key={group.id}
-                className="group-item"
+                className="group-item mine"
                 onClick={() => {
                   setFooterOption("Group");
                   setGroup(group);
-                  group = { group };
                 }}
               >
-                <Link
-                  to={`/group/${group.id}`}
-                  state={{ group }}
-                  className="group-link"
-                >
-                  <img
-                    src={group.picture} 
-                    alt={`${group.name} Icon`}
-                    className="group-icon"
-                  />
-                  <div>
+                <Link to={`/group/${group.id}`} state={{ group }} className="group-link">
+                  <img src={group.picture} alt={`${group.name} Icon`} className="group-icon" />
+                  <div className="my-group-info">
                     <div className="group-name">{group.name}</div>
                     <div className="group-level">{group.level}</div>
                   </div>
@@ -111,25 +94,13 @@ const HomePage = ({
             ))}
           </ul>
         ) : (
-          <p>Nessun gruppo trovato. Crea un nuovo gruppo!</p>
+          <p>No group found! You can create a group or join one.</p>
         )}
       </div>
 
-      {tooltipModal.visible && (
-        <div className="tooltip-modal">
-          <p>{tooltipModal.text}</p>
-          <button
-            className="create-group-button"
-            onClick={() => setTooltipModal({ visible: false, text: "" })}
-          >
-            Close
-          </button>
-        </div>
-      )}
-
-      {/* Pulsante per creare un nuovo gruppo */}
-      <div className="create-group-container">
-        <button className="create-group-button" onClick={handleCreateGroup}>
+      {/* Create Group Button */}
+      <div className="create-container group">
+        <button className="create-button group" onClick={handleCreateGroup}>
           Create Group
         </button>
       </div>
@@ -138,3 +109,15 @@ const HomePage = ({
 };
 
 export default HomePage;
+
+// {tooltipModal.visible && (
+//   <div className="tooltip-modal">
+//     <p>{tooltipModal.text}</p>
+//     <button
+//       className="create-group-button"
+//       onClick={() => setTooltipModal({ visible: false, text: "" })}
+//     >
+//       Close
+//     </button>
+//   </div>
+// )}

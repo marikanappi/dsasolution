@@ -18,6 +18,7 @@ const Challenges = ({ setFooterOption, group }) => {
       console.log("Loading challenges for group:", group.id);
       const challengesData = await getChallenge(group.id);
       if (challengesData) {
+        console.log("Challenges loaded:", challengesData);
         setChallenges(challengesData);
       }
     };
@@ -27,13 +28,14 @@ const Challenges = ({ setFooterOption, group }) => {
 
   return (
     <div className="challenges-container">
-      <div className="challenge-title">
-        <FaTrophy size={100} />
-        <span className="challenge-group-name">
-          {" "}
-          Challenges for Group {group.name}{" "}
-        </span>
-      </div>
+        <div className="challenge-title">
+          <FaTrophy className="left-header-icon" size={88} />
+          <span className="challenge-group-name">
+            Challenges for Group {group.name}
+          </span>
+        </div>
+        
+
       <div className="scrollable-challenges">
         <div className="row text-center challenge-grid">
           {challenges.length === 0 ? (
@@ -55,9 +57,11 @@ const Challenges = ({ setFooterOption, group }) => {
             ))
           )}
         </div>
-        <div className="generate-button-container">
+      </div>
+
+      <div className="create-container challenge">
           <button
-            className="generate-button"
+            className="create-button group"
             onClick={() => {
               navigate("/create-challenge");
               setFooterOption("NewChallenge");
@@ -67,7 +71,6 @@ const Challenges = ({ setFooterOption, group }) => {
             Generate Challenge
           </button>
         </div>
-      </div>
     </div>
   );
 };

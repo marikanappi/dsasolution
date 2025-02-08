@@ -3,6 +3,7 @@ import { getAllGroups, joinGroup } from "../../api"; // Import API
 import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
 import { FaCheck, FaQuestionCircle } from "react-icons/fa"; // Icona spunta verde
+import GroupModal from "./GroupModal";
 
 const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -200,6 +201,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         </p>
         {group.level && <p>Level: {group.level}</p>}
         {group.SLD && <p>SLD: {group.SLD}</p>}
+        <div className="row-buttons-container">
         <button
           className="btn btn-success"
           onClick={() => onConfirmJoin(group)}
@@ -209,6 +211,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         <button className="btn btn-secondary" onClick={onClose}>
           Cancel
         </button>
+        </div>
       </div>
     </div>
   );
@@ -220,13 +223,13 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         <div className="d-flex mb-3">
           <input
             type="text"
-            className="form-control"
+            className="form-control search"
             placeholder="Search for groups..."
             style={{ flex: 1 }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="btn btn-light filter-btn" onClick={toggleFilters}>
+          <button className="btn btn-filter" onClick={toggleFilters}>
             <FaFilter />
           </button>
         </div>
@@ -348,31 +351,13 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       )}
 
       {selectedGroup && (
-        <div className="modal-overlay" onClick={() => setSelectedGroup(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selectedGroup.picture}
-              alt={selectedGroup.name}
-              className="modal-group-image"
-            />
-            <h2 className="modal-group-name">{selectedGroup.name}</h2>
-            <p className="modal-group-university">{selectedGroup.university}</p>
-            <p className="modal-group-level">{selectedGroup.level}</p>
-            <p className="modal-group-desc">{selectedGroup.description}</p>
-            <p className="modal-group-participants">
-              Participants: {selectedGroup.numberOfPartecipants}
-            </p>
-            <button
-              className="modal-close-btn"
-              onClick={() => setSelectedGroup(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <GroupModal selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup} />
       )}
     </div>
   );
 };
 
 export default SearchGroup;
+
+
+  

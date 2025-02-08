@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaComment, FaTrophy, FaFileAlt, FaSignOutAlt, FaEdit, FaInfoCircle } from "react-icons/fa";
+import { FaComment, FaTrophy, FaFileAlt, FaSignOutAlt, FaEdit, FaInfoCircle, FaBars  } from "react-icons/fa";
 import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
+import GroupModal from "./GroupModal";
 
 const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
         <h2 className="group-card-title">{group.name}</h2>
        
         {/* Icona per la descrizione */}
-        <FaInfoCircle 
+        <FaBars 
           size={25} 
           className="info-icon" 
           onClick={() => setShowInfoModal(true)} 
@@ -154,17 +155,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
 
       {/* Modal per la descrizione del gruppo */}
       {showInfoModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Info Group</h3>
-            <p>{group.description}</p>
-            <span>{group.SLD} - {group.level}</span>
-            <span>{group.university} {group.number_of_participants}</span>
-            <button onClick={() => setShowInfoModal(false)} className="btn btn-secondary">
-              Close
-            </button>
-          </div>
-        </div>
+        <GroupModal selectedGroup={group} setSelectedGroup={setShowInfoModal} />
       )}
     </div>
   );
