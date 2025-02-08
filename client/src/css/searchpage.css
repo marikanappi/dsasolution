@@ -3,9 +3,12 @@
   display: fixed;
   flex-direction: column;
   background: linear-gradient(135deg, #A77FFC , #7B54D1 );
+}
+
+.search-groups {
   overflow-y: auto;
-  min-height: 88vh;
-  max-height: 88vh;
+  min-height: 94vh;
+  max-height: 94vh;
 }
 
 .scrollable-cards {
@@ -19,6 +22,7 @@
 }
 
 .suggested-groups-container {
+  margin-top: 100px;
   background-color: white;
   padding: 1px 4px 1px 0px;
   border-radius: 0% 0px 80px 0px;
@@ -182,15 +186,19 @@ h4 {
 }
 
 
-
-
 .group-level {
   color: #7A55C6;
   font-size: small;
 }
 
 .search-and-filter-container {
+  background-color: #A77FFC;
+  width: 100%;
   padding: 40px 20px 5px 10px;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .other-title {

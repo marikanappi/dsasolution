@@ -46,9 +46,7 @@ h6 {
 }
 
 .mobile-content {
-  
   flex-grow: 1;  
-  padding-top: 40px; 
   padding-bottom: 40px; 
   margin: 0; 
 }
@@ -144,8 +142,9 @@ h6 {
 }
 
 .icon-back-arrow {
-  color: #7A55C6; /* Freccia viola */
-  margin-left: -10px;
+  color: white;
+  z-index: 3000;
+margin-top: 60px;
   font-size: 1.5rem; /* Puoi regolare la dimensione */
 }
 

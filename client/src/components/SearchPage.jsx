@@ -129,7 +129,9 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       {/* Second Row: University, Level & Join Button */}
       <div className="info">
         <div className="group-text">
-          <div className="group-level">{group.level} - {group.SLD}</div>
+          <div className="group-level">
+            {group.level} - {group.SLD}
+          </div>
         </div>
         <button
           className={`join-btn ${
@@ -158,7 +160,9 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       </div>
       <div className="group-info">
         <div className="group-name">{group.name}</div>
-        <div className="group-level">{group.level} - {group.SLD}</div>
+        <div className="group-level">
+          {group.level} - {group.SLD}
+        </div>
       </div>
       <button
         className={`join-btn ${
@@ -202,15 +206,15 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         {group.level && <p>Level: {group.level}</p>}
         {group.SLD && <p>SLD: {group.SLD}</p>}
         <div className="row-buttons-container">
-        <button
-          className="btn btn-success"
-          onClick={() => onConfirmJoin(group)}
-        >
-          Join
-        </button>
-        <button className="btn btn-secondary" onClick={onClose}>
-          Cancel
-        </button>
+          <button
+            className="btn btn-success"
+            onClick={() => onConfirmJoin(group)}
+          >
+            Join
+          </button>
+          <button className="btn btn-secondary" onClick={onClose}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -258,74 +262,76 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         )}
       </div>
 
-      <div className="suggested-groups-container">
-        <h4>
-          Suggested for You
+      <div className="search-groups">
+        <div className="suggested-groups-container">
+          <h4>
+            Suggested for You
+            <FaQuestionCircle
+              className="help-icon ms-2"
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                setTooltipModal({
+                  visible: true,
+                  text: "These groups are suggested for you based on the university you attend.",
+                })
+              }
+            />
+          </h4>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <ul className="scrollable-cards">
+                {filteredSuggestedGroups.length > 0 ? (
+                  filteredSuggestedGroups.map((group) => (
+                    <SuggestedGroupCard
+                      key={group.id}
+                      group={group}
+                      onClick={() => handleJoinGroup(group)}
+                      isSuggested={true}
+                    />
+                  ))
+                ) : (
+                  <p>No groups found.</p>
+                )}
+              </ul>
+            </>
+          )}
+        </div>
+
+        {/* Altri Gruppi */}
+        <h4 className="other-title">
+          Other Groups
           <FaQuestionCircle
-            className="help-icon ms-2"
+            className="help-icon light ms-2"
             style={{ cursor: "pointer" }}
             onClick={() =>
               setTooltipModal({
                 visible: true,
-                text: "These groups are suggested for you based on the university you attend.",
+                text: "These groups are from other universities.",
               })
             }
           />
         </h4>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <ul className="scrollable-cards">
-              {filteredSuggestedGroups.length > 0 ? (
-                filteredSuggestedGroups.map((group) => (
-                  <SuggestedGroupCard
-                    key={group.id}
-                    group={group}
-                    onClick={() => handleJoinGroup(group)}
-                    isSuggested={true}
-                  />
-                ))
-              ) : (
-                <p>No groups found.</p>
-              )}
+
+        <div className="other-groups-container">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : filteredOtherGroups.length > 0 ? (
+            <ul>
+              {filteredOtherGroups.map((group) => (
+                <OtherGroupCard
+                  key={group.id}
+                  group={group}
+                  onClick={() => handleJoinGroup(group)}
+                  isSuggested={false}
+                />
+              ))}
             </ul>
-          </>
-        )}
-      </div>
-
-      {/* Altri Gruppi */}
-      <h4 className="other-title">
-        Other Groups
-        <FaQuestionCircle
-          className="help-icon light ms-2"
-          style={{ cursor: "pointer" }}
-          onClick={() =>
-            setTooltipModal({
-              visible: true,
-              text: "These groups are from other universities.",
-            })
-          }
-        />
-      </h4>
-
-      <div className="other-groups-container">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : filteredOtherGroups.length > 0 ? (
-          <ul>
-            {filteredOtherGroups.map((group) => (
-              <OtherGroupCard
-                key={group.id}
-                group={group}
-                onClick={() => handleJoinGroup(group)}
-                isSuggested={false}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p>No other groups found.</p>
-        )}
+          ) : (
+            <p>No other groups found.</p>
+          )}
+        </div>
       </div>
 
       {/* Tooltip Modal */}
@@ -351,13 +357,13 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       )}
 
       {selectedGroup && (
-        <GroupModal selectedGroup={selectedGroup} setSelectedGroup={setSelectedGroup} />
+        <GroupModal
+          selectedGroup={selectedGroup}
+          setSelectedGroup={setSelectedGroup}
+        />
       )}
     </div>
   );
 };
 
 export default SearchGroup;
-
-
-  

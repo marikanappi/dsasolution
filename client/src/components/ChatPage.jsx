@@ -167,6 +167,7 @@ const Chat = ({ setFooterOption, group }) => {
 
   return (
     <div className="chat-page">
+      <div className="chat-header"></div>
       <div className="chat-container">
         {messages.map((msg, index) => (
           <div

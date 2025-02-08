@@ -4,7 +4,19 @@
   background-color: #f9f9f9;
 }
 
+.chat-header {
+  z-index:500;
+  position: fixed;
+  background-color: #a77ffc;
+  height: 55px;
+  width: 100%;
+  color:white;
+  align-content: center;
+  justify-content: center;
+}
+
 .chat-container {
+  margin-top: 40px;
   padding: 30px 0px 20px 0px;
   display: flex;
   flex-direction: column;

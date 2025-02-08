@@ -1,7 +1,7 @@
 .challenges-container {
   overflow-x: hidden;
   width: 100%;
-  padding-top: 20px;
+
   position: relative;
   display: fixed;
   flex-direction: column;
@@ -16,7 +16,7 @@
   align-items: center;
   width: 100%;
   position: fixed;
-  height: 220px;
+  height: 240px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra per un effetto di profondità */
   display: flex;
   padding: 25px;
@@ -117,5 +117,5 @@
 .left-header-icon {
   position: absolute;
   left: 16px;
-  top: 60px;
+  top: 70px;
 }
