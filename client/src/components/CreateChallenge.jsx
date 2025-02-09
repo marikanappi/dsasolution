@@ -4,6 +4,8 @@ import { createChallenge, getTopics } from "../../API.mjs";
 import "../css/createChallenge.css"; // Import the CSS file
 import { Challenge } from "../DSAmodel.mjs";
 import { FaQuestionCircle } from "react-icons/fa";
+import { PiCat } from "react-icons/pi";
+import TooltipCat from "./TooltipCat";
 
 const NewChallenge = ({ setFooterOption, group }) => {
   const [title, setTitle] = useState("");
@@ -87,19 +89,18 @@ const NewChallenge = ({ setFooterOption, group }) => {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="externalMaterial">
-            External Material
-            <FaQuestionCircle
-              className="help-icon ms-2"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                setTooltipModal({
-                  visible: true,
-                  text: "You can attach PDF files or images. The attached file will be used by AI to generate challenge.",
-                })
-              }
-            />
-          </label>
+          <label htmlFor="externalMaterial">External Material</label>
+          <PiCat
+            className="help-icon ms-2"
+            size={30}
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              setTooltipModal({
+                visible: !tooltipModal.visible,
+                text: "You can attach PDF files or images. The attached file will be used by AI to generate challenge.",
+              })
+            }
+          />
           <input
             type="file"
             id="externalMaterial"
@@ -125,19 +126,10 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       </form>
 
-      {tooltipModal.visible && (
-        <div className="modal">
-        <div className="modal-content">
-          <p>{tooltipModal.text}</p>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setTooltipModal({ visible: false, text: "" })}
-          >
-            Close
-          </button>
-        </div>
-        </div>
-      )}
+      <TooltipCat
+        tooltipModal={tooltipModal}
+        setTooltipModal={setTooltipModal}
+      ></TooltipCat>
     </div>
   );
 };

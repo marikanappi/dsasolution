@@ -1,0 +1,45 @@
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dialog-box {
+    position: fixed;
+    bottom: 160px; /* Adjust based on your SVG size */
+    left: 70px;
+    width: 240px; /* Match the SVG size */
+  }
+  
+  .dialog-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .dialog-text {
+    position: absolute;
+    top: 50%; /* Adjust based on your SVG */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    width: 70%;
+  }
+  
+  .close-btn {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    padding: 3px 6px;
+    cursor: pointer;
+  }
+
+  .help-icon.cat {
+    position: fixed;
+    bottom: 150px;
+    margin-left: 20px;
+  }
+  
