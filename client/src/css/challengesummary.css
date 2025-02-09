@@ -25,7 +25,7 @@
   
   /* Contenitore dei dettagli del riepilogo */
   .summary-content {
-    margin: 70px 0px 20px;
+    margin: 60px 0px 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -50,9 +50,20 @@
   
   /* Icona della coppa per le risposte corrette */
   .summary-icon {
-    color: #ffd700; /* Colore oro per l'icona */
+    color: #ffa94b; /* Colore oro per l'icona */
     font-size: 1.5rem;
     margin-right: 10px;
+  }
+
+  .score-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .score-item span {
+    font-weight: bold;
+    color: #ffa94b;
+    font-size: 18px;
   }
   
   /* Aggiungi uno spazio tra il titolo e il contenuto */
@@ -65,6 +76,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 20px;
+    color: #555;
   }
 
   
