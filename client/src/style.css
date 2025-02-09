@@ -87,12 +87,12 @@ h6 {
 .icon {
   cursor: pointer;
   color: #7a55c6;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease; /* Keep your existing transitions */
 }
 
-.icon:hover {
-  transform: scale(1.2);
-  color: #ac00b6;
+/* Style for selected icon */
+.icon.selected {  /* Or .icon[aria-selected="true"] if using aria attributes */
+  transform: scale(1.5); /* Make it bigger when selected */
 }
 
 .logo {
@@ -226,6 +226,7 @@ h6 {
   }
 }
 
+
 .create-button {
   font-weight: bold;
   padding: 12px 20px;
@@ -235,15 +236,18 @@ h6 {
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-
+  font-size: 26px;
+  /*display: block; /* Make the button a block element */
+  /*margin: 0 auto; /* Center horizontally */
 }
 
 .create-container {
-  right: 22px;
-  bottom: 80px;
+  width: 100%; /* Ensure full width for centering context */
+  display: flex; /* Use flexbox for centering */
   position: fixed;
+  bottom: 80px; /* Position the container 80px from the bottom */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically (if needed) */
 }
 
 .wide-button-container {
