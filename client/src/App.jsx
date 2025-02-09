@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
   const [group, setGroup] = useState();
+  const [selectedIcon, setSelectedIcon] = useState("Home");
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [notifications, setNotifications] = useState([
@@ -32,6 +33,7 @@ const MobileAppSimulator = () => {
 
   const navigateTo = (path, option) => {
     setFooterOption(option);
+    setSelectedIcon(option); // Update selected icon state
     navigate(path);
   };
 
@@ -213,32 +215,32 @@ const MobileAppSimulator = () => {
         <FaHome
           onClick={() => {
             if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack(); // Handle the "goBack" case if it's one of the special pages
+              goBack();
             } else {
-              navigateTo("/", "Home"); // Navigate to home
+              navigateTo("/", "Home");
             }
           }}
-          className="icon"
+          className={`icon ${selectedIcon === "Home" ? "selected" : ""}`} // Add selected class
         />
         <FaSearch
           onClick={() => {
             if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack(); // Handle the "goBack" case if it's one of the special pages
+              goBack();
             } else {
-              navigateTo("/search", "Search"); // Navigate to search page
+              navigateTo("/search", "Search");
             }
           }}
-          className="icon"
+          className={`icon ${selectedIcon === "Search" ? "selected" : ""}`} // Add selected class
         />
         <FaUser
           onClick={() => {
             if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack(); // Handle the "goBack" case if it's one of the special pages
+              goBack();
             } else {
-              navigateTo("/profile", "Profile"); // Navigate to profile page
+              navigateTo("/profile", "Profile");
             }
           }}
-          className="icon"
+          className={`icon ${selectedIcon === "Profile" ? "selected" : ""}`} // Add selected class
         />
       </footer>
 

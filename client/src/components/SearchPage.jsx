@@ -62,7 +62,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
     if (
       filtersRef.current &&
       !filtersRef.current.contains(e.target) &&
-      !e.target.closest(".filter-btn")
+      !e.target.closest(".btn-filter") // Assicurati che il bottone abbia questa classe
     ) {
       closeFilters();
     }
@@ -74,6 +74,11 @@ const SearchGroup = ({ notifications, setNotifications }) => {
     }
     return () => document.removeEventListener("click", handleClickOutside);
   }, [filtersVisible]);
+
+  const handleCloseModal = () => {
+    setSelectedGroup(null); // Close the modal
+    setConfirmJoin(null);
+  }
 
   const handleConfirmJoin = async (group) => {
     try {
