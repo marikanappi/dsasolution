@@ -1,19 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  FaMicrophone,
-  FaPaperclip,
-  FaCamera,
-  FaPaperPlane,
-  FaPlay,
-} from "react-icons/fa";
+import { FaMicrophone, FaPaperclip, FaPaperPlane } from "react-icons/fa";
 import "../css/chatpage.css";
-import { addMaterial } from "../../API.mjs";
 
 const predefinedResponses = {
-  "When is the next meeting?":
-    "The next meeting is scheduled for Friday at 3 PM.",
-  "Can someone share the latest notes?":
-    "Sure! Here is the latest document: [link]",
+  "When is the next meeting?": "The next meeting is scheduled for Friday at 3 PM.",
+  "Can someone share the latest notes?": "Sure! Here is the latest document: [link]",
   "Who is the group admin?": "The group admin is John Doe.",
 };
 
@@ -32,20 +23,45 @@ const documentResponses = [
   "Perfect, just what I needed!",
 ];
 
+const imageResponses = [
+  "Nice picture!",
+  "Looks great!",
+  "Awesome shot!",
+  "Thanks for sharing!",
+  "Cool image!",
+];
+
 const Chat = ({ setFooterOption, group }) => {
   const [messages, setMessages] = useState([
-    { text: `Welcome to ${group?.name} chat`, isUserMessage: false },
+    { text: `Welcome to ${group?.name} chat`, isUserMessage: false, sender: "Marika" },
   ]);
   const [newMessage, setNewMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-  const fileInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
 
   useEffect(() => {
     setFooterOption("Chat");
-  }, []);
+  }, [setFooterOption]);
+
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      setMessages((prev) => [
+        ...prev,
+        { text: newMessage, isUserMessage: true, sender: "Mario" },
+      ]);
+
+      if (predefinedResponses[newMessage]) {
+        setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            { text: predefinedResponses[newMessage], isUserMessage: false, sender: "Marika" },
+          ]);
+        }, 500);
+      }
+      setNewMessage("");
+    }
+  };
 
   const handleFileSelection = async (file) => {
     if (!file) return;
@@ -80,35 +96,16 @@ const Chat = ({ setFooterOption, group }) => {
             isUserMessage: true,
             fileUrl: data.material.name,
           },
-          {
-            text: documentResponses[
-              Math.floor(Math.random() * documentResponses.length)
-            ],
-            isUserMessage: false,
-          },
         ]);
+
+        setTimeout(() => {
+          const responseList = type === "image" ? imageResponses : documentResponses;
+          const response = responseList[Math.floor(Math.random() * responseList.length)];
+          setMessages((prev) => [...prev, { text: response, isUserMessage: false, sender: "Marika" }]);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-    }
-  };
-
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      setMessages((prev) => [
-        ...prev,
-        { text: newMessage, isUserMessage: true },
-      ]);
-
-      if (predefinedResponses[newMessage]) {
-        setTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
-            { text: predefinedResponses[newMessage], isUserMessage: false },
-          ]);
-        }, 500);
-      }
-      setNewMessage("");
     }
   };
 
@@ -135,7 +132,7 @@ const Chat = ({ setFooterOption, group }) => {
           const audioUrl = URL.createObjectURL(audioBlob);
           setMessages((prev) => [
             ...prev,
-            { audio: audioUrl, isUserMessage: true },
+            { audio: audioUrl, isUserMessage: true, sender: "Mario" },
           ]);
 
           setTimeout(() => {
@@ -143,7 +140,7 @@ const Chat = ({ setFooterOption, group }) => {
               audioResponses[Math.floor(Math.random() * audioResponses.length)];
             setMessages((prev) => [
               ...prev,
-              { text: response, isUserMessage: false },
+              { text: response, isUserMessage: false, sender: "Marika" },
             ]);
           }, 1000);
         };
@@ -159,23 +156,14 @@ const Chat = ({ setFooterOption, group }) => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSendMessage();
-    }
-  };
-
   return (
     <div className="chat-page">
       <div className="chat-header"></div>
       <div className="chat-container">
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={msg.isUserMessage ? "message user" : "message received"}
-          >
+          <div key={index} className={msg.isUserMessage ? "message user" : "message received"}>
             <div className="message-text">
-              {msg.text && <p>{msg.text}</p>}
+              <strong>{msg.sender}:</strong> {msg.text && <p>{msg.text}</p>}
               {msg.audio && (
                 <audio controls>
                   <source src={msg.audio} type="audio/wav" />
@@ -183,11 +171,7 @@ const Chat = ({ setFooterOption, group }) => {
                 </audio>
               )}
               {msg.fileUrl && msg.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                <img
-                  src={msg.fileUrl}
-                  alt="Attached file"
-                  style={{ maxWidth: "200px" }}
-                />
+                <img src={msg.fileUrl} alt="Attached file" style={{ maxWidth: "200px" }} />
               ) : msg.fileUrl ? (
                 <a href={msg.fileUrl} target="_blank" rel="noopener noreferrer">
                   View attachment
@@ -198,30 +182,21 @@ const Chat = ({ setFooterOption, group }) => {
         ))}
       </div>
       <div className="input-container">
-        <div className="action-buttons left">
-          <FaPaperclip
-            className="action-icon"
-            onClick={() => document.getElementById("fileInput").click()}
-          />
-        </div>
+        <FaPaperclip className="action-icon" onClick={() => document.getElementById("fileInput").click()} />
         <input
-        className="chat-input"
+          className="chat-input"
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Write a message..."
         />
-        <div className="action-buttons right">
         <FaMicrophone
-            onClick={handleMicrophoneClick}
-            className={`action-icon ${isRecording ? "recording" : ""}`}
-            style={{ color: isRecording ? "red" : "black" }}
-          />
-          <FaPaperPlane
-            className="action-icon send"
-            onClick={handleSendMessage}
-          />
-        </div>
+          onClick={handleMicrophoneClick}
+          className={`action-icon ${isRecording ? "recording" : ""}`}
+          style={{ color: isRecording ? "red" : "black" }}
+        />
+
+        <FaPaperPlane className="action-icon send" onClick={handleSendMessage} />
         <input
           type="file"
           id="fileInput"

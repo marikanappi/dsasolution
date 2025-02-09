@@ -72,10 +72,6 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
       const data = await result.json();
       const fileUrl = data.material.name;
-
-      // Aggiungi ai materiali del gruppo
-      await addMaterial(group.id, fileUrl, type);
-
       alert(`File "${file.name}" caricato con successo!`);
       setFile(null);
       setFilePreview(null);

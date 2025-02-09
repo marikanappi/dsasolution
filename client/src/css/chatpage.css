@@ -69,6 +69,8 @@
 }
 
 .input-container {
+  padding: 12px 0; /* Increased padding slightly */
+  margin-bottom: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,21 +80,21 @@
   bottom: 0;
   width: 100%;
   background-color: #f9f9f9;
-  padding: 8px 0;
   z-index: 10;
-  margin-bottom: 60px;
 }
 
 .microphone-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
+  padding: 8px; /* Increased padding */
   border-radius: 50%;
   background-color: #f0f0f0;
   transition: background-color 0.3s;
   cursor: pointer;
+  font-size: 1.2rem; /* Increased icon size */
 }
+
 
 .microphone-icon:hover {
   background-color: #e0e0e0;
@@ -100,12 +102,12 @@
 
 input[type="text"] {
   flex-grow: 1;
-  padding: 10px;
   margin-left: 10px;
   border: 1px solid #4751b8;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 16px; /* Slightly smaller input text */
   outline: none;
+  padding: 8px; /* Added some vertical padding to the input */
 }
 
 input[type="text"]:focus {
@@ -113,19 +115,17 @@ input[type="text"]:focus {
 }
 
 button {
-  padding: 10px 20px;
+  padding: 8px 16px; /* Slightly smaller button padding */
   margin-left: 10px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px; /* Slightly smaller button text */
 }
 
-button:hover {
-  background-color: #0056b3;
-}
+
 
 .error {
   color: red;
