@@ -13,10 +13,6 @@ const HomePage = ({
 }) => {
   const [groups, setGroups] = useState([]); // Gruppi con joined = 1
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [tooltipModal, setTooltipModal] = useState({
-    visible: false,
-    text: "",
-  });
 
   const navigate = useNavigate(); // Usa il hook per la navigazione
 
@@ -74,43 +70,42 @@ const HomePage = ({
       </div>
 
       {/* Groups List */}
-  
-        <h5 className="my-groups-header">My Groups</h5>
-        <div className="my-groups-container">
-          {groups.length > 0 ? (
-            <ul>
-              {groups.map((group) => (
-                <li
-                  key={group.id}
-                  className="group-item mine"
-                  onClick={() => {
-                    setFooterOption("Group");
-                    setGroup(group);
-                  }}
-                >
-                  <Link
-                    to={`/group/${group.id}`}
-                    state={{ group }}
-                    className="group-link"
-                  >
-                    <img
-                      src={group.picture}
-                      alt={`${group.name} Icon`}
-                      className="group-icon"
-                    />
-                    <div className="my-group-info">
-                      <div className="group-name">{group.name}</div>
-                      <div className="group-level">{group.level}</div>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No group found! You can create a group or join one.</p>
-          )}
-        </div>
 
+      <h5 className="my-groups-header">My Groups</h5>
+      <div className="my-groups-container">
+        {groups.length > 0 ? (
+          <ul>
+            {groups.map((group) => (
+              <li
+                key={group.id}
+                className="group-item mine"
+                onClick={() => {
+                  setFooterOption("Group");
+                  setGroup(group);
+                }}
+              >
+                <Link
+                  to={`/group/${group.id}`}
+                  state={{ group }}
+                  className="group-link"
+                >
+                  <img
+                    src={group.picture}
+                    alt={`${group.name} Icon`}
+                    className="group-icon"
+                  />
+                  <div className="my-group-info">
+                    <div className="group-name">{group.name}</div>
+                    <div className="group-level">{group.level}</div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No group found! You can create a group or join one.</p>
+        )}
+      </div>
 
       {/* Create Group Button */}
       <div className="create-container">
@@ -123,15 +118,3 @@ const HomePage = ({
 };
 
 export default HomePage;
-
-// {tooltipModal.visible && (
-//   <div className="tooltip-modal">
-//     <p>{tooltipModal.text}</p>
-//     <button
-//       className="create-group-button"
-//       onClick={() => setTooltipModal({ visible: false, text: "" })}
-//     >
-//       Close
-//     </button>
-//   </div>
-// )}

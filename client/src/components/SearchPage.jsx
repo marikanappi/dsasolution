@@ -340,14 +340,16 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
       {/* Tooltip Modal */}
       {tooltipModal.visible && (
-        <div className="tooltip-modal">
+        <div className="modal">
+        <div className="modal-content">
           <p>{tooltipModal.text}</p>
           <button
-            className="create-group-button"
+            className="btn btn-secondary"
             onClick={() => setTooltipModal({ visible: false, text: "" })}
           >
             Close
           </button>
+        </div>
         </div>
       )}
 

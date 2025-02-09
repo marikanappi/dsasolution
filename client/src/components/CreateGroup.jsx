@@ -97,7 +97,7 @@ const CreateGroup = ({ setFooterOption }) => {
   // Render the component
   return (
     <div>
-      <div className="create-group-header">
+      <div className="title-header">
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">
@@ -295,14 +295,16 @@ const CreateGroup = ({ setFooterOption }) => {
 
         {/* Tooltip Modal */}
         {tooltipModal.visible && (
-          <div className="tooltip-modal">
+          <div className="modal">
+          <div className="modal-content">
             <p>{tooltipModal.text}</p>
             <button
-              className="create-group-button"
+              className="btn btn-secondary"
               onClick={() => setTooltipModal({ visible: false, text: "" })}
             >
               Close
             </button>
+          </div>
           </div>
         )}
 
