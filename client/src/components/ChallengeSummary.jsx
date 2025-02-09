@@ -44,7 +44,7 @@ const ChallengeSummary = ({ setFooterOption }) => {
           <span>Score: {score}%</span>
         </div>
       </div>
-      <div>
+      <div className="create-container">
         <button
           className="create-button"
           onClick={() => {
