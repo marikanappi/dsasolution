@@ -280,7 +280,7 @@ const ChallengePage = ({ setFooterOption }) => {
 
           <div className="wide-button-container">
             {hasHistory || selectedAnswer ? (
-              <button className="wide-button" onClick={buttonAction}>
+              <button className="create-button" onClick={buttonAction}>
                 {buttonText}
               </button>
             ) : null}

@@ -44,9 +44,9 @@ const ChallengeSummary = ({ setFooterOption }) => {
           <span>Score: {score}%</span>
         </div>
       </div>
-      <div className="wide-button-container">
+      <div>
         <button
-          className="wide-button"
+          className="create-button"
           onClick={() => {
             navigate("/challenges");
             setFooterOption("Challenges");

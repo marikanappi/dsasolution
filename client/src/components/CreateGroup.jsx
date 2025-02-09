@@ -286,8 +286,8 @@ const CreateGroup = ({ setFooterOption }) => {
           )}
 
           {/* Create Button */}
-          <div className="text-center mb-3">
-            <button type="submit" className="wide-button">
+          <div className="text-center mb-3 create-container">
+            <button type="submit" className="create-button">
               Create
             </button>
           </div>
