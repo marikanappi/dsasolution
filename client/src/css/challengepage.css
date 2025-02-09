@@ -22,12 +22,13 @@
 
 .progress-bar {
   position: relative;
-  top: 140px;
+  top: 130px;
   width: 80%;
   height: 15px;
   background-color: #e0e0e0;
   border-radius: 10px;
   justify-self: center;
+  display: flex;
 }
 
 .progress {
@@ -93,7 +94,7 @@
   padding: 25px;
   background-color: white;
   border-radius: 10px;
-  margin: 15px;
+  margin: 12px;
 }
 
 .answer-label {
@@ -203,4 +204,8 @@ input[type="radio"] {
   min-width: 300px;
 }
 
-
+.ok-btn {
+  color: white;
+  font-weight: bold;
+  width: 90%;
+}

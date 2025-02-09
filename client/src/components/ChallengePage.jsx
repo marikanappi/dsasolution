@@ -22,6 +22,7 @@ const ChallengePage = ({ setFooterOption }) => {
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [history, setHistory] = useState([]);
+  const [showRecapModal, setShowRecapModal] = useState(false);
 
   useEffect(() => {
     setFooterOption("ChallengePage");
@@ -55,8 +56,8 @@ const ChallengePage = ({ setFooterOption }) => {
   }, [currentQuestionIndex, questions]);
 
   useEffect(() => {
-    console.log("Answers:", answers);
-  }, [answers]);
+    console.log("history:", history);
+  }, [history]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -122,6 +123,8 @@ const ChallengePage = ({ setFooterOption }) => {
       setSelectedAnswer(null);
       setFeedback("");
       setIsAnswered(false);
+    } else {
+      setSelectedAnswer(null);
     }
   };
 
@@ -191,6 +194,13 @@ const ChallengePage = ({ setFooterOption }) => {
     setElapsedTime(0);
   };
 
+  const hasHistory = history.length > 0;
+  const buttonText = selectedAnswer ? "Confirm" : "Go to Summary";
+  const buttonAction =
+    buttonText === "Confirm"
+      ? handleSubmitAnswer
+      : () => setShowRecapModal(true);
+
   return (
     <div className="challenge-page">
       {showStartModal && (
@@ -201,7 +211,9 @@ const ChallengePage = ({ setFooterOption }) => {
             <p>
               Time of Challenge: {Math.ceil((questions.length * 120) / 60)} min
             </p>
-            <button className="btn btn-success" onClick={handleStart}>Start</button>
+            <button className="btn btn-success" onClick={handleStart}>
+              Start
+            </button>
           </div>
         </div>
       )}
@@ -266,17 +278,13 @@ const ChallengePage = ({ setFooterOption }) => {
             </div>
           </div>
 
-          {selectedAnswer && (
-            <div className="wide-button-container">
-              <button className="wide-button" onClick={handleSubmitAnswer}>
-                Confirm
+          <div className="wide-button-container">
+            {hasHistory || selectedAnswer ? (
+              <button className="wide-button" onClick={buttonAction}>
+                {buttonText}
               </button>
-            </div>
-          )}
-
-          {currentQuestionIndex == questions.length - 1 && (
-            <button onClick={handleGoToRecap}>Go to Summary</button>
-          )}
+            ) : null}
+          </div>
 
           {showModal && (
             <div className="modal-overlay">
@@ -293,6 +301,7 @@ const ChallengePage = ({ setFooterOption }) => {
                 <p className="feedbackText">{feedback.text}</p>
 
                 <button
+                  className=" btn btn-secondary ok-btn"
                   onClick={() => {
                     setShowModal(false);
                     if (feedback.type) {
@@ -300,8 +309,25 @@ const ChallengePage = ({ setFooterOption }) => {
                     }
                   }}
                 >
-                  OK
+                  Ok
                 </button>
+              </div>
+            </div>
+          )}
+
+          {showRecapModal && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <p>
+                  Are you sure you want to leave the challenge and see the
+                  summary?
+                </p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-success" onClick={handleGoToRecap}>See Summary</button>
+                  <button className="btn btn-secondary" onClick={() => setShowRecapModal(false)}>
+                    Continue Challenge
+                  </button>
+                </div>
               </div>
             </div>
           )}
