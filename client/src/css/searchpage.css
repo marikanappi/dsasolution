@@ -7,8 +7,8 @@
 
 .search-groups {
   overflow-y: auto;
-  min-height: 94vh;
-  max-height: 94vh;
+  min-height: 86vh;
+  max-height: 86vh;
 }
 
 .scrollable-cards {
