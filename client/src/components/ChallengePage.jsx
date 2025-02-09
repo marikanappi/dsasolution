@@ -193,7 +193,7 @@ const ChallengePage = ({ setFooterOption }) => {
 
   return (
     <div className="challenge-page">
-      {/* {showStartModal && (
+      {showStartModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>{challenge.title}</h2>
@@ -204,8 +204,8 @@ const ChallengePage = ({ setFooterOption }) => {
             <button className="btn btn-success" onClick={handleStart}>Start</button>
           </div>
         </div>
-      )} */}
-      {showStartModal && challenge && questions.length > 0 && (
+      )}
+      {!showStartModal && challenge && questions.length > 0 && (
         <div>
           <h1>{challenge.title}</h1>
           {renderProgressBar()}
@@ -267,15 +267,15 @@ const ChallengePage = ({ setFooterOption }) => {
           </div>
 
           {selectedAnswer && (
-            <div className="confirm-btn-container">
-              <button className="btn confirm-btn" onClick={handleSubmitAnswer}>
+            <div className="wide-button-container">
+              <button className="wide-button" onClick={handleSubmitAnswer}>
                 Confirm
               </button>
             </div>
           )}
 
           {currentQuestionIndex == questions.length - 1 && (
-            <button onClick={handleGoToRecap}>Stop and Summary</button>
+            <button onClick={handleGoToRecap}>Go to Summary</button>
           )}
 
           {showModal && (

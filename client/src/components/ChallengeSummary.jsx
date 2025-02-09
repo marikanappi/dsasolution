@@ -6,7 +6,8 @@ import "./../css/challengesummary.css";
 const ChallengeSummary = ({ setFooterOption }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { correctAnswers, skippedQuestions, wrongAnswers, challengeTitle } = location.state || {};
+  const { correctAnswers, skippedQuestions, wrongAnswers, challengeTitle } =
+    location.state || {};
 
   useEffect(() => {
     setFooterOption("ChallengeSummary");
@@ -16,11 +17,15 @@ const ChallengeSummary = ({ setFooterOption }) => {
 
   return (
     <div className="challenge-summary">
-      <h1>Challenge Summary</h1>
+      <div className="summery-header">
+        <h5>Challenge Summary</h5>
+      </div>
       <div className="summary-content">
-        <div className="summary-item">
-          <p>Challenge: {challengeTitle}</p>
+        <div className="summary-title">
+          <p>{challengeTitle}</p>
+          <hr></hr>
         </div>
+
         <div className="summary-item">
           <p>Total Questions: {4}</p>
         </div>
@@ -38,8 +43,9 @@ const ChallengeSummary = ({ setFooterOption }) => {
           <p>Score: {score}%</p>
         </div>
       </div>
+      <div className="wide-button-container">
       <button
-        className="return-button"
+        className="wide-button"
         onClick={() => {
           navigate("/challenges");
           setFooterOption("Challenges");
@@ -47,6 +53,7 @@ const ChallengeSummary = ({ setFooterOption }) => {
       >
         Return to Challenges
       </button>
+      </div>
     </div>
   );
 };

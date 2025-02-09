@@ -5,27 +5,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #f4f4f9;
-    min-height: 100vh;
+    min-height: 94vh;
   }
   
-  /* Titolo principale */
-  .challenge-summary h1 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
+  .summery-header {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: #7A55C6;
+    width: 100%;
+    height: 65px; 
     text-align: center;
+  }
+  /* Titolo principale */
+  .challenge-summary h5 {
+    color: white;  
   }
   
   /* Contenitore dei dettagli del riepilogo */
   .summary-content {
+    margin: 70px 0px 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 100%;
+    width: 90%;
     max-width: 500px;
-    background-color: white;
+    background-color: #e6ddfa;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -34,7 +40,6 @@
   /* Ogni elemento del riepilogo */
   .summary-item {
     display: flex;
-    align-items: center;
     font-size: 1rem;
     color: #555;
   }
@@ -50,25 +55,16 @@
     margin-right: 10px;
   }
   
-  /* Pulsante per tornare ai gruppi */
-  .return-button {
-    margin-top: 30px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .return-button:hover {
-    background-color: #0056b3;
-  }
-  
   /* Aggiungi uno spazio tra il titolo e il contenuto */
   .summary-item p {
     font-weight: 600;
+    
   }
+
+  .summary-title p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
   
