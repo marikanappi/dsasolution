@@ -261,7 +261,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           </div>
         )}
       </div>
-
       <div className="search-groups">
         <div className="suggested-groups-container">
           <h4>

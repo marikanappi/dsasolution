@@ -3,13 +3,17 @@
   display: fixed;
   flex-direction: column;
   background: linear-gradient(135deg, #A77FFC , #7B54D1 );
+  
 }
 
 .search-groups {
   overflow-y: auto;
+  
   min-height: 94vh;
-  max-height: 94vh;
+  max-height: 80vh;
+  padding-bottom: 90px;
 }
+
 
 .scrollable-cards {
   display: flex;
