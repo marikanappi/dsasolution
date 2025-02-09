@@ -38,21 +38,22 @@ const ChallengeSummary = ({ setFooterOption }) => {
         <div className="summary-item">
           <p>Wrong Answers: {wrongAnswers}</p>
         </div>
-        <div className="summary-item">
-          <FaTrophy className="summary-icon" />
-          <p>Score: {score}%</p>
+        <hr></hr>
+        <div className="score-item">
+          <FaTrophy className="summary-icon" size={50} />
+          <span>Score: {score}%</span>
         </div>
       </div>
       <div className="wide-button-container">
-      <button
-        className="wide-button"
-        onClick={() => {
-          navigate("/challenges");
-          setFooterOption("Challenges");
-        }}
-      >
-        Return to Challenges
-      </button>
+        <button
+          className="wide-button"
+          onClick={() => {
+            navigate("/challenges");
+            setFooterOption("Challenges");
+          }}
+        >
+          Return to Challenges
+        </button>
       </div>
     </div>
   );
