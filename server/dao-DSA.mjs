@@ -96,6 +96,7 @@ export function joinGroup(db, idGroup) {
 
 //add group:
 export function addGroup(db, name, level, university, SLD, description, picture, number_of_participants, joined) {
+    
     return new Promise((resolve, reject) => {
       const joinedInt = 1;
       const userId_temp = 1;

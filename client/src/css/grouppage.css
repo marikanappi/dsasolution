@@ -205,4 +205,16 @@
 .info-icon {
   color: white;
   margin: 12px 6px;
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+}
+.info-icon.bar {
+  top: 10px;
+  right: 10px;
+}
+.info-icon.setting {
+  top: 10px;
+  right: 50px;
 }

@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaComment, FaTrophy, FaFileAlt, FaSignOutAlt, FaEdit, FaInfoCircle, FaBars  } from "react-icons/fa";
+import {
+  FaComment,
+  FaTrophy,
+  FaFileAlt,
+  FaSignOutAlt,
+  FaEdit,
+  FaInfoCircle,
+  FaBars,
+} from "react-icons/fa";
 import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
 import GroupModal from "./GroupModal";
+import { RiSettings5Fill } from "react-icons/ri";
 
 const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false); // Stato per mostrare la descrizione del gruppo
-  const [editedGroup, setEditedGroup] = useState({ name: group.name, SLD: group.SLD, level: group.level });
+  const [editedGroup, setEditedGroup] = useState({
+    name: group.name,
+    SLD: group.SLD,
+    level: group.level,
+  });
+  const [modalType, setModalType] = useState(null);
+  const isAdmin = group.usercreate === 1; // Replace with actual admin check
 
   useEffect(() => {
     setFooterOption("GroupPage");
@@ -37,6 +52,10 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     setEditedGroup({ ...editedGroup, [e.target.name]: e.target.value });
   };
 
+  const handleSettingsClick = () => {
+    setModalType("main"); // Opens the main modal
+  };
+
   const handleEditSubmit = async () => {
     try {
       const response = await updateGroup(group.id, editedGroup);
@@ -53,74 +72,98 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     <div className="group-page">
       <div className="group-card">
         <h2 className="group-card-title">{group.name}</h2>
-       
+
         {/* Icona per la descrizione */}
-        <FaBars 
-          size={25} 
-          className="info-icon" 
-          onClick={() => setShowInfoModal(true)} 
-          style={{ cursor: "pointer", position: "absolute", top: "10px", right: "10px" }}
+        <RiSettings5Fill
+          className="info-icon setting"
+          size={28}
+          onClick={handleSettingsClick}
+        />
+
+        <FaBars
+          size={26}
+          className="info-icon bar"
+          onClick={() => setShowInfoModal(true)}
         />
       </div>
 
       <div className="action-buttons">
-        <button className="chat-btn" onClick={() => { handleNavigate("/chat"); setFooterOption("Chat"); }}>
+        <button
+          className="chat-btn"
+          onClick={() => {
+            handleNavigate("/chat");
+            setFooterOption("Chat");
+          }}
+        >
           <FaComment size={40} />
           Chat
         </button>
-        <button className="challenge-btn" onClick={() => { handleNavigate("/challenges"); setFooterOption("Challenges"); }}>
+        <button
+          className="challenge-btn"
+          onClick={() => {
+            handleNavigate("/challenges");
+            setFooterOption("Challenges");
+          }}
+        >
           <FaTrophy size={40} />
           Challenge
         </button>
-        <button className="materials-btn" onClick={() => { handleNavigate("/materials"); setFooterOption("Materials"); }}>
+        <button
+          className="materials-btn"
+          onClick={() => {
+            handleNavigate("/materials");
+            setFooterOption("Materials");
+          }}
+        >
           <FaFileAlt size={40} />
           Materials
         </button>
-        {group.usercreate === 1 && (
-          <button className="edit-btn" onClick={() => setShowEditModal(true)}>
-            <FaEdit size={20} style={{ marginRight: "10px" }} />
-            Edit
-          </button>
-        )}
-        <Link className="leave-group" onClick={() => setShowModal(true)}>
-          <FaSignOutAlt size={20} style={{ marginRight: "8px" }} />
-          <span>Leave Group</span>
-        </Link>
       </div>
 
-      {/* Modal per confermare l'uscita dal gruppo */}
-      {showModal && (
+      {modalType === "main" && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Are you sure you want to leave the group?</h3>
-            <p>You can join it again whenever you want.</p>
-            <div className="row-buttons-container">
-            <button onClick={handleLeaveGroup} className="btn btn-danger">Leave</button>
-            <button onClick={() => setShowModal(false)} className="btn btn-secondary">Cancel</button>
-          </div>
+            <h3>Group Settings</h3>
+            <button
+              onClick={() => setModalType("edit")}
+              className="btn btn-primary"
+              disabled={!isAdmin}
+            >
+              Edit Group Info
+            </button>
+            <button
+              onClick={() => setModalType("leave")}
+              className="btn btn-danger"
+            >
+              Leave Group
+            </button>
+            <button
+              onClick={() => setModalType(null)}
+              className="btn btn-secondary"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
 
-      {/* Modal per modificare il gruppo */}
-      {showEditModal && (
+      {modalType === "edit" && (
         <div className="modal">
           <div className="modal-content">
             <h3>Edit Group</h3>
-            
             <label>Group Name:*</label>
-            <input 
-              type="text" 
-              name="name" 
-              value={editedGroup.name} 
+            <input
+              type="text"
+              name="name"
+              value={editedGroup.name}
               onChange={handleEditChange}
-              required 
+              required
             />
 
             <label>SLD:</label>
-            <select 
-              name="SLD" 
-              value={editedGroup.SLD} 
+            <select
+              name="SLD"
+              value={editedGroup.SLD}
               onChange={handleEditChange}
             >
               <option value="Dyslexia">Dyslexia</option>
@@ -130,27 +173,50 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
               <option value="ASD">ASD</option>
             </select>
 
-            <label>Level:</label> 
+            <label>Level:</label>
             <select
               name="level"
               value={editedGroup.level}
               onChange={handleEditChange}
             >
               <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option> 
+              <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
             </select>
 
-            <button 
+            <button
               onClick={handleEditSubmit}
-              disabled={!editedGroup.name} 
+              disabled={!editedGroup.name}
               className="btn btn-primary"
             >
               Save
             </button>
-            <button onClick={() => setShowEditModal(false)} className="btn btn-secondary">
+            <button
+              onClick={() => setModalType("main")}
+              className="btn btn-secondary"
+            >
               Cancel
             </button>
+          </div>
+        </div>
+      )}
+
+      {modalType === "leave" && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Are you sure you want to leave the group?</h3>
+            <p>You can join it again whenever you want.</p>
+            <div className="row-buttons-container">
+              <button onClick={handleLeaveGroup} className="btn btn-danger">
+                Leave
+              </button>
+              <button
+                onClick={() => setModalType("main")}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
