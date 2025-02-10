@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaMicrophone, FaPaperclip, FaPaperPlane } from "react-icons/fa";
+import { IoDocument } from "react-icons/io5";
 import "../css/chatpage.css";
 
 const predefinedResponses = {
   "When is the next meeting?":
     "The next meeting is scheduled for Friday at 3 PM.",
   "Can someone share the latest notes?":
-    "Sure! Here is the latest document: [link]",
+    "Sure! Here is the latest document",
   "Who is the group admin?": "The group admin is John Doe.",
+  "Can we schedule a meeting?": "Sure! What time works best for you?",
+  "What do you think about this notes?": "Looks great!",
+  "Can you review this document?": "I'll review this later.",
 };
 
 const audioResponses = ["I'll listen later.", "Sorry, I can't help right now."];
@@ -102,8 +106,8 @@ const Chat = ({ setFooterOption, group }) => {
         setMessages((prev) => [
           ...prev,
           {
-            text: `Attached: ${file.name}`,
             isUserMessage: true,
+            sender: "Mario",
             fileUrl: data.material.name,
           },
         ]);
@@ -195,9 +199,12 @@ const Chat = ({ setFooterOption, group }) => {
                   style={{ maxWidth: "200px" }}
                 />
               ) : msg.fileUrl ? (
-                <a href={msg.fileUrl} target="_blank" rel="noopener noreferrer">
-                  View attachment
-                </a>
+                <div>
+                  <IoDocument size={30} />
+                  <a href={msg.fileUrl} target="_blank" rel="noopener noreferrer">
+                    {msg.fileUrl.split('/').pop()}
+                  </a>
+                </div>
               ) : null}
             </div>
           </div>
