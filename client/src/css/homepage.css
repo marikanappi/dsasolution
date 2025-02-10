@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background:  #a77ffc;
+  background: linear-gradient(135deg,#7B54D1, #A77FFC );
   height: 100vh;
 }
 
@@ -101,7 +101,7 @@
 .my-groups-container {
 
   overflow-y: hidden;
-  background:  #a77ffc;
+
   position:fixed;
   margin-top: 50px;
   width: 100%;
