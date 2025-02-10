@@ -2,7 +2,7 @@
   position: relative;
   display: fixed;
   flex-direction: column;
-  background: linear-gradient(135deg, #A77FFC , #7B54D1 );
+  background: linear-gradient(135deg,#7B54D1, #A77FFC );
   
 }
 
@@ -196,7 +196,7 @@ h4 {
 }
 
 .search-and-filter-container {
-  background-color: #A77FFC;
+  background-color: #7B54D1;
   width: 100%;
   padding: 30px 20px 5px 10px;
   position: fixed;

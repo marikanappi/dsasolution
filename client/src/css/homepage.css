@@ -2,6 +2,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg,#7B54D1, #A77FFC );
+  height: 100vh;
 }
 
 .overlay {
@@ -24,11 +26,13 @@
 }
 
 .notifications-container {
-  top: 60px;
-  width: 100%;
+  align-self: center;
+  margin-top:20px;
+  width: 80%;
   background-color: #fff;
   transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
   z-index: 1000;
+  border-radius: 10px;
 }
 
 .notifications-content {
@@ -54,6 +58,7 @@
 
 
 .notifications-header {
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,30 +99,36 @@
 
 
 .my-groups-container {
-  margin-top: -10px;
-  margin-bottom: 100px;
-  min-height: 80vh;
-  max-height: 80vh;
-  overflow-y: auto;
-  background:  #a77ffc;
+
+  overflow-y: hidden;
+
+  position:fixed;
+  margin-top: 50px;
+  width: 100%;
 }
 
 
 .my-groups-header {
-  background: #a77ffc;
-  border-radius: 200% 200% 0 0;
-  padding: 15px;
-  font-size: 1.6rem;
+  color: #7A55C6;
+  border-radius: 0 100px 100px 0;
+  padding: 20px;
+  font-size: 26px;
   font-weight: bold;
-  color: #fff;
-  text-align: center;
+  background-color: #fff;
+  text-align: left;
   margin-top: 10px;
+  width:70%;
+  margin-top: 40px;
+  overflow-y: hidden;
 }
 
 .my-groups-container ul {
-  margin-top: 10px;
+  margin: 20px 6px 0;
   list-style: none;
-  padding: 0;
+  padding: 0 0 140px 0;
+  overflow-y: auto;
+  min-height: 60vh;
+  max-height: 70vh;
 }
 
 .my-groups-container li {
@@ -126,6 +137,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 17px;
 }
 
 .notification {

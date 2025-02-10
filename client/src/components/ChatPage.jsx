@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaMicrophone, FaPaperclip, FaPaperPlane } from "react-icons/fa";
+import { IoDocument } from "react-icons/io5";
 import "../css/chatpage.css";
 
 const predefinedResponses = {
-  "When is the next meeting?": "The next meeting is scheduled for Friday at 3 PM.",
-  "Can someone share the latest notes?": "Sure! Here is the latest document: [link]",
+  "When is the next meeting?":
+    "The next meeting is scheduled for Friday at 3 PM.",
+  "Can someone share the latest notes?":
+    "Sure! Here is the latest document",
   "Who is the group admin?": "The group admin is John Doe.",
+  "Can we schedule a meeting?": "Sure! What time works best for you?",
+  "What do you think about this notes?": "Looks great!",
+  "Can you review this document?": "I'll review this later.",
 };
 
 const audioResponses = ["I'll listen later.", "Sorry, I can't help right now."];
@@ -33,7 +39,11 @@ const imageResponses = [
 
 const Chat = ({ setFooterOption, group }) => {
   const [messages, setMessages] = useState([
-    { text: `Welcome to ${group?.name} chat`, isUserMessage: false, sender: "Marika" },
+    {
+      text: `Welcome to ${group?.name} chat`,
+      isUserMessage: false,
+      sender: "Marika",
+    },
   ]);
   const [newMessage, setNewMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -55,7 +65,11 @@ const Chat = ({ setFooterOption, group }) => {
         setTimeout(() => {
           setMessages((prev) => [
             ...prev,
-            { text: predefinedResponses[newMessage], isUserMessage: false, sender: "Marika" },
+            {
+              text: predefinedResponses[newMessage],
+              isUserMessage: false,
+              sender: "Marika",
+            },
           ]);
         }, 500);
       }
@@ -92,16 +106,21 @@ const Chat = ({ setFooterOption, group }) => {
         setMessages((prev) => [
           ...prev,
           {
-            text: `Attached: ${file.name}`,
             isUserMessage: true,
+            sender: "Mario",
             fileUrl: data.material.name,
           },
         ]);
 
         setTimeout(() => {
-          const responseList = type === "image" ? imageResponses : documentResponses;
-          const response = responseList[Math.floor(Math.random() * responseList.length)];
-          setMessages((prev) => [...prev, { text: response, isUserMessage: false, sender: "Marika" }]);
+          const responseList =
+            type === "image" ? imageResponses : documentResponses;
+          const response =
+            responseList[Math.floor(Math.random() * responseList.length)];
+          setMessages((prev) => [
+            ...prev,
+            { text: response, isUserMessage: false, sender: "Marika" },
+          ]);
         }, 1000);
       }
     } catch (error) {
@@ -161,7 +180,10 @@ const Chat = ({ setFooterOption, group }) => {
       <div className="chat-header"></div>
       <div className="chat-container">
         {messages.map((msg, index) => (
-          <div key={index} className={msg.isUserMessage ? "message user" : "message received"}>
+          <div
+            key={index}
+            className={msg.isUserMessage ? "message user" : "message received"}
+          >
             <div className="message-text">
               <strong>{msg.sender}:</strong> {msg.text && <p>{msg.text}</p>}
               {msg.audio && (
@@ -171,18 +193,29 @@ const Chat = ({ setFooterOption, group }) => {
                 </audio>
               )}
               {msg.fileUrl && msg.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                <img src={msg.fileUrl} alt="Attached file" style={{ maxWidth: "200px" }} />
+                <img
+                  src={msg.fileUrl}
+                  alt="Attached file"
+                  style={{ maxWidth: "200px" }}
+                />
               ) : msg.fileUrl ? (
-                <a href={msg.fileUrl} target="_blank" rel="noopener noreferrer">
-                  View attachment
-                </a>
+                <div>
+                  <IoDocument size={30} />
+                  <a href={msg.fileUrl} target="_blank" rel="noopener noreferrer">
+                    {msg.fileUrl.split('/').pop()}
+                  </a>
+                </div>
               ) : null}
             </div>
           </div>
         ))}
       </div>
-      <div className="input-container">
-        <FaPaperclip className="action-icon" onClick={() => document.getElementById("fileInput").click()} />
+      <div className="chat-input-container">
+        <FaPaperclip
+          size={30}
+          className="action-icon-attach"
+          onClick={() => document.getElementById("fileInput").click()}
+        />
         <input
           className="chat-input"
           type="text"
@@ -191,12 +224,17 @@ const Chat = ({ setFooterOption, group }) => {
           placeholder="Write a message..."
         />
         <FaMicrophone
+          size={26}
           onClick={handleMicrophoneClick}
           className={`action-icon ${isRecording ? "recording" : ""}`}
           style={{ color: isRecording ? "red" : "black" }}
         />
 
-        <FaPaperPlane className="action-icon send" onClick={handleSendMessage} />
+        <FaPaperPlane
+          size={30}
+          className="action-icon-send"
+          onClick={handleSendMessage}
+        />
         <input
           type="file"
           id="fileInput"
