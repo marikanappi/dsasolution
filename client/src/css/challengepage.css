@@ -197,8 +197,11 @@ input[type="radio"] {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  text-align: center;
   min-width: 300px;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .ok-btn {

@@ -207,9 +207,10 @@ const ChallengePage = ({ setFooterOption }) => {
       {showStartModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>{challenge.title}</h3>
-            <p>Number of Questions: {questions.length}</p>
-            <p>
+            <h3 className="m-0">{challenge.title}</h3>
+            <hr></hr>
+            <p className="text-left">Number of Questions: {questions.length}</p>
+            <p className="text-left">
               Time of Challenge: {Math.ceil((questions.length * 120) / 60)} min
             </p>
             <button className="btn btn-success" onClick={handleStart}>
@@ -322,7 +323,7 @@ const ChallengePage = ({ setFooterOption }) => {
           {showRecapModal && (
             <div className="modal-overlay">
               <div className="modal-content">
-                <p>
+                <p className="text-left">
                   Are you sure you want to leave the challenge and see the
                   summary?
                 </p>
