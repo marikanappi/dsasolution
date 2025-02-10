@@ -4,6 +4,7 @@ import { getQuestions, getAnswers } from "/../client/API.mjs";
 import Modal from "./GroupModal.jsx";
 import "../css/challengepage.css";
 import QuestionNavigation from "./QuestionNavigation.jsx";
+import { PiCatBold } from "react-icons/pi";
 
 const ChallengePage = ({ setFooterOption }) => {
   const [showStartModal, setShowStartModal] = useState(false);
@@ -206,7 +207,7 @@ const ChallengePage = ({ setFooterOption }) => {
       {showStartModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>{challenge.title}</h2>
+            <h3>{challenge.title}</h3>
             <p>Number of Questions: {questions.length}</p>
             <p>
               Time of Challenge: {Math.ceil((questions.length * 120) / 60)} min
@@ -297,7 +298,10 @@ const ChallengePage = ({ setFooterOption }) => {
                     : "no-feedback"
                 }`}
               >
-                <p className="feedbackType">{feedback.type}</p>
+                <div className="d-flex">
+                  <PiCatBold className="cat-icon" size={32} />
+                  <p className="feedbackType">{feedback.type}</p>
+                </div>
                 <p className="feedbackText">{feedback.text}</p>
 
                 <button
@@ -323,8 +327,13 @@ const ChallengePage = ({ setFooterOption }) => {
                   summary?
                 </p>
                 <div className="row-buttons-container">
-                  <button className="btn btn-success" onClick={handleGoToRecap}>See Summary</button>
-                  <button className="btn btn-secondary" onClick={() => setShowRecapModal(false)}>
+                  <button className="btn btn-success" onClick={handleGoToRecap}>
+                    See Summary
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setShowRecapModal(false)}
+                  >
                     Continue Challenge
                   </button>
                 </div>

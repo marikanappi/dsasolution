@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import "../css/challenges.css";
 import { getChallenge } from "/../client/API.mjs";
+import { PiCatBold } from "react-icons/pi";
 
 const Challenges = ({ setFooterOption, group }) => {
   const [challenges, setChallenges] = useState([]);
@@ -68,6 +69,7 @@ const Challenges = ({ setFooterOption, group }) => {
               group = { group };
             }}
           >
+            <PiCatBold className="cat-icon" size={26} />
             Generate Challenge
           </button>
         </div>
