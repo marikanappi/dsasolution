@@ -164,7 +164,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         />
       </div>
       <div className="group-info">
-        <div className="group-name">{group.name}</div>
+        <div className="other-group-name">{group.name}</div>
         <div className="group-level">
           {group.level} - {group.SLD}
         </div>
@@ -268,7 +268,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       </div>
       <div className="search-groups">
         <div className="suggested-groups-container">
-          <h4>
+          <p>
             Suggested for You
             <FaQuestionCircle
               className="help-icon ms-2"
@@ -280,7 +280,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
                 })
               }
             />
-          </h4>
+          </p>
           {isLoading ? (
             <p>Loading...</p>
           ) : (
@@ -304,7 +304,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         </div>
 
         {/* Altri Gruppi */}
-        <h4 className="other-title">
+        <p className="other-title">
           Other Groups
           <FaQuestionCircle
             className="help-icon light ms-2"
@@ -316,12 +316,11 @@ const SearchGroup = ({ notifications, setNotifications }) => {
               })
             }
           />
-        </h4>
+        </p>
 
         <div className="other-groups-container">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : filteredOtherGroups.length > 0 ? (
+          {filteredOtherGroups.length > 0 ? (
+            
             <ul>
               {filteredOtherGroups.map((group) => (
                 <OtherGroupCard
@@ -332,6 +331,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
                 />
               ))}
             </ul>
+           
           ) : (
             <p>No other groups found.</p>
           )}

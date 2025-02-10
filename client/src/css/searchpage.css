@@ -8,7 +8,6 @@
 
 .search-groups {
   overflow-y: auto;
-  
   min-height: 94vh;
   max-height: 80vh;
   padding-bottom: 90px;
@@ -80,6 +79,10 @@
   color: #ffffff;
 }
 
+.other-group-name {
+  font-size: 18px;
+  font-weight: bold;
+}
 
 .scrollable-cards li {
   list-style: none;
@@ -92,22 +95,58 @@
   transition: transform 0.3s ease;
 }
 
-h4 {
+.suggested-groups-container p {
+  font-weight: bold;
+  font-size: 24px;
   color: #333;
-  margin-top: 20px;
-  padding-left: 20px;
-  font-size: 21px;
+  margin: 10px;
   margin-bottom: 10px;
 }
 
+.other-title {
+  margin: 14px;
+  color: white;
+  font-weight: bold;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
 .other-groups-container {
-  margin-top: 30px;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 0;
+  
 }
 
 .other-group {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  padding: 0;
+
+}
+
+.join-btn {
+  background-color: #ffd079;
+  color: #7B54D1;  
+  font-weight: bold;
+  font-size: 26px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.2s;
+
+}
+
+.join-btn.joined {
+  background-color: #19D4A0;
+  color: white;
+  transform: scale(1.1);
 }
 
 .filters-container {
@@ -166,29 +205,6 @@ h4 {
   position: relative;
 }
 
-.join-btn {
-  background-color: #ffd079;
-  color: #7B54D1;  
-  font-weight: bold;
-  font-size: 18px;
-  width: 35px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-/* When group is joined */
-.join-btn.joined {
-  background-color: #19D4A0;
-  color: white;
-  transform: scale(1.1); /* Slight animation effect */
-}
-
 
 .group-level {
   color: #7A55C6;
@@ -205,9 +221,6 @@ h4 {
   z-index: 1000;
 }
 
-.other-title {
-  color: white;
-}
 
 .other-title .light {
   color: white;
@@ -248,14 +261,12 @@ h4 {
   align-self: center;
 }
 
-/* Close Button */
-
-
 
 .form-control.search {
   border-radius: 10px;
   border: none;
 }
+
 .btn-filter {
   border-radius: 10px;
   border: none;
