@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaHome, FaSearch, FaUser, FaArrowLeft } from "react-icons/fa";
 import "./style.css";
@@ -25,6 +25,7 @@ const MobileAppSimulator = () => {
   const [group, setGroup] = useState();
   const [selectedIcon, setSelectedIcon] = useState("Home");
   const navigate = useNavigate();
+  const location = useLocation();
   const [showModal, setShowModal] = useState(false);
   const [notifications, setNotifications] = useState([
     { id: 1, text: "You have one new message" },
@@ -35,6 +36,20 @@ const MobileAppSimulator = () => {
     setFooterOption(option);
     setSelectedIcon(option); // Update selected icon state
     navigate(path);
+  };
+
+  const getFooterIconClass = (iconName) => {
+    const currentPath = location.pathname;
+    switch (iconName) {
+      case "Home":
+        return currentPath === "/" ? "icon selected" : "icon";
+      case "Search":
+        return currentPath === "/search" ? "icon selected" : "icon";
+      case "Profile":
+        return currentPath === "/profile" ? "icon selected" : "icon";
+      default:
+        return "icon";
+    }
   };
 
   const goBack = () => {
@@ -220,7 +235,7 @@ const MobileAppSimulator = () => {
               navigateTo("/", "Home");
             }
           }}
-          className={`icon ${selectedIcon === "Home" ? "selected" : ""}`} // Add selected class
+          className={getFooterIconClass("Home")} // Use function to set class
         />
         <FaSearch
           onClick={() => {
@@ -230,7 +245,7 @@ const MobileAppSimulator = () => {
               navigateTo("/search", "Search");
             }
           }}
-          className={`icon ${selectedIcon === "Search" ? "selected" : ""}`} // Add selected class
+          className={getFooterIconClass("Search")} // Use function to set class
         />
         <FaUser
           onClick={() => {
@@ -240,7 +255,7 @@ const MobileAppSimulator = () => {
               navigateTo("/profile", "Profile");
             }
           }}
-          className={`icon ${selectedIcon === "Profile" ? "selected" : ""}`} // Add selected class
+          className={getFooterIconClass("Profile")} // Use function to set class
         />
       </footer>
 
