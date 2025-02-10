@@ -71,40 +71,42 @@ const HomePage = ({
 
       {/* Groups List */}
 
-      <h5 className="my-groups-header">My Groups</h5>
       <div className="my-groups-container">
-        {groups.length > 0 ? (
-          <ul>
-            {groups.map((group) => (
-              <li
-                key={group.id}
-                className="group-item mine"
-                onClick={() => {
-                  setFooterOption("Group");
-                  setGroup(group);
-                }}
-              >
-                <Link
-                  to={`/group/${group.id}`}
-                  state={{ group }}
-                  className="group-link"
+        <h5 className="my-groups-header">My Groups</h5>
+        <div>
+          {groups.length > 0 ? (
+            <ul>
+              {groups.map((group) => (
+                <li
+                  key={group.id}
+                  className="group-item mine"
+                  onClick={() => {
+                    setFooterOption("Group");
+                    setGroup(group);
+                  }}
                 >
-                  <img
-                    src={group.picture}
-                    alt={`${group.name} Icon`}
-                    className="group-icon"
-                  />
-                  <div className="my-group-info">
-                    <div className="group-name">{group.name}</div>
-                    <div className="group-level">{group.level}</div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No group found! You can create a group or join one.</p>
-        )}
+                  <Link
+                    to={`/group/${group.id}`}
+                    state={{ group }}
+                    className="group-link"
+                  >
+                    <img
+                      src={group.picture}
+                      alt={`${group.name} Icon`}
+                      className="group-icon"
+                    />
+                    <div className="my-group-info">
+                      <div className="group-name">{group.name}</div>
+                      <div className="group-level">{group.level}</div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No group found! You can create a group or join one.</p>
+          )}
+        </div>
       </div>
 
       {/* Create Group Button */}
