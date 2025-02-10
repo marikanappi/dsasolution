@@ -68,19 +68,19 @@
   color: #333;
 }
 
-.input-container {
-  padding: 12px 0; /* Increased padding slightly */
-  margin-bottom: 70px;
+.chat-input-container {
+  padding: 10px; /* Increased padding slightly */
+  margin: 10px 0px 70px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
   border-top: 1px solid #ccc;
   position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #f9f9f9;
   z-index: 10;
+  gap:10px;
 }
 
 .microphone-icon {
@@ -153,4 +153,12 @@ button {
   justify-content: center;
   width: 100%;
   height: 40px;
+}
+
+.action-icon-send {
+  margin: 0 12px;
+}
+
+.action-icon-attach {
+  margin: 0 0 0 10px;
 }
