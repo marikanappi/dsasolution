@@ -16,8 +16,6 @@ import { RiSettings5Fill } from "react-icons/ri";
 
 const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false); // Stato per mostrare la descrizione del gruppo
   const [editedGroup, setEditedGroup] = useState({
     name: group.name,
@@ -43,8 +41,6 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
       }
     } catch (error) {
       console.error("Errore durante l'uscita dal gruppo:", error);
-    } finally {
-      setShowModal(false);
     }
   };
 
@@ -61,7 +57,6 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
       const response = await updateGroup(group.id, editedGroup);
       if (response) {
         setGroup({ ...group, ...editedGroup });
-        setShowEditModal(false);
       }
     } catch (error) {
       console.error("Errore durante la modifica del gruppo:", error);
