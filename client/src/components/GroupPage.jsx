@@ -66,7 +66,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   return (
     <div className="group-page">
       <div className="group-card">
-        <h2 className="group-card-title">{group.name}</h2>
+        <p className="group-card-title">{group.name}</p>
 
         {/* Icona per la descrizione */}
         <RiSettings5Fill

@@ -29,11 +29,13 @@
 }
 
 .group-card-title {
-  font-size: 1.7rem;
+  padding: 20px;
+  text-align: center;
   font-weight: bold;
   color: #ffffff;
   margin-bottom: 1rem;
   border-radius: 8px;
+  font-size: 30px;
 }
 
 /* Sezione dei tasti di azione */
@@ -49,7 +51,7 @@
 }
 
 .action-buttons button {
-  font-size: 28px;
+  font-size: 24px;
   height: 120px;
 
 }
@@ -71,8 +73,8 @@
 }
 
 .chat-btn {
-  /* background: linear-gradient(135deg, #1cb982, #1edba9); */
-  background: #7A55C6;
+  background: linear-gradient(135deg, #1cb982 50%, #1edba9);
+  /* background: #7A55C6; */
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
@@ -87,8 +89,8 @@
 /* Pulsante Challenge */
 .challenge-btn {
   font-weight: bold;
-  /* background: linear-gradient(135deg, #63a6fd, #88c1fe); */
-  background: #7A55C6;
+  background: linear-gradient(135deg, #63a6fd 50%, #88c1fe);
+  /* background: #7A55C6; */
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
@@ -100,16 +102,13 @@
 
 /* Pulsante Materials */
 .materials-btn {
-  background: #7A55C6;
+  background: linear-gradient(135deg, #ffa94b 50%, #fccf79);
   font-weight: bold;
   border-radius: 20px;
   padding: 10%;
   font-size: 17px;
 }
 
-.materials-btn:hover {
-  background: linear-gradient(135deg, #fbc46c, #e5640e);
-}
 
 .materials-btn svg {
   margin-right: 10px;
