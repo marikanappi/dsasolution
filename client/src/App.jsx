@@ -98,34 +98,10 @@ const MobileAppSimulator = () => {
     setShowModal(false); // Close the modal without any action
   };
 
-  const renderHeader = () => {
-    const isMainOption = ["Home", "Search", "Profile"].includes(footerOption);
-
-    if (isMainOption) {
-      return (
-        <img
-          src="logo.png"
-          alt="Logo"
-          className="logo"
-          onClick={() => navigateTo("/", "Home")}
-        />
-      );
-    } else if (!isMainOption) {
-      return (
-        <FaArrowLeft
-          onClick={goBack}
-          className="icon-back-arrow"
-          style={{ position: "absolute", left: "20px", cursor: "pointer" }}
-        />
-      );
-    }
-  };
+  
 
   return (
     <div className="mobile-frame d-flex flex-column">
-      <header >
-        {renderHeader()}
-      </header>
 
       <main className="mobile-content flex-grow-1">
         <Routes>
@@ -259,7 +235,6 @@ const MobileAppSimulator = () => {
         />
       </footer>
 
-      {/* Modal for exit confirmation */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
