@@ -1,94 +1,137 @@
-import { useState, useEffect } from "react";
-import "./../css/homepage.css";
+import React, { useEffect, useState, useRef } from 'react';
+import { FaBell, FaTimes, FaTrash } from 'react-icons/fa';
 
-const Notifications = ({ notifications, setNotifications, groups }) => {
-  const [swipeStyles, setSwipeStyles] = useState({});
+const NotificationSystem = ({ notifications, setNotifications, groups }) => {
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [animatedNotifications, setAnimatedNotifications] = useState([]);
+  const [bellShake, setBellShake] = useState(false); // State for bell animation
+
+  const notificationPanelRef = useRef(null);
+  const notificationOverlayRef = useRef(null);
 
   useEffect(() => {
-    if (groups.length === 0 || notifications.length === 0) return;
-  
-    setNotifications((prev) =>
-      prev.filter((notif) => groups.some((group) => group.id === notif.id))
-    );
-  }, [groups]);
-  
+    if (groups && notifications) {
+      const formattedNotifications = notifications.map(notification => {
+        const group = groups.find(g => g.id === notification.groupId);
+        return {
+          ...notification,
+          groupInfo: group || null,
+          isNew: true
+        };
+      }).filter(notification => notification.groupInfo !== null);
 
-  const handleTouchStart = (e, index) => {
-    e.currentTarget.dataset.startX = e.touches[0].clientX;
-  };
+      setAnimatedNotifications(formattedNotifications);
 
-  const handleTouchMove = (e, index) => {
-    const startX = parseFloat(e.currentTarget.dataset.startX);
-    const moveX = e.touches[0].clientX;
-    const deltaX = moveX - startX;
+      // Trigger bell shake if there are new notifications
+      if (formattedNotifications.some(n => n.isNew)) {
+        setBellShake(true);
+        // Reset the shake animation after a delay (e.g., 3 seconds)
+        setTimeout(() => {
+          setBellShake(false);
+        }, 3000); // Adjust delay as needed
+      }
+    }
+  }, [notifications, groups]);
 
-    setSwipeStyles((prev) => ({
-      ...prev,
-      [index]: {
-        transform: `translateX(${deltaX}px)`,
-        opacity: 1 - Math.abs(deltaX) / 100,
-      },
-    }));
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notificationOverlayRef.current && notificationOverlayRef.current === event.target) {
+        setShowNotifications(false);
+      }
+    };
 
-    if (Math.abs(deltaX) > 80) {
-      setSwipeStyles((prev) => ({
-        ...prev,
-        [index]: {
-          transform: `translateX(${deltaX > 0 ? "100%" : "-100%"})`,
-          opacity: 0,
-        },
-      }));
+    document.addEventListener('click', handleClickOutside);
 
-      setTimeout(() => {
-        setNotifications((prev) => prev.filter((_, i) => i !== index));
-      }, 300);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+    if (!showNotifications) {
+      setAnimatedNotifications(prev =>
+        prev.map(notif => ({ ...notif, isNew: false }))
+      );
     }
   };
 
-  const handleTouchEnd = (index) => {
-    setSwipeStyles((prev) => ({
-      ...prev,
-      [index]: {
-        transform: "translateX(0)",
-        opacity: 1,
-        transition: "transform 0.3s ease, opacity 0.3s ease",
-      },
-    }));
+  const removeNotification = (id) => {
+    setAnimatedNotifications(prev =>
+      prev.filter(notification => notification.id !== id)
+    );
+    setNotifications(prev =>
+      prev.filter(notification => notification.id !== id)
+    );
+  };
+
+  const clearAllNotifications = () => {
+    setAnimatedNotifications([]);
+    setNotifications([]);
   };
 
   return (
-    <div className="card-body">
-      {notifications.length > 0 && (
-        <div>
-          {notifications.map((notif, index) => {
-            const group = groups.find((group) => group.id === notif.id);
-            return group ? (
-              <div
-                className="notification"
-                key={index}
-                onTouchStart={(e) => handleTouchStart(e, index)}
-                onTouchMove={(e) => handleTouchMove(e, index)}
-                onTouchEnd={() => handleTouchEnd(index)}
-                style={swipeStyles[index] || {}}
-              >
-                <div className="notification-left">
-                  <img
-                    src={group.picture}
-                    alt={group.name}
-                    className="group-image"
-                  />
+    <div className="notification-system">
+      <div className="notification-bell-container" onClick={toggleNotifications}>
+        <FaBell
+          className={`notification-bell ${bellShake ? 'has-new' : ''}`} // Apply animation class conditionally
+        />
+        {animatedNotifications.length > 0 && (
+          <span className="notification-count">{animatedNotifications.length}</span>
+        )}
+      </div>
+
+      {showNotifications && (
+        <div className="notification-overlay" ref={notificationOverlayRef}> {/* Added ref here */}
+          <div className="notification-panel" ref={notificationPanelRef}>
+            <div className="notification-header">
+              <h6>Notifications</h6>
+              {animatedNotifications.length > 0 && (
+                <button className="clear-all" onClick={clearAllNotifications}>
+                  <FaTrash />
+                </button>
+              )}
+            </div>
+
+            <div className="notification-list">
+              {animatedNotifications.length > 0 ? (
+                animatedNotifications.map(notification => (
+                  <div
+                    key={notification.id}
+                    className={`notification-item ${notification.isNew ? 'new' : ''}`}
+                  >
+                    {notification.groupInfo && (
+                      <img
+                        src={notification.groupInfo.picture}
+                        alt={notification.groupInfo.name}
+                        className="group-icon"
+                      />
+                    )}
+                    <div className="notification-content">
+                      <div className="notification-message">
+                        {notification.message}
+                      </div>
+                    </div>
+                    <button
+                      className="delete-notification"
+                      onClick={() => removeNotification(notification.id)}
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div className="no-notifications">
+                  No notifications
                 </div>
-                <div className="notification-right">
-                  <span className="notification-group-name">{group.name}</span>
-                  <span className="notif-text">{notif.text}</span>
-                </div>
-              </div>
-            ) : null;
-          })}
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default Notifications;
+export default NotificationSystem;
+

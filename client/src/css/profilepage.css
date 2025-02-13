@@ -81,7 +81,6 @@
   text-align: left;
 }
 
-/* Styles for edit mode */
 .profile-content input[type="text"],
 .profile-content input[type="email"] { /* Style both text and email inputs */
   border: 1px solid #7b54d1; /* Purple border */
@@ -107,13 +106,14 @@
   justify-content: center;
 }
 .edit-button button {
-  background-color: #7b54d1;
+  background-color: #6e00ad;
   color: white;
-  padding: 15px 60px;
-  border: none;
+  padding: 15px 30px;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 @media (max-width: 768px) {

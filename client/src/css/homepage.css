@@ -1,213 +1,284 @@
 .home-page-container {
-  position: relative;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg,#7B54D1, #A77FFC );
-  height: 100vh;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999; /* Below notifications but above everything else */
-}
-
-.notifications-container h5 {
-  background-color: #6e00ad;
-  color: #fff; 
-  font-size: 17px;
-  font-weight: bold;
-  margin: 0; 
-  padding: 2px; 
-}
-
-.notifications-container {
-  align-self: center;
-  margin-top:20px;
-  width: 80%;
-  background-color: #fff;
-  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-  z-index: 1000;
-  border-radius: 10px;
-}
-
-.notifications-content {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-}
-
-.notifications-container.show .notifications-content {
-  max-height: 300px;
-  opacity: 1;
-}
-
-/* When notifications should disappear */
-.hide-notifications {
-  opacity: 0;
-  transform: translateY(-10px);
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none; /* Prevents interaction when hidden */
-}
-
-
-.notifications-header {
-  border-radius: 10px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #ffd079;
-  color: #2c2c2c;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px;
-  cursor: pointer;
+  min-height: 100vh;
 }
 
-.notifications-header div {
-  color:#2c2c2c;
-}
-
-.notif-badge {
-  background-color: #2c2c2c;
+.home-page-header {
+  background: linear-gradient(135deg, #7b54d1, #a77ffc);
   color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 50%;
+  padding: 20px;
+  height: 240px; /* Adjusted height */
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0% 0% 40% 0%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  min-height: 20px;
+}
+
+.my-groups-header {
+  margin-top: 25px;
+  font-size: 54px; /* Adjusted font size */
+  color: white;
+}
+
+.my-groups-container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+
+.my-groups-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .group-item.mine {
-  margin: 7px 25px;
+  background: #fff;
+  border: 1px solid #ddd;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-
-
-.my-groups-container {
-
-  overflow-y: hidden;
-
-  position:fixed;
-  margin-top: 50px;
-  width: 100%;
-}
-
-
-.my-groups-header {
-  color: #7A55C6;
-  border-radius: 0 100px 100px 0;
-  padding: 20px;
-  font-size: 26px;
-  font-weight: bold;
-  background-color: #fff;
-  text-align: left;
-  margin-top: 10px;
-  width:70%;
-  margin-top: 40px;
-  overflow-y: hidden;
-}
-
-.my-groups-container ul {
-  margin: 20px 6px 0;
-  list-style: none;
-  padding: 0 0 140px 0;
-  overflow-y: auto;
-  min-height: 60vh;
-  max-height: 70vh;
-}
-
-.my-groups-container li {
-  background-color: #f4f4f4;
-  margin-bottom: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 17px;
-}
-
-.notification {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 15px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.group-item.mine:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.group-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.my-group-info {
+  flex: 1;
+}
+
+.group-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.group-level {
+  color: #777;
+  font-size: 0.95em;
+}
+
+.create-container {
+  width: 100%;
+  text-align: center;
+  margin-top: auto; 
+}
+
+.create-button {
+  background-color: #6e00ad;
+  color: white;
+  padding: 15px 30px;
   border-radius: 8px;
-  margin-bottom: 4px;
-  margin: 5px 12px;
-  background: #f4f4f4;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  will-change: transform, opacity;
+  font-size: 23px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.notification-left {
-  flex-shrink: 0;
+.group-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
 }
 
-.group-image {
+.clear-all {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.group-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
+  margin-right: 12px;
 }
 
-.notification-right {
-  display: flex;
-  flex-direction: column;
+.notification-system {
+  position: relative;
 }
 
-.notification-group-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: #333;
-}
-
-.notif-text {
-  font-size: 12px;
-  color: #666;
-}
-
-
-.notif-text {
-  color: #333;
-}
-
-.my-group-info .group-level {
-  color: #333;
-}
-
-.notification-group-name {
-  font-weight: bold;
-  width: 200px;
-}
-
-
-.header-group {
+.notification-bell-container {
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centers content horizontally */
-  position: relative; /* Needed for the absolute positioning of FaArrowLeft */
 }
 
-.logo {
+.notification-bell {
+  font-size: 50px; 
+  z-index: 1001;
+  color: white;
+  margin-right: 0px;
+  margin-bottom: 150px;
   cursor: pointer;
 }
 
+.notification-bell.has-new {
+  color: white;
+  animation: bell-shake 1s ease-in-out infinite;
+}
 
-.notifications-content.show {
-  max-height: 300px; 
-  opacity: 1;
+.notification-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px; 
+  font-size: 16px; 
+  min-width: 25px; 
+  height: 25px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Corrected opacity value */
+  z-index: 999;
+  display: flex;
+  justify-content: flex-end; /* Align panel to the right */
+  align-items: flex-start; /* Align panel to the top */
+  pointer-events: auto;
+}
+
+.notification-panel {
+  position: absolute;
+  top: 85px;
+  right: 40px;
+  width: 300px;
+  max-height: 400px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  font-size: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-header h6 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.clear-all {
+  background-color: #f1ddff;
+  border: none;
+  color: #000000;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.notification-list {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  animation: fade-in 0.3s ease;
+}
+
+.notification-item.new {
+  background-color: #f8f9fa;
+}
+
+.group-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-message {
+  font-size: 17px;
+  color: #666;
+}
+
+.delete-notification {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 8px;
+}
+
+.no-notifications {
+  padding: 24px;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: #666;
+}
+
+.notification-bell.has-new {
+  color: white;
+  animation: bell-shake 1s ease-in-out;
+}
+
+@keyframes bell-shake {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
