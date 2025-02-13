@@ -351,7 +351,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         <div className="modal-content">
           <p>{tooltipModal.text}</p>
           <button
-            className="btn btn-secondary"
             onClick={() => setTooltipModal({ visible: false, text: "" })}
           >
             Close
