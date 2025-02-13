@@ -86,32 +86,53 @@ const ChallengePage = ({ setFooterOption }) => {
     setSelectedAnswer(Number(event.target.value)); // Convert to number
   };
 
+  const correctMessages = [
+    "🎉 Great work! Keep it up! 💪",
+    "🚀 You're on fire! Stay focused!",
+    "🌟 Excellent! You're getting better!",
+    "🔥 That was amazing! Keep going!",
+    "💡 Brilliant answer! You nailed it!",
+  ];
+
+  const wrongMessages = [
+    "💪 Don't worry! Try again next time!",
+    "🌱 Mistakes help you grow! Keep learning!",
+    "📚 You will improve! Stay motivated!",
+    "🔁 Keep practicing! You’ll get it soon!",
+    "✨ Almost there! Keep going!",
+  ];
+
+  const getRandomMessage = (messages) =>
+    messages[Math.floor(Math.random() * messages.length)];
+
   const handleSubmitAnswer = () => {
     const correctAnswer = answers.find((answer) => answer.is_correct === 1);
+    const isCorrect = selectedAnswer === correctAnswer.id;
 
-    if (selectedAnswer === correctAnswer.id) {
-      setFeedback({ type: "Correct!", text: correctAnswer.feedback });
+    let encouragementMessage = isCorrect
+      ? getRandomMessage(correctMessages)
+      : getRandomMessage(wrongMessages);
+
+    setFeedback({
+      type: isCorrect ? "Correct!" : "Wrong!",
+      text: correctAnswer.feedback,
+      message: encouragementMessage,
+    });
+
+    if (isCorrect) {
       setCorrectAnswers((prev) => prev + 1);
-      setHistory([
-        ...history,
-        {
-          question: currentQuestionIndex,
-          answer: selectedAnswer, // Store ID instead of text
-          correct: true,
-        },
-      ]);
     } else {
-      setFeedback({ type: "Wrong!", text: correctAnswer.feedback });
       setWrongAnswers((prev) => prev + 1);
-      setHistory([
-        ...history,
-        {
-          question: currentQuestionIndex,
-          answer: selectedAnswer, // Store ID instead of text
-          correct: false,
-        },
-      ]);
     }
+
+    setHistory([
+      ...history,
+      {
+        question: currentQuestionIndex,
+        answer: selectedAnswer,
+        correct: isCorrect,
+      },
+    ]);
 
     setShowModal(true);
     setIsAnswered(true);
@@ -292,11 +313,7 @@ const ChallengePage = ({ setFooterOption }) => {
             <div className="modal-overlay">
               <div
                 className={`myModal ${
-                  feedback.type === "Correct!"
-                    ? "correct"
-                    : feedback.type === "Wrong!"
-                    ? "incorrect"
-                    : "no-feedback"
+                  feedback.type === "Correct!" ? "correct" : "incorrect"
                 }`}
               >
                 <div className="d-flex">
@@ -304,14 +321,13 @@ const ChallengePage = ({ setFooterOption }) => {
                   <p className="feedbackType">{feedback.type}</p>
                 </div>
                 <p className="feedbackText">{feedback.text}</p>
-
+                <p className="encouragementMessage">{feedback.message}</p>{" "}
+                {/* New Line for Random Message */}
                 <button
-                  className=" btn btn-secondary ok-btn"
+                  className="btn btn-secondary ok-btn"
                   onClick={() => {
                     setShowModal(false);
-                    if (feedback.type) {
-                      handleNextQuestion();
-                    }
+                    handleNextQuestion();
                   }}
                 >
                   Ok

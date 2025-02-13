@@ -91,10 +91,10 @@
 
 /* Question container */
 .question-answers {
-  padding: 25px;
+  padding: 22px;
   background-color: white;
   border-radius: 10px;
-  margin: 12px;
+  margin: 10px 10px 0;
 }
 
 .answer-label {
@@ -207,5 +207,10 @@ input[type="radio"] {
 .ok-btn {
   color: white;
   font-weight: bold;
-  width: 90%;
+  width: 96%;
+}
+
+.encouragementMessage {
+  font-weight: bold;
+  margin-bottom: 10px;
 }

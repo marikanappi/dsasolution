@@ -24,6 +24,8 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   });
   const [modalType, setModalType] = useState(null);
   const isAdmin = group.usercreate === 1; // Replace with actual admin check
+  const leaveText = isAdmin ? "Delete" : "Leave";
+const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and cannot be undone." : "You can join it again whenever you want.";
 
   useEffect(() => {
     setFooterOption("GroupPage");
@@ -56,11 +58,12 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     try {
       const response = await updateGroup(group.id, editedGroup);
       if (response) {
-        setGroup({ ...group, ...editedGroup });
+        setGroup({...editedGroup});
       }
     } catch (error) {
-      console.error("Errore durante la modifica del gruppo:", error);
+      console.error("Error in modifying group information.:", error);
     }
+    setModalType(null);
   };
 
   return (
@@ -75,7 +78,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
           onClick={handleSettingsClick}
         />
 
-        <FaBars
+        <FaInfoCircle
           size={26}
           className="info-icon bar"
           onClick={() => setShowInfoModal(true)}
@@ -108,29 +111,31 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
           onClick={() => {
             handleNavigate("/materials");
             setFooterOption("Materials");
-          }}
-        >
-          <FaFileAlt size={40} />
-          Materials
-        </button>
-      </div>
+            }}
+            >
+            <FaFileAlt size={40} />
+            Materials
+            </button>
+            </div>
 
-      {modalType === "main" && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Group Settings</h3>
-            <button
+            {modalType === "main" && (
+            <div className="modal">
+            <div className="modal-content">
+            <h3 className="text-center">Group Settings</h3>
+            
+            {isAdmin ? <button
               onClick={() => setModalType("edit")}
               className="btn btn-primary"
               disabled={!isAdmin}
             >
               Edit Group Info
-            </button>
+            </button> :
+            <span className = "text-left p-2 mb-2"> Only the creator of group has access to edit the information of group. </span>}
             <button
               onClick={() => setModalType("leave")}
               className="btn btn-danger"
             >
-              Leave Group
+             {leaveText} Group
             </button>
             <button
               onClick={() => setModalType(null)}
@@ -138,16 +143,17 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             >
               Cancel
             </button>
-          </div>
-        </div>
-      )}
+            </div>
+            </div>
+            )}
 
-      {modalType === "edit" && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Edit Group</h3>
+            {modalType === "edit" && (
+            <div className="modal">
+            <div className="modal-content text-left">
+            <h3 className="text-center">Edit Group</h3>
             <label>Group Name:*</label>
             <input
+              className="m-0"
               type="text"
               name="name"
               value={editedGroup.name}
@@ -178,11 +184,11 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
               <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
             </select>
-
+            <div className="row-buttons-container">
             <button
               onClick={handleEditSubmit}
               disabled={!editedGroup.name}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               Save
             </button>
@@ -192,18 +198,19 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             >
               Cancel
             </button>
+            </div>
+            </div>
           </div>
-        </div>
       )}
 
       {modalType === "leave" && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Are you sure you want to leave the group?</h3>
-            <p>You can join it again whenever you want.</p>
+            <h3 className="text-left ">Are you sure you want to {leaveText} group?</h3>
+            <p className="text-left">{deleteConfirm}</p>
             <div className="row-buttons-container">
               <button onClick={handleLeaveGroup} className="btn btn-danger">
-                Leave
+                {leaveText}
               </button>
               <button
                 onClick={() => setModalType("main")}

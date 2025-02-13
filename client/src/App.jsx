@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 const MobileAppSimulator = () => {
   const [footerOption, setFooterOption] = useState("Home");
-  const [group, setGroup] = useState();
+  const [group, setGroup] = useState({});
   const [selectedIcon, setSelectedIcon] = useState("Home");
   const navigate = useNavigate();
   const location = useLocation();
@@ -128,7 +128,7 @@ const MobileAppSimulator = () => {
           <Route
             path="/group/:id"
             element={
-              <GroupPage setFooterOption={setFooterOption} group={group} />
+              <GroupPage setFooterOption={setFooterOption} group={group} setGroup={setGroup} />
             }
           />
           <Route
@@ -238,8 +238,8 @@ const MobileAppSimulator = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Are you sure you want to exit?</h3>
-            <p>All your changes will be discarded.</p>
+            <h3 className="text-left">Are you sure you want to exit?</h3>
+            <p className="text-left">All your changes will be discarded.</p>
             <div className="row-buttons-container">
               <button className="btn btn-danger" onClick={handleExit}>
                 Exit
