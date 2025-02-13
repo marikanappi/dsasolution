@@ -1,52 +1,35 @@
-import React, { useState, useEffect } from "react"; 
-import { AiOutlineCloudUpload } from "react-icons/ai"; 
-import { FaFolder, FaFolderOpen } from "react-icons/fa"; 
-import { getAudio } from "../../API.mjs"; 
-//import "./../css/audiopage.css";  
- 
-const AudioPage = ({ group, setFooterOption }) => { 
-  const [audio, setAudio] = useState([]); 
- 
-  useEffect(() => { 
-    setFooterOption("Audio"); 
-  }, []); 
- 
-  // Funzione per recuperare le immagini 
-  const fetchAudio = async () => { 
-    if (!group || !group.id) return; // Controllo se il gruppo esiste 
-    try { 
-      const audioData = await getAudio(group.id); 
-      setImages(audioData); 
-    } catch (err) { 
-      console.error("Error fetching images:", err); 
-    } 
-  }; 
- 
-  useEffect(() => { 
-    fetchAudio(); 
-  }, [group]); // Chiamata ogni volta che il gruppo cambia 
- 
-  return ( 
-    <div className="images-page"> 
-      <h1 className="page-title">Gallery</h1> 
+import React from "react";
+
+const AudioPage = ({ group, audio = [] }) => {
+  return (
+    <>
+      <div className="group-card">
+        <h2 className="group-card-title">{group.name}</h2>
+      </div>
+
+      <div className="audio-page">
        
-      <div className="images-grid"> 
-        {audio.length === 0 ? ( 
-          <p>No images found.</p> 
-        ) : ( 
-          audio.map((audio) => ( 
-            <div key={audio.material_id} className="image-card"> 
- 
-              <img src={`http://localhost:3001/uploads/${audio.name}`} alt={audio.name} className="image-thumbnail" /> 
-              <div className="image-details"> 
-                <p>{audio.name}</p> 
-              </div> 
-            </div> 
-          )) 
-        )} 
-      </div> 
-    </div> 
-  ); 
-}; 
- 
+
+        <div className="audio-grid">
+          {audio.length === 0 ? (
+            <p>No audio files found.</p>
+          ) : (
+            audio.map((audioFile) => (
+              <div key={audioFile.material_id} className="audio-card">
+                <audio controls>
+                  <source src={`http://localhost:3001/uploads/${audioFile.name}`} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+                <div className="audio-details">
+                  <p>{audioFile.name}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
+
 export default AudioPage;

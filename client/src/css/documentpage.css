@@ -1,4 +1,92 @@
-.pdf-icon { 
-    font-size: 50px; /* Aumenta la dimensione dell'icona */ 
-    color: #007bff;  /* Colore blu per l'icona */ 
-  }
+/* Contenitore generale della pagina dei documenti */
+.document-page {
+  padding: 20px;
+  background-color: #f9f9ff;
+}
+
+/* Griglia per i documenti */
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Card del documento */
+.document-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.document-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Icona del file */
+.document-thumbnail {
+  margin-bottom: 10px;
+}
+
+.file-icon {
+  font-size: 60px;
+  color: #7a55c6;
+}
+
+.pdf-icon {
+  color: #e63946;
+}
+
+.word-icon {
+  color: #0077b6;
+}
+
+.default-icon {
+  color: #6e00ad;
+}
+
+/* Dettagli del documento */
+.document-details p {
+  margin: 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  word-break: break-word;
+}
+
+.document-details a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #7a55c6;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.document-details a:hover {
+  color: #6e00ad;
+  text-decoration: underline;
+}
+
+/* Titolo del gruppo */
+.group-card {
+  background: linear-gradient(135deg, #7b54d1, #a77ffc);
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+}
+
+.group-card-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}

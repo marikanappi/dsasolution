@@ -1,16 +1,46 @@
-/* Importa un font moderno */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-
-/* Contenitore principale */
+.material-container {
+    
+    overflow: hidden; /* Blocca lo scrolling */
+  
+}
 .material-page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure full viewport height */
-    padding: 20px; /* Adjusted padding */
-    background-color: #f8f8f8; /* Light background */
-    align-items: center; /* Center content horizontally */
+    gap: 30px;
+    position: relative;
+    
+    
 }
 
+.material-card {
+  background: linear-gradient(135deg, #7b54d1, #a77ffc);
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  height: 240px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra per un effetto di profondità */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  border-radius: 0% 0% 40% 0%;
+}
+
+.material-card span {
+  color: #a47cba;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.material-card-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
 /* Header */
 .material-header {
     width: 100%;
@@ -39,19 +69,19 @@
 
 /* Stile delle icone */
 .folder-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    border-radius: 15px;
-    background-color: white;
-    border: 2px solid transparent;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    flex: 1 0 150px; /* Distribute space evenly, min-width 150px */
-    text-align: center; /* Center text within the button */
+  color: #7a55c6;
+  background: #e6ddfa;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border: none;
+ 
 }
-
 .folder-btn span {
     margin-top: 8px;
     font-size: 15px;
@@ -153,6 +183,129 @@
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
 }
+
+/* Contenitore principale per il posizionamento fisso dell'icona */
+.plus-icon-container {
+    position: fixed;
+    bottom: 70px;
+    left: 40%;
+    z-index: 1000;
+}
+
+.plus-icon-button {
+    background: #7a55c6;
+    border: none;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.plus-icon {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+    position: relative;
+}
+.plus-icon-button:hover {
+    background: #6e00ad; /* Cambia il colore al passaggio */
+    transform: scale(1.1);
+}
+
+
+
+/* Tooltip "Add File" */
+.plus-icon-tooltip {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #6e00ad;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform-origin: bottom center;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Mostra la nuvoletta al passaggio del mouse */
+.plus-icon-button:hover .plus-icon-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  .preview-image {
+    max-width: 100%;
+    max-height: 200px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .upload-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .upload-btn {
+    background-color: #4caf50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .upload-icon {
+    margin-right: 8px; /* Space between the icon and the text */
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  
+
+
 
 /* Animazione dolce per la comparsa degli elementi */
 @keyframes fadeInUp {

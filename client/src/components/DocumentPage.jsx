@@ -1,57 +1,50 @@
-import React, { useState, useEffect } from "react"; 
-import { AiOutlineCloudUpload } from "react-icons/ai"; 
-import { FaFolder, FaFolderOpen, FaFilePdf } from "react-icons/fa"; 
-import { getDocument } from "../../API.mjs"; 
-import "./../css/documentpage.css";  
- 
-const DocumentPage = ({ group, setFooterOption }) => { 
-  const [documents, setDocuments] = useState([]); 
- 
-  useEffect(() => { 
-    setFooterOption("Documents"); 
-  }, []); 
-   
-  const fetchDocuments = async () => { 
-    if (!group || !group.id) return; // Controllo se il gruppo esiste 
-    try { 
-      const documentsData = await getDocument(group.id); 
-      console.log("documentsData", documentsData); 
-      setDocuments(documentsData); 
-    } catch (err) { 
-      console.error("Error fetching documents:", err); 
-    } 
-  }; 
- 
-  useEffect(() => { 
-    fetchDocuments(); 
-  }, [group]); // Chiamata ogni volta che il gruppo cambia 
-  console.log("SEI IN DOCUMENTS:::::", documents); 
-  return ( 
-    <div className="document-page"> 
-      <h1 className="page-title">Documents Gallery</h1> 
- 
-      <div className="document-grid"> 
-        {documents.length === 0 ? ( 
-          <p>No documents found.</p> 
-        ) : ( 
-          documents.map((document) => ( 
-            <div key={document.material_id} className="document-card"> 
- 
-                <div className="document-thumbnail"> 
-                  <FaFolder className="folder-icon" /> {/* Icona per la cartella */} 
-                </div> 
- 
-              <div className="document-details"> 
-                <p>{document.name}</p> 
-              </div> 
-            </div> 
-          )) 
-        )} 
-      </div> 
-    </div> 
-  ); 
-}; 
- 
- 
- 
+import React from "react";
+import { FaFilePdf, FaFileWord, FaFileAlt } from "react-icons/fa";
+
+const DocumentPage = ({ group, documents = []}) => {
+  const handleDocumentError = (fileName) => {
+    console.error(`Errore nel caricamento del documento: ${fileName}`);
+  };
+
+  return (
+    <>
+      <div className="group-card">
+        <h2 className="group-card-title">{group.name}</h2>
+      </div>
+
+      <div className="document-page">
+        <div className="document-grid">
+          {documents.length === 0 ? (
+            <p>No documents found.</p>
+          ) : (
+            documents.map((document) => {
+              const fileName = document.name.split("/").pop(); // Estrai solo il nome del file
+
+              return (
+                <div key={document.material_id} className="document-card">
+                  <div className="document-thumbnail">
+                    {fileName.endsWith(".pdf") ? (
+                      <FaFilePdf className="file-icon pdf-icon" title="PDF File" />
+                    ) : fileName.endsWith(".doc") || fileName.endsWith(".docx") ? (
+                      <FaFileWord className="file-icon word-icon" title="Word Document" />
+                    ) : (
+                      <FaFileAlt className="file-icon default-icon" title="Other Document" />
+                    )}
+                  </div>
+                  <div className="document-details">
+                    <p>{fileName}</p>
+                    <a href={document.name} target="_blank" rel="noopener noreferrer">
+                      Open Document
+                    </a>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
+
 export default DocumentPage;
