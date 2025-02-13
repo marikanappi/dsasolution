@@ -86,7 +86,7 @@ h6 {
 
 .icon {
   cursor: pointer;
-  color: #7a55c6;
+  color: #6e00ad;
   transition: transform 0.3s ease, color 0.3s ease; /* Keep your existing transitions */
 }
 
