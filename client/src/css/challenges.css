@@ -25,6 +25,11 @@
   color: white;
 }
 
+.back-arrow {
+  position: absolute;
+  left: 16px;
+  top: 20px;
+}
 
 .create-container.challenge {
   position: fixed;

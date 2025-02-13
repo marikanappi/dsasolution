@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import { addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
@@ -41,6 +41,10 @@ const CreateGroup = ({ setFooterOption }) => {
       ...prevState,
       [id]: value,
     }));
+  };
+
+  const handleBack = () => {
+    navigate(-1); // Torna indietro alla pagina precedente
   };
 
   const handleFileChange = (e) => {
@@ -97,7 +101,8 @@ const CreateGroup = ({ setFooterOption }) => {
   // Render the component
   return (
     <div>
-      <div className="title-header">
+      <div className="title-header" onClick={handleBack}>
+      <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px"}} />
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">

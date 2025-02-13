@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaMicrophone, FaPaperclip, FaPaperPlane } from "react-icons/fa";
+import { FaMicrophone, FaPaperclip, FaPaperPlane, FaArrowLeft } from "react-icons/fa";
 import { IoDocument } from "react-icons/io5";
 import "../css/chatpage.css";
+import { useNavigate } from "react-router-dom";
 
 const predefinedResponses = {
   "When is the next meeting?":
@@ -49,6 +50,7 @@ const Chat = ({ setFooterOption, group }) => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setFooterOption("Chat");
@@ -75,6 +77,10 @@ const Chat = ({ setFooterOption, group }) => {
       }
       setNewMessage("");
     }
+  };
+
+  const handleBack = () => {
+    navigate(-1); // Torna indietro alla pagina precedente
   };
 
   const handleFileSelection = async (file) => {
@@ -177,7 +183,12 @@ const Chat = ({ setFooterOption, group }) => {
 
   return (
     <div className="chat-page">
-      <div className="chat-header"></div>
+      <div className="chat-header">
+        <div className="back-arrow" onClick={handleBack}>
+          <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "330px" }} />
+        </div>
+        <p className="chat-title">{group?.name}</p>
+      </div>
       <div className="chat-container">
         {messages.map((msg, index) => (
           <div

@@ -26,11 +26,19 @@
 }
 
 .my-groups-container {
+  margin-top: 10px;
+  max-height: 350px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.my-groups-container-scroll {
+  max-height: 350px;
   width: 100%;
   box-sizing: border-box;
   padding: 20px;
   overflow-y: auto;
-  margin-bottom: 10px;
 }
 
 
@@ -74,10 +82,11 @@
   font-weight: bold;
   font-size: 1.1em;
   margin-bottom: 5px;
+  color: #6e00ad;
 }
 
 .group-level {
-  color: #777;
+  color: #6e00ad;
   font-size: 0.95em;
 }
 
@@ -131,16 +140,15 @@
 }
 
 .notification-bell {
-  font-size: 50px; 
-  z-index: 1001;
-  color: white;
+  font-size: 40px; 
+  color: #ffd079;
   margin-right: 0px;
   margin-bottom: 150px;
   cursor: pointer;
 }
 
 .notification-bell.has-new {
-  color: white;
+  color: #ffd079;
   animation: bell-shake 1s ease-in-out infinite;
 }
 
@@ -176,10 +184,11 @@
 }
 
 .notification-panel {
-  position: absolute;
-  top: 85px;
-  right: 40px;
-  width: 300px;
+  position: fixed;
+  top: 22%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Sposta il pannello esattamente al centro */
+  width: 350px;
   max-height: 400px;
   background: white;
   border-radius: 8px;
@@ -262,7 +271,7 @@
 }
 
 .notification-bell.has-new {
-  color: white;
+  color: #ffd079;
   animation: bell-shake 1s ease-in-out;
 }
 

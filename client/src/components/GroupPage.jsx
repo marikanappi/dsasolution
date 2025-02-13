@@ -4,10 +4,8 @@ import {
   FaComment,
   FaTrophy,
   FaFileAlt,
-  FaSignOutAlt,
-  FaEdit,
-  FaInfoCircle,
   FaBars,
+  FaArrowLeft
 } from "react-icons/fa";
 import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
@@ -44,6 +42,10 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Torna indietro alla pagina precedente
+  };
+
   const handleEditChange = (e) => {
     setEditedGroup({ ...editedGroup, [e.target.name]: e.target.value });
   };
@@ -66,6 +68,9 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   return (
     <div className="group-page">
       <div className="group-card">
+        <div className="back-arrow" onClick={handleBack}>
+      <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "330px"}} />
+        </div>
         <p className="group-card-title">{group.name}</p>
 
         {/* Icona per la descrizione */}

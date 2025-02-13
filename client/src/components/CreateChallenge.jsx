@@ -6,6 +6,7 @@ import { Challenge } from "../DSAmodel.mjs";
 import { FaQuestionCircle } from "react-icons/fa";
 import { PiCat } from "react-icons/pi";
 import TooltipCat from "./TooltipCat";
+import { FaArrowLeft } from "react-icons/fa";
 
 const NewChallenge = ({ setFooterOption, group }) => {
   const [title, setTitle] = useState("");
@@ -14,6 +15,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
   const [numQuestions, setNumQuestions] = useState(1); // Default to 1 question
   const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
+  const [showExitModal, setShowExitModal] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
     text: "",
@@ -51,6 +53,19 @@ const NewChallenge = ({ setFooterOption, group }) => {
     }
   };
 
+  const handleBack = () => {
+    setShowExitModal(true); // Attiva il modal di conferma uscita
+  };
+
+  const handleExit = () => {
+    setShowExitModal(false); // Close the modal
+    navigate("/challenges"); // Navigate to challenges page
+  };
+
+  const handleCancelArrow = () => {
+    setShowExitModal(false); // Close the modal without any action
+  };
+
   const handleFileChange = (e) => {
     setExternalMaterial(e.target.files[0]); // Set the selected file (PDF or image)
   };
@@ -58,6 +73,9 @@ const NewChallenge = ({ setFooterOption, group }) => {
   return (
     <div className="generate-challenge-container">
       <div className="title-header">
+        <div className="back-arrow" onClick={handleBack}>
+                <FaArrowLeft size={25} />
+              </div>
         <h5>Generate Challenge</h5>
       </div>
       <form onSubmit={handleSubmit} className="challenge-form">
@@ -136,6 +154,22 @@ const NewChallenge = ({ setFooterOption, group }) => {
           </button>
         </div>
       </form>
+      {showExitModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <h3>Are you sure you want to exit?</h3>
+                <p>All your changes will be discarded.</p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-danger" onClick={handleExit}>
+                    Exit
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
       <TooltipCat
         tooltipModal={tooltipModal}
