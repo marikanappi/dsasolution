@@ -142,7 +142,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             >
               Edit Group Info
             </button> :
-              <span className="text-left p-2 mb-2"> Only the creator of group has access to edit the information of group. </span>}
+              <span className="text-left p-2 mb-2"> Only the creator of group has access to edit the information. </span>}
             <button
               onClick={() => setModalType("leave")}
               className="btn btn-danger"

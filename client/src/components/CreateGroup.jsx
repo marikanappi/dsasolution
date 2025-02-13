@@ -300,8 +300,8 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
 
           {/* Create Button */}
-          <div className="text-center mb-3 create-container">
-            <button type="submit" className="create-button">
+          <div className="create-container ">
+            <button type="submit" className=" create-button " style={{ marginLeft: "-22px" }}>
               Create
             </button>
           </div>
@@ -311,7 +311,7 @@ const CreateGroup = ({ setFooterOption }) => {
         {tooltipModal.visible && (
           <div className="modal">
           <div className="modal-content">
-            <p>{tooltipModal.text}</p>
+            <p className="text-left">{tooltipModal.text}</p>
             <button
               className="btn btn-secondary"
               onClick={() => setTooltipModal({ visible: false, text: "" })}
@@ -325,7 +325,7 @@ const CreateGroup = ({ setFooterOption }) => {
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
           <div className="exit-modal">
-            <p>Are you sure you want to exit?</p>
+            <p className="text-left">Are you sure you want to exit?</p>
             <div className="d-flex justify-content-center">
               <button
                 className="btn btn-secondary"
@@ -342,8 +342,8 @@ const CreateGroup = ({ setFooterOption }) => {
         {showExitModal && (
             <div className="modal">
               <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
+                <h3 className="text-left">Are you sure you want to exit?</h3>
+                <p className="text-left">All your changes will be discarded.</p>
                 <div className="row-buttons-container">
                   <button className="btn btn-danger" onClick={handleExit}>
                     Exit

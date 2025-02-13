@@ -74,8 +74,8 @@ const NewChallenge = ({ setFooterOption, group }) => {
     <div className="generate-challenge-container">
       <div className="title-header">
         <div className="back-arrow" onClick={handleBack}>
-                <FaArrowLeft size={25} />
-              </div>
+          <FaArrowLeft size={25} />
+        </div>
         <h5>Generate Challenge</h5>
       </div>
       <form onSubmit={handleSubmit} className="challenge-form">
@@ -155,21 +155,21 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       </form>
       {showExitModal && (
-            <div className="modal">
-              <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
-                <div className="row-buttons-container">
-                  <button className="btn btn-danger" onClick={handleExit}>
-                    Exit
-                  </button>
-                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
+        <div className="modal">
+          <div className="modal-content">
+            <h3 className="text-left">Are you sure you want to exit?</h3>
+            <p className="text-left">All your changes will be discarded.</p>
+            <div className="row-buttons-container">
+              <button className="btn btn-danger" onClick={handleExit}>
+                Exit
+              </button>
+              <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                Cancel
+              </button>
             </div>
-          )}
+          </div>
+        </div>
+      )}
 
       <TooltipCat
         tooltipModal={tooltipModal}
