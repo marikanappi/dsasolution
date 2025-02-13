@@ -80,7 +80,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
       </div>
       <form onSubmit={handleSubmit} className="challenge-form">
         <div className="form-group">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">Title*</label>
           <input
             className="title-input"
             type="text"
@@ -150,7 +150,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
         <div className="create-container submit-btn">
           <button type="submit" className="create-button">
-            Generate Challenge
+            Generate
           </button>
         </div>
       </form>

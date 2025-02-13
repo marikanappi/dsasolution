@@ -27,7 +27,7 @@ const CreateGroup = ({ setFooterOption }) => {
     visible: false,
     text: "",
   });
-
+  const [showExitModal, setShowExitModal] = useState(false); // State for exit confirmation modal
   const [exitModalVisible, setExitModalVisible] = useState(false); // State for exit confirmation modal
 
   useEffect(() => {
@@ -44,7 +44,11 @@ const CreateGroup = ({ setFooterOption }) => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Torna indietro alla pagina precedente
+    setShowExitModal(true); // Attiva il modal di conferma uscita
+  };
+
+  const handleCancelArrow = () => {
+    setShowExitModal(false); // Close the modal without any action
   };
 
   const handleFileChange = (e) => {
@@ -155,6 +159,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     value={formData.name}
                     onChange={handleInputChange}
                     className={`form-control`}
+                    required
                     placeholder="Enter group name"
                   />
                 </div>
@@ -169,6 +174,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     value={formData.university}
                     onChange={handleInputChange}
                     className={`form-control`}
+                    required
                     placeholder="Enter university name"
                   />
                 </div>
@@ -197,6 +203,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.level}
                 onChange={handleInputChange}
                 className={`form-control form-select`}
+                required
               >
                 <option value="">Select level</option>
                 <option value="Beginner">Beginner</option>
@@ -228,6 +235,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.specialNeeds}
                 onChange={handleInputChange}
                 className={`form-control form-select`}
+                required
               >
                 <option value="">Select special need</option>
                 <option value="Dyslexia">Dyslexia</option>
@@ -242,10 +250,17 @@ const CreateGroup = ({ setFooterOption }) => {
               <div className="me-3 d-flex flex-column">
                 <label htmlFor="maxParticipants" className="form-label mb-0">
                   Max Number of Participants
+                  <FaQuestionCircle
+                  className="help-icon ms-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    setTooltipModal({
+                      visible: true,
+                      text: "Set a number up to 50.",
+                    })
+                  }
+                />
                 </label>
-                <small style={{ fontSize: "11px" }}>
-                  Set a limit up to 50.
-                </small>
               </div>
 
               <select
@@ -253,9 +268,10 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.maxParticipants}
                 onChange={handleInputChange}
                 className="form-select"
-                style={{ width: "120px" }}
+                required
+                style={{ width: "80px" }}
               >
-                <option value={0}>No Limit</option>
+                <option value="" disabled hidden>Set Limit</option>
                 {[...Array(50)].map((_, i) => (
                   <option key={i} value={i + 1}>
                     {i + 1}
@@ -282,13 +298,6 @@ const CreateGroup = ({ setFooterOption }) => {
               ></textarea>
             </div>
           </div>
-
-          {/* Mandatory Fields Notice */}
-          {error && (
-            <p className="form-items text-danger">
-              * Mandatory fields to fill.
-            </p>
-          )}
 
           {/* Create Button */}
           <div className="text-center mb-3 create-container">
@@ -330,6 +339,22 @@ const CreateGroup = ({ setFooterOption }) => {
             </div>
           </div>
         )}
+        {showExitModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <h3>Are you sure you want to exit?</h3>
+                <p>All your changes will be discarded.</p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-danger" onClick={handleExit}>
+                    Exit
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );
