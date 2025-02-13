@@ -2,7 +2,7 @@
   position: relative;
   display: fixed;
   flex-direction: column;
-  background: linear-gradient(135deg,#7B54D1, #A77FFC );
+  background: #e8e8e8;
   
 }
 
@@ -25,11 +25,14 @@
 }
 
 .suggested-groups-container {
-  margin-top: 100px;
-  background-color: white;
+  margin-top: 90px;
+  background-color: #7B54D1;
   padding: 1px 4px 1px 0px;
   border-radius: 0% 0px 80px 0px;
   overflow-x: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .suggested-group-name {
@@ -60,9 +63,27 @@
 }
 
 .group-item.suggested-item {
-  background-color: #e6ddfa;
+  background-color: #ffffff;
   flex-direction: column;
   width: 300px;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.group-item.other-item {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin-left: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .suggested-name {
@@ -71,18 +92,12 @@
   text-overflow: ellipsis;
 }
 
-.group-info {
-  width: 206px;
-}
-
-.group-info div {
-  color: #ffffff;
-}
-
 .other-group-name {
+  color: #7A55C6;
   font-size: 18px;
   font-weight: bold;
 }
+
 
 .scrollable-cards li {
   list-style: none;
@@ -90,7 +105,6 @@
   flex-basis: 200px; /* O larghezza in % per una resa responsive */
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
   transition: transform 0.3s ease;
 }
@@ -98,14 +112,13 @@
 .suggested-groups-container p {
   font-weight: bold;
   font-size: 24px;
-  color: #333;
   margin: 10px;
   margin-bottom: 10px;
 }
 
 .other-title {
   margin: 14px;
-  color: white;
+  color: #7A55C6;
   font-weight: bold;
   font-size: 26px;
   margin-bottom: 20px;

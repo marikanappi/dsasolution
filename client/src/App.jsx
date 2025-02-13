@@ -123,9 +123,6 @@ const MobileAppSimulator = () => {
 
   return (
     <div className="mobile-frame d-flex flex-column">
-      <header >
-        {renderHeader()}
-      </header>
 
       <main className="mobile-content flex-grow-1">
         <Routes>
