@@ -50,10 +50,19 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
   fileFilter: (req, file, cb) => {
+    console.log("File ricevuto:", file.originalname);
+    console.log("Mimetype:", file.mimetype);
+    console.log("Estensione:", path.extname(file.originalname).toLowerCase());
+
+
     // Permettiamo immagini, audio e documenti
-    const filetypes = /jpeg|jpg|png|pdf|doc|docx|mp3|wav/;
+    const filetypes = /jpeg|jpg|png|pdf|doc|docx|mp3|wav|mpeg/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    console.log("Mimetype ricevuto:", file.mimetype);
+    console.log("Mimetype valido?", mimetype);
+    console.log("Estensione valida?", extname);
 
     if (mimetype && extname) {
       return cb(null, true);
@@ -313,6 +322,14 @@ app.get('/material/:group_id', async (req, res) => {
 
 app.post('/material', upload.single('file'), async (req, res) => {
   try {
+
+    console.log("📥 File ricevuto:", req.file);
+    console.log("📥 Body ricevuto:", req.body);
+
+    if (!req.file) {
+      return res.status(400).json({ error: "Nessun file caricato" });
+    }
+
     const { group_id, type } = req.body;
     const filename = req.file.filename; // Nome del file salvato
 
