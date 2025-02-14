@@ -70,7 +70,10 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
 
   return (
     <div className="group-page">
-      <div className="back-arrow" onClick={handleBack}>
+      <div
+        className={`back-arrow ${modalType || showInfoModal ? "disabled" : ""}`}
+        onClick={!modalType && !showInfoModal ? handleBack : null}
+      >
         <FaArrowLeft
           size={25}
           style={{ cursor: "pointer", color: "white", marginRight: "330px" }}

@@ -298,16 +298,6 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         {/* Altri Gruppi */}
         <p className="other-title">
           Other Groups
-          <FaQuestionCircle
-            className="help-icon light ms-2"
-            style={{ cursor: "pointer", color: "#7A55C6" }}
-            onClick={() =>
-              setTooltipModal({
-                visible: true,
-                text: "These groups are from other universities.",
-              })
-            }
-          />
         </p>
 
         <div className="other-groups-container">

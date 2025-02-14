@@ -1,16 +1,18 @@
 import { AiOutlineCloudUpload } from "react-icons/ai"; // Upload icon
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { FaFilePdf, FaFolder, FaPlus, FaArrowLeft } from "react-icons/fa"; // Folder & Back icon
+import { FaFilePdf, FaFolder, FaPlus, FaArrowLeft, FaInfoCircle } from "react-icons/fa"; // Folder & Back icon
 import { MdInsertDriveFile } from "react-icons/md"; // Generic file icon
 import { addMaterial } from "../../API.mjs";
 import "./../css/materialpage.css";
+import GroupModal from "./GroupModal";
 
 const MaterialPage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null); // Selected file
   const [filePreview, setFilePreview] = useState(null); // File preview
   const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
+  const [showInfoModal, setShowInfoModal] = useState(false); // Stato per mostrare la descrizione del gruppo
 
   useEffect(() => {
     setFooterOption("Materials");
@@ -20,12 +22,16 @@ const MaterialPage = ({ group, setFooterOption }) => {
     navigate(path);
   };
 
+  const handleCancelArrow = () => {
+    setShowInfoModal(false); // Close the modal without any action
+  };
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-  
+
     if (selectedFile) {
       setFile(selectedFile);
-  
+
       // Controlla il tipo di file
       if (selectedFile.type.startsWith("image/")) {
         // Anteprima per immagini
@@ -42,17 +48,17 @@ const MaterialPage = ({ group, setFooterOption }) => {
         // Anteprima generica per altri file
         setFilePreview("/images/file-preview.png");
       }
-  
+
       setModalOpen(true);
     }
   };
-  
+
   const handleUpload = async () => {
     if (!file) {
       alert("Seleziona un file prima di caricare!");
       return;
     }
-  
+
     let type;
     if (file.type.startsWith("image/")) type = "image";
     else if (file.type === "application/pdf") type = "document";
@@ -61,25 +67,25 @@ const MaterialPage = ({ group, setFooterOption }) => {
       alert("Tipo di file non supportato!");
       return;
     }
-  
+
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("group_id", group.id);
       formData.append("type", type);
-  
+
       const result = await fetch("http://localhost:3001/material", {
         method: "POST",
         body: formData,
       });
-  
+
       if (!result.ok) {
         throw new Error("Errore durante l'upload del file");
       }
-  
+
       const data = await result.json();
       const fileUrl = data.material.name;
-  
+
       // Navigazione basata sul tipo di file
       if (fileUrl.endsWith(".jpg") || fileUrl.endsWith(".png")) {
         navigate("/images");
@@ -88,7 +94,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
       } else if (fileUrl.endsWith(".mp3")) {
         navigate("/audio");  // Naviga alla sezione audio
       }
-  
+
       setFile(null);
       setFilePreview(null);
       setModalOpen(false); // Chiudi il modal dopo l'upload
@@ -96,7 +102,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
       console.error("Errore durante l'upload:", error);
     }
   };
-  
+
   const cancelUpload = () => {
     setFile(null); // Resetta il file selezionato
     setFilePreview(null); // Cancella l'anteprima
@@ -109,13 +115,22 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
   return (
     <div className="material-container">
-      <div className="back-arrow" onClick={handleBack}>
+      <div className={`back-arrow ${modalOpen || showInfoModal ? "disabled" : ""}`}
+        onClick={!modalOpen && !showInfoModal ? handleBack : null}>
         <FaArrowLeft size={25} />
       </div>
 
       <div className="group-page">
         <div className="group-card">
           <p className="group-card-title">{group.name}</p>
+          <FaInfoCircle
+            size={26}
+            className="info-icon bar"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowInfoModal(true);
+            }}
+          />
         </div>
 
         <div className="material-page">
@@ -123,17 +138,17 @@ const MaterialPage = ({ group, setFooterOption }) => {
           <div className="material-filters d-flex justify-content-around">
             <button className="folder-btn" onClick={() => handleNavigate("/images")}>
               <FaFolder className="folder-icon" />
-              <span>Images</span>
+              <span className="bold-text">Images</span>
             </button>
 
             <button className="folder-btn" onClick={() => handleNavigate("/documents")}>
               <FaFolder className="folder-icon" />
-              <span>Documents</span>
+              <span className="bold-text">Documents</span>
             </button>
 
             <button className="folder-btn" onClick={() => handleNavigate("/audio")}>
               <FaFolder className="folder-icon" />
-              <span>Audio</span>
+              <span className="bold-text">Audio</span>
             </button>
           </div>
 
@@ -160,7 +175,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            
+
 
             {/* Anteprima del file */}
             {filePreview && (
@@ -172,7 +187,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
                 <img src="/images/audio-preview.png" alt="Audio Preview" className="preview-image" />
               ) : (
                 <MdInsertDriveFile className="generic-file-icon" />
-              ) 
+              )
             )}
             <p>{file?.name}</p>
             <div className="modal-actions">
@@ -186,6 +201,22 @@ const MaterialPage = ({ group, setFooterOption }) => {
           </div>
         </div>
       )}
+
+      {/* Modal per la descrizione del gruppo */}
+      {showInfoModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p className="text-left">You can upload .jpg, .png, .pdf and .mp3</p>
+            <button
+              className="btn modal-button"
+              onClick={handleCancelArrow}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

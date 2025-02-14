@@ -214,7 +214,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         <div className="modal">
           <div className="modal-content">
             <PiCatBold size={30} className="tooltip-cat-icon" />
-            <p>{tooltipModal.text}</p>
+            <p>{catModal.text}</p>
             <button
               className="btn modal-button"
               onClick={() => setCatModal({ visible: false, text: "" })}

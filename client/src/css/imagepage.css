@@ -1,6 +1,7 @@
 .images-page {
   padding: 20px;
-  max-height: calc(100vh - 100px);
+  display: flex;
+  max-height: 520px;
   overflow-y: auto;
 }
 
