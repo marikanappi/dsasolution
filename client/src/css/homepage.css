@@ -21,10 +21,9 @@
 
 .my-groups-header {
   margin-top: 25px;
-  font-size: 54px; /* Adjusted font size */
+  font-size: 48px; /* Adjusted font size */
   color: white;
 }
-
 .my-groups-container {
   margin-top: 10px;
   max-height: 350px;

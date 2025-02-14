@@ -39,7 +39,6 @@ const NewChallenge = ({ setFooterOption, group }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //const challenge = { title, topic_id: selectedTopic, external_material: externalMaterial, num_questions: numQuestions };
     const challenge = new Challenge(title, group.id, selectedTopic);
     console.log("titolo: ", challenge.title);
     console.log("group.id: ", challenge.group_id);
@@ -82,7 +81,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         <div className="form-group">
           <label htmlFor="title">Title*</label>
           <input
-            className="title-input"
+            className={`title-input `}
             type="text"
             id="title"
             value={title}

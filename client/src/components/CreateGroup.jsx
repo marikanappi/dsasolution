@@ -5,7 +5,6 @@ import { addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
 
-// eslint-disable-next-line react/prop-types
 const CreateGroup = ({ setFooterOption }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +22,7 @@ const CreateGroup = ({ setFooterOption }) => {
   const [error, setError] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [setMandatoryWarningVisible] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
     text: "",
@@ -74,7 +74,6 @@ const CreateGroup = ({ setFooterOption }) => {
       !formData.level ||
       !formData.specialNeeds
     ) {
-      setError(true);
       setMandatoryWarningVisible(true);
       return;
     }
@@ -87,8 +86,7 @@ const CreateGroup = ({ setFooterOption }) => {
     try {
       const result = await addGroup(groupData);
       if (result) {
-        alert("Group added successfully!");
-        navigate("/");
+        setShowSuccessModal(true);
       }
     } catch (error) {
       console.error("Error creating group:", error);
@@ -106,11 +104,11 @@ const CreateGroup = ({ setFooterOption }) => {
   return (
     <div>
       <div className="title-header" onClick={handleBack}>
-      <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px"}} />
+        <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px" }} />
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">
-        <form onSubmit={handleCreate}>
+        <form onSubmit={handleCreate} className="create-group-form">
           <div>
             <div className="row">
               <div
@@ -118,9 +116,8 @@ const CreateGroup = ({ setFooterOption }) => {
                 style={{ marginTop: "14px" }}
               >
                 <div
-                  className={`image-upload-container ${
-                    imagePreview ? "image-uploaded" : ""
-                  }`}
+                  className={`image-upload-container ${imagePreview ? "image-uploaded" : ""
+                    }`}
                   style={{
                     backgroundImage: imagePreview
                       ? `url(${imagePreview})`
@@ -158,7 +155,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     id="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`form-control`}
+                    className={`form-control `}
                     required
                     placeholder="Enter group name"
                   />
@@ -173,7 +170,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     id="university"
                     value={formData.university}
                     onChange={handleInputChange}
-                    className={`form-control`}
+                    className={`form-control `}
                     required
                     placeholder="Enter university name"
                   />
@@ -202,7 +199,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 id="level"
                 value={formData.level}
                 onChange={handleInputChange}
-                className={`form-control form-select`}
+                className={`form-control form-select `}
                 required
               >
                 <option value="">Select level</option>
@@ -234,7 +231,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 id="specialNeeds"
                 value={formData.specialNeeds}
                 onChange={handleInputChange}
-                className={`form-control form-select`}
+                className={`form-control form-select `}
                 required
               >
                 <option value="">Select special need</option>
@@ -251,15 +248,15 @@ const CreateGroup = ({ setFooterOption }) => {
                 <label htmlFor="maxParticipants" className="form-label mb-0">
                   Max Number of Participants
                   <FaQuestionCircle
-                  className="help-icon ms-2"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setTooltipModal({
-                      visible: true,
-                      text: "Set a number up to 50.",
-                    })
-                  }
-                />
+                    className="help-icon ms-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      setTooltipModal({
+                        visible: true,
+                        text: "Set a number up to 50.",
+                      })
+                    }
+                  />
                 </label>
               </div>
 
@@ -301,7 +298,7 @@ const CreateGroup = ({ setFooterOption }) => {
 
           {/* Create Button */}
           <div className="text-center mb-3 create-container">
-            <button type="submit" className="create-button">
+            <button type="submit" className="create-button" onClick={handleCreate}>
               Create
             </button>
           </div>
@@ -310,17 +307,34 @@ const CreateGroup = ({ setFooterOption }) => {
         {/* Tooltip Modal */}
         {tooltipModal.visible && (
           <div className="modal">
-          <div className="modal-content">
-            <p>{tooltipModal.text}</p>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setTooltipModal({ visible: false, text: "" })}
-            >
-              Close
-            </button>
-          </div>
+            <div className="modal-content">
+              <p>{tooltipModal.text}</p>
+              <button
+                className="btn btn-secondary"
+                onClick={() => setTooltipModal({ visible: false, text: "" })}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
+
+{showSuccessModal && (
+  <div className="modal">
+    <div className="modal-content">
+      <h3>Group Created Successfully!</h3>
+      <p>Your group has been created and is ready for use.</p>
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          navigate("/"); // Naviga alla home
+        }}
+      >
+        Go to Home
+      </button>
+    </div>
+  </div>
+)}
 
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
@@ -340,21 +354,21 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
         {showExitModal && (
-            <div className="modal">
-              <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
-                <div className="row-buttons-container">
-                  <button className="btn btn-danger" onClick={handleExit}>
-                    Exit
-                  </button>
-                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
-                    Cancel
-                  </button>
-                </div>
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Are you sure you want to exit?</h3>
+              <p>All your changes will be discarded.</p>
+              <div className="row-buttons-container">
+                <button className="btn btn-danger" onClick={handleExit}>
+                  Exit
+                </button>
+                <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                  Cancel
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );
