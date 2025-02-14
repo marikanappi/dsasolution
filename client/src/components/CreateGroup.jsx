@@ -104,7 +104,10 @@ const CreateGroup = ({ setFooterOption }) => {
   return (
     <div>
       <div className="title-header" onClick={handleBack}>
-        <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px" }} />
+        <FaArrowLeft
+          size={25}
+          style={{ cursor: "pointer", color: "white", marginRight: "5px" }}
+        />
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">
@@ -113,24 +116,28 @@ const CreateGroup = ({ setFooterOption }) => {
             <div className="row">
               <div
                 className="col-4 d-flex flex-column align-items-right"
-                style={{ marginTop: "14px" }}
+                style={{ marginTop: "30px" }}
               >
                 <div
-                  className={`image-upload-container ${imagePreview ? "image-uploaded" : ""
-                    }`}
+                  className={`image-upload-container ${
+                    imagePreview ? "image-uploaded" : ""
+                  }`}
                   style={{
                     backgroundImage: imagePreview
                       ? `url(${imagePreview})`
                       : "none",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    width: "100px",
-                    height: "100px",
+                    width: "110px",
+                    height: "110px",
                     border: "1px solid #ccc",
+                    borderRadius: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    cursor: "pointer", // Makes it clear that it's clickable
                   }}
+                  onClick={() => document.getElementById("group-pic").click()} // Triggers input on div click
                 >
                   {!imagePreview && <span className="add-text">+ Add</span>}
                 </div>
@@ -140,11 +147,7 @@ const CreateGroup = ({ setFooterOption }) => {
                   name="profile_pic"
                   accept=".jpg, .jpeg, .png"
                   onChange={handleFileChange}
-                  style={{
-                    fontSize: "13px",
-                    maxWidth: "94px",
-                    paddingTop: "8px",
-                  }}
+                  style={{ display: "none" }} // Hide the file input
                 />
               </div>
               <div className="col-7" style={{ paddingRight: "10px" }}>
@@ -268,7 +271,9 @@ const CreateGroup = ({ setFooterOption }) => {
                 required
                 style={{ width: "80px" }}
               >
-                <option value="" disabled hidden>Set Limit</option>
+                <option value="" disabled hidden>
+                  Set Limit
+                </option>
                 {[...Array(50)].map((_, i) => (
                   <option key={i} value={i + 1}>
                     {i + 1}
@@ -299,10 +304,13 @@ const CreateGroup = ({ setFooterOption }) => {
 
         {error && <div className="error-message text-left">{error}</div>}
 
-
         {/* Create Button */}
         <div className="create-container">
-          <button type="submit" className="create-button" onClick={handleCreate}>
+          <button
+            type="submit"
+            className="create-button"
+            onClick={handleCreate}
+          >
             Create
           </button>
         </div>
@@ -365,7 +373,10 @@ const CreateGroup = ({ setFooterOption }) => {
                 <button className="btn btn-danger" onClick={handleExit}>
                   Exit
                 </button>
-                <button className="btn modal-button" onClick={handleCancelArrow}>
+                <button
+                  className="btn modal-button"
+                  onClick={handleCancelArrow}
+                >
                   Cancel
                 </button>
               </div>
@@ -376,6 +387,5 @@ const CreateGroup = ({ setFooterOption }) => {
     </div>
   );
 };
-
 
 export default CreateGroup;
