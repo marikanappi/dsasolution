@@ -189,14 +189,16 @@ h6 {
   text-align: center;
 }
 
-.modal button {
+.modal-button {
   margin: 10px;
   padding: 10px;
   cursor: pointer;
+  background-color: #6e00ad;
+  color: white;
 }
 
 .btn-success {
-  background-color: #1cb982;
+  background-color: green;
 }
 
 .row-buttons-container {
@@ -209,7 +211,7 @@ h6 {
 }
 
 .btn-danger {
-  background-color: #ff5f5f;
+  background-color: red;
   color: white;
   padding: 8px 16px;
   border: none;

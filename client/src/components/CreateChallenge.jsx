@@ -39,7 +39,6 @@ const NewChallenge = ({ setFooterOption, group }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //const challenge = { title, topic_id: selectedTopic, external_material: externalMaterial, num_questions: numQuestions };
     const challenge = new Challenge(title, group.id, selectedTopic);
     console.log("titolo: ", challenge.title);
     console.log("group.id: ", challenge.group_id);
@@ -82,7 +81,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         <div className="form-group">
           <label htmlFor="title">Title*</label>
           <input
-            className="title-input"
+            className={`title-input `}
             type="text"
             id="title"
             value={title}
@@ -155,20 +154,20 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       </form>
       {showExitModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3 className="text-left">Are you sure you want to exit?</h3>
-            <p className="text-left">All your changes will be discarded.</p>
-            <div className="row-buttons-container">
-              <button className="btn btn-danger" onClick={handleExit}>
-                Exit
-              </button>
-              <button className="btn btn-secondary" onClick={handleCancelArrow}>
-                Cancel
-              </button>
+            <div className="modal">
+              <div className="modal-content">
+                <h3>Are you sure you want to exit?</h3>
+                <p>All your changes will be discarded.</p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-danger" onClick={handleExit}>
+                    Exit
+                  </button>
+                  <button className="btn modal-button" onClick={handleCancelArrow}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
       )}
 
       <TooltipCat

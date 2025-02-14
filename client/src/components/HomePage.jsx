@@ -50,7 +50,7 @@ const HomePage = ({
   return (
     <div className="home-page-container">
       <div className="home-page-header">
-        <h5 className="my-groups-header">Home</h5>
+        <h4 className="my-groups-header">My Groups</h4>
         <div className="notification-container"> {/* Container for the bell */}
           <NotificationSystem
             notifications={notifications}
@@ -59,10 +59,7 @@ const HomePage = ({
           />
         </div>
       </div>  
-      <div className="my-groups-container">
-      <p className="other-title">
-      My Groups   
-      </p>  
+      <div className="my-groups-container"> 
       <div className="my-groups-container-scroll">
       
         {groups.length > 0 ? (

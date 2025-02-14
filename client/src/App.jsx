@@ -27,16 +27,23 @@ const MobileAppSimulator = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState(null); // Nuovo stato per la destinazione
   const [notifications, setNotifications] = useState([
     { id: 1, text: "You have one new message" },
     { id: 6, text: "You have one new challenge" },
   ]);
 
   const navigateTo = (path, option) => {
-    setFooterOption(option);
-    setSelectedIcon(option); // Update selected icon state
-    navigate(path);
+    if (["CreateGroup", "ChallengePage", "NewChallenge"].includes(footerOption)) {
+      setPendingNavigation({ path, option }); // Salva la destinazione
+      setShowModal(true); // Mostra il modal
+    } else {
+      setFooterOption(option);
+      setSelectedIcon(option);
+      navigate(path);
+    }
   };
+  
 
   const getFooterIconClass = (iconName) => {
     const currentPath = location.pathname;
@@ -80,17 +87,14 @@ const MobileAppSimulator = () => {
     }
   };
 
+
+  
   const handleExit = () => {
-    setShowModal(false); // Close the modal
-    if (footerOption === "CreateGroup") {
-      setFooterOption("Home");
-      navigate("/"); // Navigate to home
-    } else if (
-      footerOption === "ChallengePage" ||
-      footerOption === "NewChallenge"
-    ) {
-      setFooterOption("Challenges");
-      navigate("/challenges"); // Navigate to challenges page
+    setShowModal(false);
+    if (pendingNavigation) {
+      setFooterOption(pendingNavigation.option);
+      navigate(pendingNavigation.path);
+      setPendingNavigation(null); // Resetta la destinazione
     }
   };
 
@@ -205,31 +209,19 @@ const MobileAppSimulator = () => {
       <footer className="mobile-footer text-white d-flex justify-content-around align-items-center">
         <FaHome
           onClick={() => {
-            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack();
-            } else {
               navigateTo("/", "Home");
-            }
           }}
           className={getFooterIconClass("Home")} // Use function to set class
         />
         <FaSearch
           onClick={() => {
-            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack();
-            } else {
               navigateTo("/search", "Search");
-            }
           }}
           className={getFooterIconClass("Search")} // Use function to set class
         />
         <FaUser
           onClick={() => {
-            if (["ChallengePage", "NewChallenge"].includes(footerOption)) {
-              goBack();
-            } else {
               navigateTo("/profile", "Profile");
-            }
           }}
           className={getFooterIconClass("Profile")} // Use function to set class
         />
@@ -244,7 +236,7 @@ const MobileAppSimulator = () => {
               <button className="btn btn-danger" onClick={handleExit}>
                 Exit
               </button>
-              <button className="btn btn-secondary" onClick={handleCancel}>
+              <button className="btn modal-button" onClick={handleCancel}>
                 Cancel
               </button>
             </div>

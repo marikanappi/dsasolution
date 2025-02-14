@@ -28,6 +28,7 @@
   scroll-behavior: smooth; /* Scorrimento fluido */
 }
 
+
 .suggested-groups-container {
   background: linear-gradient(135deg, #7b54d1, #a77ffc);
   padding: 1px 4px 1px 0px;
@@ -123,7 +124,6 @@
   flex-basis: 200px; /* O larghezza in % per una resa responsive */
   background-color: #fff;
   border-radius: 10px;
-  padding: 16px;
   transition: transform 0.3s ease;
 }
 
@@ -148,6 +148,7 @@
   padding: 0;
   max-height: 350px; /* Scegli un'altezza adeguata */
   overflow-y: auto;
+  scrollbar-color: #7A55C6; /* Colore della barra di scorrimento */
 }
 
 .other-group {
@@ -183,7 +184,7 @@
 }
 
 .join-btn.joined {
-  background-color: #19D4A0;
+  background-color: green;
   color: white;
   transform: scale(1.1);
 }
@@ -205,8 +206,8 @@
 
 .filter-dropdown-container {
   position: fixed; /* Posiziona il dropdown rispetto alla finestra */
-  top: 130px; /* Regola la distanza dal top della finestra */
-  left: 10;
+  top: 80px; /* Regola la distanza dal top della finestra */
+  left: 20px;
   width: 90%; /* Occupa tutta la larghezza della finestra */
   background-color: rgb(
     240,
@@ -222,6 +223,7 @@
   transform: translateY(
     -10px
   ); /* Partenza dalla parte superiore per un effetto di "salita" */
+
 }
 
 .filter-dropdown-container.visible {

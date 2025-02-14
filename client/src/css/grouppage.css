@@ -122,26 +122,6 @@
   margin-right: 10px;
 }
 
-/* Effetto focus per l'accessibilità */
-.action-btn:focus {
-  box-shadow: 0 0 0 2px rgba(106, 92, 205, 0.8);
-}
-
-.leave-group {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  font-weight: bold;
-  color: #b70000;
-}
-
-.confirm-btn {
-  background-color: #6e00ad;
-}
-
-.cancel-btn {
-  background-color: #6e00ad;
-}
 
 /* Adattamento per dispositivi piccoli */
 @media screen and (max-width: 768px) {
@@ -207,14 +187,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
 }
-
-.modal-content button:disabled {
-  background: #cccccc;
-  cursor: not-allowed;
-}
-
 
 
 .info-icon {

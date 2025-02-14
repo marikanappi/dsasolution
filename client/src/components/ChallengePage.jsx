@@ -348,7 +348,7 @@ const ChallengePage = ({ setFooterOption }) => {
                 <p className="encouragementMessage">{feedback.message}</p>{" "}
                 {/* New Line for Random Message */}
                 <button
-                  className="btn btn-secondary ok-btn"
+                  className="btn modal-button"
                   onClick={() => {
                     setShowModal(false);
                     handleNextQuestion();
@@ -372,7 +372,7 @@ const ChallengePage = ({ setFooterOption }) => {
                     See Summary
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn modal-button"
                     onClick={() => setShowRecapModal(false)}
                   >
                     Continue Challenge
@@ -390,7 +390,7 @@ const ChallengePage = ({ setFooterOption }) => {
                   <button className="btn btn-danger" onClick={handleExit}>
                     Exit
                   </button>
-                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                  <button className="btn modal-button" onClick={handleCancelArrow}>
                     Cancel
                   </button>
                 </div>
