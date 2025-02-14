@@ -158,7 +158,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
       {/* Contenitore nome + pulsante */}
       <div className="group-info-container">
-        <div className="other-group-name">{group.name}</div>
+        <div className="other-group-name text-left">{group.name}</div>
         <button
           className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
           onClick={(e) => {
@@ -195,11 +195,11 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const Modal = ({ group, onClose, onConfirmJoin }) => (
     <div className="modal">
       <div className="modal-content">
-        <p>
+        <h3 className="text-left">
           Are you sure you want to join <strong>{group.name}</strong>?
-        </p>
-        {group.level && <p>Level: {group.level}</p>}
-        {group.SLD && <p>SLD: {group.SLD}</p>}
+        </h3>
+        {group.level && <p className="text-left m-0">Level: {group.level}</p>}
+        {group.SLD && <p className="text-left">SLD: {group.SLD}</p>}
         <div className="row-buttons-container">
           <button
             className="btn btn-success"

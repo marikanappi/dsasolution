@@ -245,10 +245,10 @@ const CreateGroup = ({ setFooterOption }) => {
             {/* Max Participants */}
             <div className="mb-3 d-flex align-items-center">
               <div className="me-3 d-flex flex-column">
-                <label htmlFor="maxParticipants" className="form-label mb-0">
+                <label htmlFor="maxParticipants" className="form-label m-0">
                   Max Number of Participants
                   <FaQuestionCircle
-                    className="help-icon ms-2"
+                    className="help-icon ms-1"
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       setTooltipModal({
@@ -264,7 +264,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 id="maxParticipants"
                 value={formData.maxParticipants}
                 onChange={handleInputChange}
-                className="form-select"
+                className="form-select ms-3"
                 required
                 style={{ width: "80px" }}
               >
@@ -297,7 +297,7 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         </form>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="error-message text-left">{error}</div>}
 
 
         {/* Create Button */}
@@ -311,9 +311,9 @@ const CreateGroup = ({ setFooterOption }) => {
         {tooltipModal.visible && (
           <div className="modal">
             <div className="modal-content">
-              <p>{tooltipModal.text}</p>
+              <p className="text-left">{tooltipModal.text}</p>
               <button
-                className="btn modal-button"
+                className="btn modal-button "
                 onClick={() => setTooltipModal({ visible: false, text: "" })}
               >
                 Close
@@ -359,8 +359,8 @@ const CreateGroup = ({ setFooterOption }) => {
         {showExitModal && (
           <div className="modal">
             <div className="modal-content">
-              <h3>Are you sure you want to exit?</h3>
-              <p>All your changes will be discarded.</p>
+              <h3 className="text-left">Are you sure you want to exit?</h3>
+              <p className="text-left">All your changes will be discarded.</p>
               <div className="row-buttons-container">
                 <button className="btn btn-danger" onClick={handleExit}>
                   Exit
