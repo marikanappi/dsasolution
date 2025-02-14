@@ -321,7 +321,7 @@ const CreateGroup = ({ setFooterOption }) => {
             <div className="modal-content">
               <p className="text-left">{tooltipModal.text}</p>
               <button
-                className="btn modal-button "
+                className="btn modal-button"
                 onClick={() => setTooltipModal({ visible: false, text: "" })}
               >
                 Close

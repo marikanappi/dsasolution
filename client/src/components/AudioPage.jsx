@@ -1,24 +1,26 @@
 import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaCloudDownloadAlt, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import "./../css/audiopage.css";
-import { getAudio } from "../../API.mjs";
+import { getAudio, deleteMaterial } from "../../API.mjs";
 
 const AudioPage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [audio, setAudio] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [audioToDelete, setAudioToDelete] = useState(null);
 
   const handleBack = () => {
     navigate(-1);
   };
 
-   useEffect(() => {
-      if (setFooterOption) {
-        setFooterOption("Audio");
-      }
-    }, [setFooterOption]);
-  
+  useEffect(() => {
+    if (setFooterOption) {
+      setFooterOption("Audio");
+    }
+  }, [setFooterOption]);
+
 
   // Funzione per recuperare le immagini
   const fetchAudio = async () => {
@@ -36,6 +38,50 @@ const AudioPage = ({ group, setFooterOption }) => {
     fetchAudio();
   }, [group]); // Chiamata ogni volta che il gruppo cambia
 
+  const handleDownloadAudio = async (url) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+  
+      const blobUrl = window.URL.createObjectURL(blob);
+  
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = url.split("/").pop(); // Scarica il file con il nome finale
+  
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error downloading audio:', error);
+      alert('Error downloading the audio. Please try again.');
+    }
+  };
+  
+
+  const handleDeleteAudio = async (material_id) => {
+    try {
+      await deleteMaterial(material_id);
+      setAudio((prevAudio) =>
+        prevAudio.filter((doc) => doc.material_id !== material_id)
+      );
+      setShowModal(false);
+    } catch (err) {
+      console.error("Error deleting document:", err);
+    }
+  };
+
+  const handleConfirmDelete = (audio) => {
+    setAudioToDelete(audio);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <div className="back-arrow" onClick={handleBack}>
@@ -43,7 +89,7 @@ const AudioPage = ({ group, setFooterOption }) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">Audio for{group.name}</h2>
+        <h2 className="group-card-title">Audio for {group.name}</h2>
       </div>
 
       <div className="audio-page">
@@ -64,14 +110,46 @@ const AudioPage = ({ group, setFooterOption }) => {
                 </div>
                 <div className="audio-details">
                   <p className="audio-name">{audioFile.name.split('/').pop()}</p>
+                  <FaCloudDownloadAlt
+                    className="download-icon-doc"
+                    title="Download"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownloadAudio(`http://localhost:3001/uploads/${audioFile.name}`);
+                    }}
+                  />
+                  <FaTrash
+                    className="delete-icon-doc"
+                    title="Delete"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleConfirmDelete(audioFile);
+                    }}
+                  />
                 </div>
               </div>
             ))
           )}
         </div>
-      </div>
+
+        {/* Modal per conferma eliminazione */}
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+            <p className="text-left">Are you sure you want to delete this file audio?</p>
+                <button className="btn btn-success" onClick={() => handleDeleteAudio(audioToDelete?.material_id)}>
+                  Yes
+                </button>
+                <button className="btn modal-button" onClick={handleCloseModal}>
+                  Cancel
+                </button>
+            </div>
+          </div>
+        )}
+
+          </div>
     </>
-  );
+      );
 };
 
-export default AudioPage;
+      export default AudioPage;
