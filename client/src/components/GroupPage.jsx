@@ -151,7 +151,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             </button>
             <button
               onClick={() => setModalType(null)}
-              className="btn btn-secondary"
+              className="btn modal-button"
             >
               Cancel
             </button>
@@ -206,7 +206,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
               </button>
               <button
                 onClick={() => setModalType("main")}
-                className="btn btn-secondary"
+                className="btn modal-button"
               >
                 Cancel
               </button>
@@ -226,7 +226,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
               </button>
               <button
                 onClick={() => setModalType("main")}
-                className="btn btn-secondary"
+                className="btn modal-button"
               >
                 Cancel
               </button>

@@ -207,7 +207,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           >
             Join
           </button>
-          <button className="btn btn-secondary" onClick={onClose}>
+          <button className="btn modal-button" onClick={onClose}>
             Cancel
           </button>
         </div>
@@ -335,6 +335,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
         <div className="modal-content">
           <p>{tooltipModal.text}</p>
           <button
+            className="btn modal-button"
             onClick={() => setTooltipModal({ visible: false, text: "" })}
           >
             Close

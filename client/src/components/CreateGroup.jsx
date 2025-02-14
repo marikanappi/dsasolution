@@ -310,7 +310,7 @@ const CreateGroup = ({ setFooterOption }) => {
             <div className="modal-content">
               <p>{tooltipModal.text}</p>
               <button
-                className="btn btn-secondary"
+                className="btn modal-button"
                 onClick={() => setTooltipModal({ visible: false, text: "" })}
               >
                 Close
@@ -342,7 +342,7 @@ const CreateGroup = ({ setFooterOption }) => {
             <p>Are you sure you want to exit?</p>
             <div className="d-flex justify-content-center">
               <button
-                className="btn btn-secondary"
+                className="btn modal-button"
                 onClick={() => setExitModalVisible(false)}
               >
                 No
@@ -362,7 +362,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 <button className="btn btn-danger" onClick={handleExit}>
                   Exit
                 </button>
-                <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                <button className="btn modal-button" onClick={handleCancelArrow}>
                   Cancel
                 </button>
               </div>

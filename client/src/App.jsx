@@ -236,7 +236,7 @@ const MobileAppSimulator = () => {
               <button className="btn btn-danger" onClick={handleExit}>
                 Exit
               </button>
-              <button className="btn btn-secondary" onClick={handleCancel}>
+              <button className="btn modal-button" onClick={handleCancel}>
                 Cancel
               </button>
             </div>

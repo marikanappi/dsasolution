@@ -19,7 +19,7 @@ const GroupModal = ({ selectedGroup, setSelectedGroup }) => {
           Participants: {selectedGroup.numberOfPartecipants}
         </p>
         <button
-          className="btn btn-secondary"
+          className="btn modal-button"
           onClick={() => setSelectedGroup(null)}
         >
           Close

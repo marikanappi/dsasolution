@@ -184,7 +184,7 @@
 }
 
 .join-btn.joined {
-  background-color: #19D4A0;
+  background-color: green;
   color: white;
   transform: scale(1.1);
 }
@@ -206,8 +206,8 @@
 
 .filter-dropdown-container {
   position: fixed; /* Posiziona il dropdown rispetto alla finestra */
-  top: 130px; /* Regola la distanza dal top della finestra */
-  left: 10;
+  top: 80px; /* Regola la distanza dal top della finestra */
+  left: 20px;
   width: 90%; /* Occupa tutta la larghezza della finestra */
   background-color: rgb(
     240,
@@ -223,6 +223,7 @@
   transform: translateY(
     -10px
   ); /* Partenza dalla parte superiore per un effetto di "salita" */
+
 }
 
 .filter-dropdown-container.visible {

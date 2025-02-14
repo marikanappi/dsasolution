@@ -162,7 +162,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
                   <button className="btn btn-danger" onClick={handleExit}>
                     Exit
                   </button>
-                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                  <button className="btn modal-button" onClick={handleCancelArrow}>
                     Cancel
                   </button>
                 </div>
