@@ -9,6 +9,8 @@ const DocumentPage = ({ group, setFooterOption }) => {
   const [documents, setDocuments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [documentToDelete, setDocumentToDelete] = useState(null);
+  const isAdmin = group.usercreate === 1; // Replace with actual admin check
+
 
   useEffect(() => {
     if (setFooterOption) {
@@ -120,6 +122,8 @@ const DocumentPage = ({ group, setFooterOption }) => {
                   <p title={fileName}>{fileName}</p>
                   <span className="document-meta">{group?.name || "Unknown Group"}</span>
                 </div>
+                {isAdmin ? (
+                    <div>
                 <FaCloudDownloadAlt
                   className="download-icon-doc"
                   title="Download"
@@ -136,6 +140,17 @@ const DocumentPage = ({ group, setFooterOption }) => {
                     handleConfirmDelete(document);
                   }}
                 />
+                </div>
+              ) : (
+                <FaCloudDownloadAlt
+                  className="download-icon-doc"
+                  title="Download"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDownloadDocument(document.name);
+                  }}
+                />
+              )}
               </div>
             );
           })

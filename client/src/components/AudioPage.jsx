@@ -10,6 +10,7 @@ const AudioPage = ({ group, setFooterOption }) => {
   const [audio, setAudio] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [audioToDelete, setAudioToDelete] = useState(null);
+  const isAdmin = group.usercreate === 1; // Replace with actual admin check
 
   const handleBack = () => {
     navigate(-1);
@@ -42,24 +43,24 @@ const AudioPage = ({ group, setFooterOption }) => {
     try {
       const response = await fetch(url);
       const blob = await response.blob();
-  
+
       const blobUrl = window.URL.createObjectURL(blob);
-  
+
       const link = document.createElement('a');
       link.href = blobUrl;
       link.download = url.split("/").pop(); // Scarica il file con il nome finale
-  
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-  
+
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Error downloading audio:', error);
       alert('Error downloading the audio. Please try again.');
     }
   };
-  
+
 
   const handleDeleteAudio = async (material_id) => {
     try {
@@ -110,7 +111,27 @@ const AudioPage = ({ group, setFooterOption }) => {
                 </div>
                 <div className="audio-details">
                   <p className="audio-name">{audioFile.name.split('/').pop()}</p>
-                  <FaCloudDownloadAlt
+                  {isAdmin ? (
+                    <div>
+                      <FaCloudDownloadAlt
+                        className="download-icon-doc"
+                        title="Download"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownloadAudio(`http://localhost:3001/uploads/${audioFile.name}`);
+                        }}
+                      />
+                      <FaTrash
+                        className="delete-icon-doc"
+                        title="Delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleConfirmDelete(audioFile);
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <FaCloudDownloadAlt
                     className="download-icon-doc"
                     title="Download"
                     onClick={(e) => {
@@ -118,14 +139,7 @@ const AudioPage = ({ group, setFooterOption }) => {
                       handleDownloadAudio(`http://localhost:3001/uploads/${audioFile.name}`);
                     }}
                   />
-                  <FaTrash
-                    className="delete-icon-doc"
-                    title="Delete"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleConfirmDelete(audioFile);
-                    }}
-                  />
+                  )}
                 </div>
               </div>
             ))
@@ -136,20 +150,20 @@ const AudioPage = ({ group, setFooterOption }) => {
         {showModal && (
           <div className="modal">
             <div className="modal-content">
-            <p className="text-left">Are you sure you want to delete this file audio?</p>
-                <button className="btn btn-success" onClick={() => handleDeleteAudio(audioToDelete?.material_id)}>
-                  Yes
-                </button>
-                <button className="btn modal-button" onClick={handleCloseModal}>
-                  Cancel
-                </button>
+              <p className="text-left">Are you sure you want to delete this file audio?</p>
+              <button className="btn btn-success" onClick={() => handleDeleteAudio(audioToDelete?.material_id)}>
+                Yes
+              </button>
+              <button className="btn modal-button" onClick={handleCloseModal}>
+                Cancel
+              </button>
             </div>
           </div>
         )}
 
-          </div>
+      </div>
     </>
-      );
+  );
 };
 
-      export default AudioPage;
+export default AudioPage;

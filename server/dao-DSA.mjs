@@ -397,7 +397,7 @@ export function addMaterial(db, group_id, name, type) {
 }
 
 //funzione per eliminare il material
-export function deleteMaterial(db, material_id) {
+export function deleteMaterial(material_id) {
     return new Promise((resolve, reject) => {
         const query = "DELETE FROM material WHERE material_id = ?";
         db.run(query, [material_id], function(err) {

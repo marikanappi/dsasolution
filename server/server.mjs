@@ -3,9 +3,6 @@ import morgan from 'morgan'; // logging middleware
 import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
-import session from 'express-session';
 import db from './db.mjs'; // Assuming db is correctly exported from db.mjs
 import { 
   getAllGroups,  
@@ -24,7 +21,8 @@ import {
   getDocuments,
   getAudio,
   updateGroup,
-  addMaterial
+  addMaterial,
+  deleteMaterial
 } from './dao-DSA.mjs';
 
 const app = express();
@@ -289,9 +287,6 @@ app.get('/material/audio/:group_id', async (req, res) => {
 app.post('/material', upload.single('file'), async (req, res) => {
   try {
 
-    console.log("📥 File ricevuto:", req.file);
-    console.log("📥 Body ricevuto:", req.body);
-
     if (!req.file) {
       return res.status(400).json({ error: "Nessun file caricato" });
     }
@@ -321,15 +316,24 @@ app.post('/material', upload.single('file'), async (req, res) => {
 
 //elimina materiali 
 app.delete('/material/:id', async (req, res) => {
-  const group_id = req.params.group_id;
+  const material_id = req.params.id;
   try {
-    await deleteMaterial(db, group_id);
+    const result = await deleteMaterial(material_id);
+    
+    if (result === 0) {
+      // Materiale non trovato
+      console.error(`Material with id ${material_id} not found`);
+      return res.status(404).json({ error: 'Material not found' });
+    }
+    
     res.status(200).json({ message: 'Material deleted successfully' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    // Log dell'errore
+    console.error('Error while deleting material:', err);
+    res.status(500).json({ error: 'Internal server error', details: err.message });
   }
-}
-);
+});
+
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

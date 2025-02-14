@@ -8,6 +8,8 @@ import "./../css/imagepage.css";
 const ImagePage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
+  const isAdmin = group.usercreate === 1; // Replace with actual admin check
+
 
   useEffect(() => {
     if (setFooterOption) {
@@ -95,6 +97,8 @@ const ImagePage = ({ group, setFooterOption }) => {
                     className="image-thumbnail"
                     onError={() => handleImageError(image.name)}
                   />
+                  {isAdmin ? (
+                    <div>
                   <FaCloudDownloadAlt
                     className="download-icon"
                     title="Download"
@@ -113,6 +117,17 @@ const ImagePage = ({ group, setFooterOption }) => {
                       }
                     }}
                   />
+                  </div>
+                  ) : (
+                  <FaCloudDownloadAlt
+                    className="download-icon"
+                    title="Download"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownloadImage(image.name);
+                    }}
+                  />
+                  )}
                 </div>
 
                 <div className="image-details">
