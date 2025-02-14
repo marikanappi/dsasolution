@@ -147,16 +147,25 @@ const NewChallenge = ({ setFooterOption, group }) => {
             accept=".pdf,.jpg,.jpeg,.png"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="numQuestions">Number of Questions</label>
-          <input
-            type="number"
+        <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+          <label htmlFor="numQuestions" style={{ marginRight: "90px", flexShrink: 0 }}>Number of Questions</label>
+          <select
             id="numQuestions"
             value={numQuestions}
             onChange={(e) => setNumQuestions(e.target.value)}
-            min="1"
+            className="form-select ms-3"
             required
-          />
+            style={{ width: "80px" }}
+          >
+            <option value="" disabled hidden>
+              Set Limit
+            </option>
+            {[...Array(11)].map((_, i) => (
+              <option key={i} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="create-container submit-btn">
           <button type="submit" className="create-button" onClick={handleSubmit}>
@@ -216,7 +225,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       )}
 
-<TooltipCat tooltipModal={tooltipModal} setTooltipModal={setTooltipModal} />
+      <TooltipCat tooltipModal={tooltipModal} setTooltipModal={setTooltipModal} />
 
 
     </div>
