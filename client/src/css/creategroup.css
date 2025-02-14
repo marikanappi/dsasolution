@@ -80,6 +80,19 @@
     width: 100%;
 }
 
+.create-container {
+    display: flex;
+    padding: 20px;
+    right: 1%
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-right: 100px;
+    font-weight: bold;
+  }
+
 
 .create-button {
     border-radius: 8px;

@@ -56,6 +56,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
     let type;
     if (file.type.startsWith("image/")) type = "image";
     else if (file.type === "application/pdf") type = "document";
+    else if (file.type.startsWith("audio/")) type = "audio";
     else {
       alert("Tipo di file non supportato!");
       return;
@@ -84,6 +85,8 @@ const MaterialPage = ({ group, setFooterOption }) => {
         navigate("/images");
       } else if (fileUrl.endsWith(".pdf")) {
         navigate("/documents");
+      } else if (fileUrl.endsWith(".mp3")) {
+        navigate("/audio");
       }
 
       setFile(null);
@@ -149,7 +152,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
             <input
               type="file"
               id="fileInput"
-              accept=".png,.jpg,.jpeg,.pdf"
+              accept=".png,.jpg,.jpeg,.pdf,.mp3"
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
@@ -161,9 +164,6 @@ const MaterialPage = ({ group, setFooterOption }) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={closeModal}>
-              ✖
-            </button>
 
             {/* Anteprima del file */}
             {filePreview && (
@@ -174,15 +174,15 @@ const MaterialPage = ({ group, setFooterOption }) => {
               ) : file.type.startsWith("audio/") ? (
                 <img src="/images/audio-preview.png" alt="Audio Preview" className="preview-image" />
               ) : (
-                <img src="/images/file-preview.png" alt="Generic File Preview" className="preview-image" />
-              )
+                <MdInsertDriveFile className="generic-file-icon" />
+              ) 
             )}
             <p>{file?.name}</p>
             <div className="modal-actions">
-              <button onClick={handleUpload} className="upload-btn">
+              <button onClick={handleUpload} className="btn modal-button" style={{ backgroundColor: "green", color: "white" }}>
                 <AiOutlineCloudUpload className="upload-icon" /> Upload
               </button>
-              <button onClick={cancelUpload} className="cancel-btn">
+              <button onClick={cancelUpload} className="btn modal-button">
                 Cancel
               </button>
             </div>

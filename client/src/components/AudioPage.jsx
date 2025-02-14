@@ -1,11 +1,11 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate} from "react-router-dom";
-import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import "./../css/audiopage.css";
 import { getAudio } from "../../API.mjs";
 
-const AudioPage = ({ group, setFooterOption}) => {
+const AudioPage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [audio, setAudio] = useState([]);
 
@@ -19,7 +19,7 @@ const AudioPage = ({ group, setFooterOption}) => {
     try {
       const audioData = await getAudio(group.id);
       console.log("audioData", audioData);
-      setImages(audioData || []); // Evita problemi se il valore è null
+      setAudio(audioData || []); // Evita problemi se il valore è null
     } catch (err) {
       console.error("Error fetching images:", err);
     }
@@ -36,22 +36,27 @@ const AudioPage = ({ group, setFooterOption}) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">{group.name}</h2>
+        <p className="group-card-title">{group.name}</p>
       </div>
 
       <div className="audio-page">
         <div className="audio-grid">
           {audio.length === 0 ? (
-            <p>No audio files found.</p>
+            <p className="no-files-message">No audio files found.</p>
           ) : (
             audio.map((audioFile) => (
               <div key={audioFile.material_id} className="audio-card">
-                <audio controls>
-                  <source src={`http://localhost:3001/uploads/${audioFile.name}`} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
+                <div className="audio-player">
+                  <audio controls>
+                    <source
+                      src={`${audioFile.name}`}
+                      type="audio/mpeg"
+                    />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
                 <div className="audio-details">
-                  <p>{audioFile.name}</p>
+                  <p className="audio-name">{audioFile.name.split('/').pop()}</p>
                 </div>
               </div>
             ))

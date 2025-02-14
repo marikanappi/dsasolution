@@ -4,6 +4,7 @@ import "./../css/searchpage.css"; // File CSS per lo stile
 import { FaFilter } from "react-icons/fa";
 import { FaCheck, FaQuestionCircle } from "react-icons/fa"; // Icona spunta verde
 import GroupModal from "./GroupModal";
+import { PiCatBold } from "react-icons/pi"; // Icona gatto
 
 const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -116,61 +117,61 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   // Componenti riutilizzabili
   const SuggestedGroupCard = ({ group, isSuggested }) => (
     <li className="group-item suggested-item" onClick={() => setSelectedGroup(group)}>
-    <div className="group-content">
-      {/* Colonna 1: Immagine */}
-      <div className="group-image-container">
-        <img src={group.picture} alt={`${group.name} Icon`} className="group-icon" />
-      </div>
+      <div className="group-content">
+        {/* Colonna 1: Immagine */}
+        <div className="group-image-container">
+          <img src={group.picture} alt={`${group.name} Icon`} className="group-icon" />
+        </div>
 
-      {/* Colonna 2: Nome del gruppo */}
-      <div className="group-name-container">
-        <div className="group-name suggested-group-name">{group.name}</div>
-      </div>
+        {/* Colonna 2: Nome del gruppo */}
+        <div className="group-name-container">
+          <div className="group-name suggested-group-name">{group.name}</div>
+        </div>
 
-      {/* Colonna 3: Pulsante "+" */}
-      <div className="group-button-container">
-        <button
-          className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setConfirmJoin(group);
-          }}
-          disabled={joinedGroups.includes(group.id)}
-        >
-          {joinedGroups.includes(group.id) ? "✔" : "+"}
-        </button>
+        {/* Colonna 3: Pulsante "+" */}
+        <div className="group-button-container">
+          <button
+            className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setConfirmJoin(group);
+            }}
+            disabled={joinedGroups.includes(group.id)}
+          >
+            {joinedGroups.includes(group.id) ? "✔" : "+"}
+          </button>
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
   );
 
   const OtherGroupCard = ({ group, onClick, isSuggested }) => (
     <li className="group-item other-item" onClick={() => setSelectedGroup(group)}>
-<div className="group-header">
-      {/* Immagine del gruppo */}
-      <div className="group-image-container">
-        <img
-          src={group.picture}
-          alt={`${group.name} Icon`}
-          className="group-icon"
-        />
-      </div>
+      <div className="group-header">
+        {/* Immagine del gruppo */}
+        <div className="group-image-container">
+          <img
+            src={group.picture}
+            alt={`${group.name} Icon`}
+            className="group-icon"
+          />
+        </div>
 
-      {/* Contenitore nome + pulsante */}
-      <div className="group-info-container">
-        <div className="other-group-name">{group.name}</div>
-        <button
-          className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setConfirmJoin(group);
-          }}
-          disabled={joinedGroups.includes(group.id)}
-        >
-          {joinedGroups.includes(group.id) ? "✔" : "+"}
-        </button>
+        {/* Contenitore nome + pulsante */}
+        <div className="group-info-container">
+          <div className="other-group-name text-left">{group.name}</div>
+          <button
+            className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setConfirmJoin(group);
+            }}
+            disabled={joinedGroups.includes(group.id)}
+          >
+            {joinedGroups.includes(group.id) ? "✔" : "+"}
+          </button>
+        </div>
       </div>
-    </div>
     </li>
   );
 
@@ -195,11 +196,11 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const Modal = ({ group, onClose, onConfirmJoin }) => (
     <div className="modal">
       <div className="modal-content">
-        <p>
+        <h3 className="text-left">
           Are you sure you want to join <strong>{group.name}</strong>?
-        </p>
-        {group.level && <p>Level: {group.level}</p>}
-        {group.SLD && <p>SLD: {group.SLD}</p>}
+        </h3>
+        {group.level && <p className="text-left m-0">Level: {group.level}</p>}
+        {group.SLD && <p className="text-left">SLD: {group.SLD}</p>}
         <div className="row-buttons-container">
           <button
             className="btn btn-success"
@@ -218,56 +219,55 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   return (
     <div className="search-group-container">
       {/* Search Bar and Filter Button */}
-      
+
       <div className="search-groups">
         <div className="suggested-groups-container">
-        <div className="search-and-filter-container mb-0">
-        <div className="d-flex mb-3">
-          <input
-            type="text"
-            className="form-control search"
-            placeholder="Search for groups..."
-            style={{ flex: 1 }}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className="btn btn-filter" onClick={toggleFilters}>
-            <FaFilter />
-          </button>
-        </div>
+          <div className="search-and-filter-container mb-0">
+            <div className="d-flex mb-3">
+              <input
+                type="text"
+                className="form-control search"
+                placeholder="Search for groups..."
+                style={{ flex: 1 }}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button className="btn btn-filter" onClick={toggleFilters}>
+                <FaFilter />
+              </button>
+            </div>
 
-        {/* Filtri */}
-        {filtersVisible && (
-          <div
-            className={`filter-dropdown-container ${
-              filtersVisible ? "visible" : "hidden"
-            }`}
-            ref={filtersRef}
-          >
-            <FilterDropdown
-              label="Level"
-              options={levels}
-              selected={selectedLevel}
-              onSelect={setSelectedLevel}
-            />
-            <FilterDropdown
-              label="SLD"
-              options={slds}
-              selected={selectedSLD}
-              onSelect={setSelectedSLD}
-            />
+            {/* Filtri */}
+            {filtersVisible && (
+              <div
+                className={`filter-dropdown-container ${filtersVisible ? "visible" : "hidden"
+                  }`}
+                ref={filtersRef}
+              >
+                <FilterDropdown
+                  label="Level"
+                  options={levels}
+                  selected={selectedLevel}
+                  onSelect={setSelectedLevel}
+                />
+                <FilterDropdown
+                  label="SLD"
+                  options={slds}
+                  selected={selectedSLD}
+                  onSelect={setSelectedSLD}
+                />
+              </div>
+            )}
           </div>
-        )}
-      </div>
           <p style={{ color: "white" }}>
             Suggested for You
-            <FaQuestionCircle
+            <PiCatBold
               className="help-icon ms-2"
               style={{ cursor: "pointer", color: "white" }}
               onClick={() =>
                 setTooltipModal({
                   visible: true,
-                  text: "These groups are suggested for you based on the university you attend.",
+                  text: "AI suggests for you these groups based on your user's settings.",
                 })
               }
             />
@@ -297,7 +297,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
         {/* Altri Gruppi */}
         <p className="other-title">
-          Other Groups          
+          Other Groups
           <FaQuestionCircle
             className="help-icon light ms-2"
             style={{ cursor: "pointer", color: "#7A55C6" }}
@@ -322,7 +322,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
                 />
               ))}
             </il>
-           
+
           ) : (
             <p className="no-groups-message">No other groups found.</p>
           )}
@@ -332,15 +332,16 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       {/* Tooltip Modal */}
       {tooltipModal.visible && (
         <div className="modal">
-        <div className="modal-content">
-          <p>{tooltipModal.text}</p>
-          <button
-            className="btn modal-button"
-            onClick={() => setTooltipModal({ visible: false, text: "" })}
-          >
-            Close
-          </button>
-        </div>
+          <div className="modal-content">
+            <PiCatBold size={30} className="tooltip-cat-icon" />
+            <p>{tooltipModal.text}</p>
+            <button
+              className="btn modal-button"
+              onClick={() => setTooltipModal({ visible: false, text: "" })}
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
 

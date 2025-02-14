@@ -21,7 +21,7 @@ const CreateGroup = ({ setFooterOption }) => {
   const [imageName, setImageName] = useState("");
   const [error, setError] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-  const [setMandatoryWarningVisible] = useState(false);
+  const [MandatoryWarningVisible, setMandatoryWarningVisible] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
@@ -74,7 +74,7 @@ const CreateGroup = ({ setFooterOption }) => {
       !formData.level ||
       !formData.specialNeeds
     ) {
-      setMandatoryWarningVisible(true);
+      setError("Please fill in all required fields."); // Imposta il messaggio di errore
       return;
     }
 
@@ -104,7 +104,10 @@ const CreateGroup = ({ setFooterOption }) => {
   return (
     <div>
       <div className="title-header" onClick={handleBack}>
-        <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px" }} />
+        <FaArrowLeft
+          size={25}
+          style={{ cursor: "pointer", color: "white", marginRight: "5px" }}
+        />
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">
@@ -113,24 +116,28 @@ const CreateGroup = ({ setFooterOption }) => {
             <div className="row">
               <div
                 className="col-4 d-flex flex-column align-items-right"
-                style={{ marginTop: "14px" }}
+                style={{ marginTop: "30px" }}
               >
                 <div
-                  className={`image-upload-container ${imagePreview ? "image-uploaded" : ""
-                    }`}
+                  className={`image-upload-container ${
+                    imagePreview ? "image-uploaded" : ""
+                  }`}
                   style={{
                     backgroundImage: imagePreview
                       ? `url(${imagePreview})`
                       : "none",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    width: "100px",
-                    height: "100px",
+                    width: "110px",
+                    height: "110px",
                     border: "1px solid #ccc",
+                    borderRadius: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    cursor: "pointer", // Makes it clear that it's clickable
                   }}
+                  onClick={() => document.getElementById("group-pic").click()} // Triggers input on div click
                 >
                   {!imagePreview && <span className="add-text">+ Add</span>}
                 </div>
@@ -140,11 +147,7 @@ const CreateGroup = ({ setFooterOption }) => {
                   name="profile_pic"
                   accept=".jpg, .jpeg, .png"
                   onChange={handleFileChange}
-                  style={{
-                    fontSize: "13px",
-                    maxWidth: "94px",
-                    paddingTop: "8px",
-                  }}
+                  style={{ display: "none" }} // Hide the file input
                 />
               </div>
               <div className="col-7" style={{ paddingRight: "10px" }}>
@@ -245,10 +248,10 @@ const CreateGroup = ({ setFooterOption }) => {
             {/* Max Participants */}
             <div className="mb-3 d-flex align-items-center">
               <div className="me-3 d-flex flex-column">
-                <label htmlFor="maxParticipants" className="form-label mb-0">
+                <label htmlFor="maxParticipants" className="form-label m-0">
                   Max Number of Participants
                   <FaQuestionCircle
-                    className="help-icon ms-2"
+                    className="help-icon ms-1"
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       setTooltipModal({
@@ -264,11 +267,13 @@ const CreateGroup = ({ setFooterOption }) => {
                 id="maxParticipants"
                 value={formData.maxParticipants}
                 onChange={handleInputChange}
-                className="form-select"
+                className="form-select ms-3"
                 required
                 style={{ width: "80px" }}
               >
-                <option value="" disabled hidden>Set Limit</option>
+                <option value="" disabled hidden>
+                  Set Limit
+                </option>
                 {[...Array(50)].map((_, i) => (
                   <option key={i} value={i + 1}>
                     {i + 1}
@@ -295,22 +300,28 @@ const CreateGroup = ({ setFooterOption }) => {
               ></textarea>
             </div>
           </div>
-
-          {/* Create Button */}
-          <div className="text-center mb-3 create-container">
-            <button type="submit" className="create-button" onClick={handleCreate}>
-              Create
-            </button>
-          </div>
         </form>
+
+        {error && <div className="error-message text-left">{error}</div>}
+
+        {/* Create Button */}
+        <div className="create-container">
+          <button
+            type="submit"
+            className="create-button"
+            onClick={handleCreate}
+          >
+            Create
+          </button>
+        </div>
 
         {/* Tooltip Modal */}
         {tooltipModal.visible && (
           <div className="modal">
             <div className="modal-content">
-              <p>{tooltipModal.text}</p>
+              <p className="text-left">{tooltipModal.text}</p>
               <button
-                className="btn modal-button"
+                className="btn modal-button "
                 onClick={() => setTooltipModal({ visible: false, text: "" })}
               >
                 Close
@@ -319,22 +330,22 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
 
-{showSuccessModal && (
-  <div className="modal">
-    <div className="modal-content">
-      <h3>Group Created Successfully!</h3>
-      <p>Your group has been created and is ready for use.</p>
-      <button
-        className="btn btn-primary"
-        onClick={() => {
-          navigate("/"); // Naviga alla home
-        }}
-      >
-        Go to Home
-      </button>
-    </div>
-  </div>
-)}
+        {showSuccessModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Group Created Successfully!</h3>
+              <p>Your group has been created and is ready for use.</p>
+              <button
+                className="btn modal-button"
+                onClick={() => {
+                  navigate("/"); // Naviga alla home
+                }}
+              >
+                Go to Home
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
@@ -356,13 +367,16 @@ const CreateGroup = ({ setFooterOption }) => {
         {showExitModal && (
           <div className="modal">
             <div className="modal-content">
-              <h3>Are you sure you want to exit?</h3>
-              <p>All your changes will be discarded.</p>
+              <h3 className="text-left">Are you sure you want to exit?</h3>
+              <p className="text-left">All your changes will be discarded.</p>
               <div className="row-buttons-container">
                 <button className="btn btn-danger" onClick={handleExit}>
                   Exit
                 </button>
-                <button className="btn modal-button" onClick={handleCancelArrow}>
+                <button
+                  className="btn modal-button"
+                  onClick={handleCancelArrow}
+                >
                   Cancel
                 </button>
               </div>
@@ -370,9 +384,8 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
       </div>
-    </div>  
+    </div>
   );
 };
-
 
 export default CreateGroup;

@@ -118,7 +118,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
           }}
         >
           <FaTrophy size={40} />
-          Challenge
+          Challenges
         </button>
         <button
           className="materials-btn"
@@ -140,7 +140,10 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             {isAdmin ? (
               <button
                 onClick={() => setModalType("edit")}
-                className="btn btn-primary"
+                className="btn modal-button"
+                style={{
+                  backgroundColor: "#007bff"
+                }}
                 disabled={!isAdmin}
               >
                 Edit Group Info

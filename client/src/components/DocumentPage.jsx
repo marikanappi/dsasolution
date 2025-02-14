@@ -51,7 +51,7 @@ const DocumentPage = ({ group, setFooterOption }) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">{group?.name || "Group"}</h2>
+        <p className="group-card-title">{group.name}</p>
       </div>
 
       <div className="document-grid">

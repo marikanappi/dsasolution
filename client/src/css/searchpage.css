@@ -333,6 +333,15 @@
   outline: none; /* Rimuove il bordo di focus */
 }
 
+.tooltip-cat-icon {
+  font-size: 40px; /* Dimensione aumentata */
+  color: #6e00ad;
+  display: block;
+  margin: 0 auto; /* Allinea orizzontalmente al centro */
+  text-align: center;
+}
+
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

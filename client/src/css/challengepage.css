@@ -40,6 +40,12 @@
   display: flex;
 }
 
+.modal-button {
+  min-width: 120px; /* Regola la dimensione minima */
+  padding: 10px 20px; /* Espande il contenuto */
+}
+
+
 .progress {
   height: 100%;
   background-color: #1edba9;
@@ -106,45 +112,8 @@
   margin: 10px 10px 0;
 }
 
-.answer-label {
-  font-weight: bold;
-  margin-right: 5px;
-}
-
 input[type="radio"] {
   margin-right: 10px;
-}
-
-/* Buttons */
-.challenge-button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.challenge-button-group button {
-  padding: 0.8rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.challenge-button-group button:hover {
-  opacity: 0.9;
-}
-
-/* Modal Overlay */
-.modal-overlay {
-  display: flex;
-  position: fixed; /* Ensure it covers the entire screen */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1000;
 }
 
 /* Modal */
@@ -173,11 +142,6 @@ input[type="radio"] {
   color: #721c24;
 }
 
-.myModal.no-feedback {
-  border: 1px solid gray;
-  background: #f1f1f1;
-  color: #333;
-}
 
 /* Text Styling */
 .feedbackType {
@@ -185,38 +149,8 @@ input[type="radio"] {
   margin-bottom: 1rem;
 }
 
-.feedbackText {
-  margin-bottom: 1rem;
-  padding: 0.1rem;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  min-width: 300px;
-}
-
 .text-left {
   text-align: left;
-}
-
-.ok-btn {
-  color: white;
-  font-weight: bold;
-  width: 96%;
 }
 
 .encouragementMessage {

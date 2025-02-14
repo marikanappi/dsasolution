@@ -7,19 +7,19 @@
   position: fixed;
   bottom: 220px;
   left: 60px;
-  background: white;
-  border: 2px solid black;
+  background: #fafafa; /* Sfondo più chiaro (avorio chiaro) */
+  border: 1px solid #ddd; /* Bordo più chiaro e sottile */
   border-radius: 12px;
   padding: 10px;
   width: 220px;
   text-align: center;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Ombra più leggera */
 }
 
 .dialog-content {
   font-size: 14px;
   font-weight: bold;
-  color: black;
+  color: #333; /* Colore del testo più morbido */
 }
 
 .dialog-tail {
@@ -30,7 +30,7 @@
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 12px solid black;
+  border-top: 12px solid #fafafa; /* Colore della coda che si adatta al box */
 }
 
 

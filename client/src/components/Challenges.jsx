@@ -37,7 +37,7 @@ const Challenges = ({ setFooterOption, group }) => {
       <div className="back-arrow" onClick={handleBack}>
         <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white"}} />
       </div>
-        <FaTrophy className="left-header-icon" size={88} />
+        <FaTrophy className="left-header-icon" size={68} />
         <span className="challenge-group-name">
           Challenges for Group {group.name}
         </span>
