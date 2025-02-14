@@ -4,7 +4,7 @@ import { createChallenge, getTopics } from "../../API.mjs";
 import "../css/createChallenge.css"; // Import the CSS file
 import { Challenge } from "../DSAmodel.mjs";
 import { FaQuestionCircle } from "react-icons/fa";
-import { PiCat } from "react-icons/pi";
+import { PiCatBold } from "react-icons/pi";
 import TooltipCat from "./TooltipCat";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -22,6 +22,10 @@ const NewChallenge = ({ setFooterOption, group }) => {
     visible: false,
     text: "",
   });
+  const [tooltipModalCat, setTooltipModalCat] = useState({
+  visible: false,
+  text: "",
+});
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -48,7 +52,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
     }
 
     const challenge = new Challenge(title, group.id, selectedTopic);
-    
+
     const result = await createChallenge(challenge);
     if (result) {
       setFooterOption("Group");
@@ -99,7 +103,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
         <div className="form-group">
           <label htmlFor="topic">Topic</label>
-          <PiCat
+          <PiCatBold
             className="help-icon ms-2"
             size={30}
             style={{ cursor: "pointer" }}
@@ -125,7 +129,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
         <div className="form-group">
           <label htmlFor="externalMaterial">External Material</label>
-          <PiCat
+          <PiCatBold
             className="help-icon ms-2"
             size={30}
             style={{ cursor: "pointer" }}
@@ -196,9 +200,25 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       )}
 
+      {/* Tooltip Modal */}
+      {tooltipModal.visible && (
+        <div className="modal">
+          <div className="modal-content">
+            <PiCatBold size={30} className="tooltip-cat-icon" />
+            <p>{tooltipModal.text}</p>
+            <button
+              className="btn modal-button"
+              onClick={() => setTooltipModal({ visible: false, text: "" })}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <TooltipCat
-        tooltipModal={tooltipModal}
-        setTooltipModal={setTooltipModal}
+        tooltipModalCat={tooltipModalCat}
+        setTooltipModalcat={setTooltipModalCat}
       ></TooltipCat>
     </div>
   );

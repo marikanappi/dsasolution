@@ -41,7 +41,7 @@
 }
 
 .modal-button {
-  min-width: 260px; /* Regola la dimensione minima */
+  min-width: 120px; /* Regola la dimensione minima */
   padding: 10px 20px; /* Espande il contenuto */
 }
 

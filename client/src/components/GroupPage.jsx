@@ -118,7 +118,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
           }}
         >
           <FaTrophy size={40} />
-          Challenge
+          Challenges
         </button>
         <button
           className="materials-btn"
