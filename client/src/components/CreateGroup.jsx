@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import { addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
@@ -27,7 +27,7 @@ const CreateGroup = ({ setFooterOption }) => {
     visible: false,
     text: "",
   });
-
+  const [showExitModal, setShowExitModal] = useState(false); // State for exit confirmation modal
   const [exitModalVisible, setExitModalVisible] = useState(false); // State for exit confirmation modal
 
   useEffect(() => {
@@ -41,6 +41,14 @@ const CreateGroup = ({ setFooterOption }) => {
       ...prevState,
       [id]: value,
     }));
+  };
+
+  const handleBack = () => {
+    setShowExitModal(true); // Attiva il modal di conferma uscita
+  };
+
+  const handleCancelArrow = () => {
+    setShowExitModal(false); // Close the modal without any action
   };
 
   const handleFileChange = (e) => {
@@ -97,7 +105,8 @@ const CreateGroup = ({ setFooterOption }) => {
   // Render the component
   return (
     <div>
-      <div className="title-header">
+      <div className="title-header" onClick={handleBack}>
+      <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white", marginRight: "5px"}} />
         <h5>Create a New Group</h5>
       </div>
       <div className="p-3">
@@ -150,6 +159,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     value={formData.name}
                     onChange={handleInputChange}
                     className={`form-control`}
+                    required
                     placeholder="Enter group name"
                   />
                 </div>
@@ -164,6 +174,7 @@ const CreateGroup = ({ setFooterOption }) => {
                     value={formData.university}
                     onChange={handleInputChange}
                     className={`form-control`}
+                    required
                     placeholder="Enter university name"
                   />
                 </div>
@@ -192,6 +203,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.level}
                 onChange={handleInputChange}
                 className={`form-control form-select`}
+                required
               >
                 <option value="">Select level</option>
                 <option value="Beginner">Beginner</option>
@@ -223,6 +235,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.specialNeeds}
                 onChange={handleInputChange}
                 className={`form-control form-select`}
+                required
               >
                 <option value="">Select special need</option>
                 <option value="Dyslexia">Dyslexia</option>
@@ -237,10 +250,17 @@ const CreateGroup = ({ setFooterOption }) => {
               <div className="me-3 d-flex flex-column">
                 <label htmlFor="maxParticipants" className="form-label mb-0">
                   Max Number of Participants
+                  <FaQuestionCircle
+                  className="help-icon ms-2"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    setTooltipModal({
+                      visible: true,
+                      text: "Set a number up to 50.",
+                    })
+                  }
+                />
                 </label>
-                <small style={{ fontSize: "11px" }}>
-                  Set a limit up to 50.
-                </small>
               </div>
 
               <select
@@ -248,9 +268,10 @@ const CreateGroup = ({ setFooterOption }) => {
                 value={formData.maxParticipants}
                 onChange={handleInputChange}
                 className="form-select"
-                style={{ width: "120px" }}
+                required
+                style={{ width: "80px" }}
               >
-                <option value={0}>No Limit</option>
+                <option value="" disabled hidden>Set Limit</option>
                 {[...Array(50)].map((_, i) => (
                   <option key={i} value={i + 1}>
                     {i + 1}
@@ -278,16 +299,9 @@ const CreateGroup = ({ setFooterOption }) => {
             </div>
           </div>
 
-          {/* Mandatory Fields Notice */}
-          {error && (
-            <p className="form-items text-danger">
-              * Mandatory fields to fill.
-            </p>
-          )}
-
           {/* Create Button */}
-          <div className="text-center mb-3 create-container">
-            <button type="submit" className="create-button">
+          <div className="create-container ">
+            <button type="submit" className=" create-button " style={{ marginLeft: "-22px" }}>
               Create
             </button>
           </div>
@@ -297,7 +311,7 @@ const CreateGroup = ({ setFooterOption }) => {
         {tooltipModal.visible && (
           <div className="modal">
           <div className="modal-content">
-            <p>{tooltipModal.text}</p>
+            <p className="text-left">{tooltipModal.text}</p>
             <button
               className="btn btn-secondary"
               onClick={() => setTooltipModal({ visible: false, text: "" })}
@@ -311,7 +325,7 @@ const CreateGroup = ({ setFooterOption }) => {
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
           <div className="exit-modal">
-            <p>Are you sure you want to exit?</p>
+            <p className="text-left">Are you sure you want to exit?</p>
             <div className="d-flex justify-content-center">
               <button
                 className="btn btn-secondary"
@@ -325,6 +339,22 @@ const CreateGroup = ({ setFooterOption }) => {
             </div>
           </div>
         )}
+        {showExitModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <h3 className="text-left">Are you sure you want to exit?</h3>
+                <p className="text-left">All your changes will be discarded.</p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-danger" onClick={handleExit}>
+                    Exit
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

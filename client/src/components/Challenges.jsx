@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaTrophy } from "react-icons/fa";
+import { FaTrophy, FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import "../css/challenges.css";
@@ -13,6 +13,10 @@ const Challenges = ({ setFooterOption, group }) => {
   useEffect(() => {
     setFooterOption("Challenges");
   }, []);
+
+  const handleBack = () => {
+    navigate("/group/:id");
+  };
 
   useEffect(() => {
     const loadChallenges = async () => {
@@ -29,13 +33,16 @@ const Challenges = ({ setFooterOption, group }) => {
 
   return (
     <div className="challenges-container">
-        <div className="challenge-title">
-          <FaTrophy className="left-header-icon" size={88} />
-          <span className="challenge-group-name">
-            Challenges for Group {group.name}
-          </span>
-        </div>
-        
+      <div className="challenge-title">
+      <div className="back-arrow" onClick={handleBack}>
+        <FaArrowLeft size={25} style={{ cursor: "pointer", color: "white"}} />
+      </div>
+        <FaTrophy className="left-header-icon" size={88} />
+        <span className="challenge-group-name">
+          Challenges for Group {group.name}
+        </span>
+      </div>
+
 
       <div className="scrollable-challenges">
         <div className="row text-center challenge-grid">
@@ -61,18 +68,18 @@ const Challenges = ({ setFooterOption, group }) => {
       </div>
 
       <div className="create-container">
-          <button
-            className="create-button"
-            onClick={() => {
-              navigate("/create-challenge");
-              setFooterOption("NewChallenge");
-              group = { group };
-            }}
-          >
-            <PiCatBold className="cat-icon" size={26} />
-            Generate Challenge
-          </button>
-        </div>
+        <button
+          className="create-button"
+          onClick={() => {
+            navigate("/create-challenge");
+            setFooterOption("NewChallenge");
+            group = { group };
+          }}
+        >
+          <PiCatBold className="cat-icon" size={26} />
+          Generate Challenge
+        </button>
+      </div>
     </div>
   );
 };

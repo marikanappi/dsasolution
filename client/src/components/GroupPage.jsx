@@ -4,10 +4,9 @@ import {
   FaComment,
   FaTrophy,
   FaFileAlt,
-  FaSignOutAlt,
-  FaEdit,
-  FaInfoCircle,
   FaBars,
+  FaArrowLeft,
+  FaInfoCircle,
 } from "react-icons/fa";
 import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
@@ -24,8 +23,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   });
   const [modalType, setModalType] = useState(null);
   const isAdmin = group.usercreate === 1; // Replace with actual admin check
-  const leaveText = isAdmin ? "Delete" : "Leave";
-const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and cannot be undone." : "You can join it again whenever you want.";
+  const deleteConfirm = "You can join it again whenever you want.";
 
   useEffect(() => {
     setFooterOption("GroupPage");
@@ -46,19 +44,23 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
     }
   };
 
+  const handleBack = () => {
+    navigate("/"); // Torna indietro alla pagina precedente
+  };
+
   const handleEditChange = (e) => {
     setEditedGroup({ ...editedGroup, [e.target.name]: e.target.value });
   };
 
   const handleSettingsClick = () => {
-    setModalType("main"); // Opens the main modal
+    setModalType("main");
   };
 
   const handleEditSubmit = async () => {
     try {
       const response = await updateGroup(group.id, editedGroup);
       if (response) {
-        setGroup({...editedGroup});
+        setGroup({ ...editedGroup });
       }
     } catch (error) {
       console.error("Error in modifying group information.:", error);
@@ -68,6 +70,12 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
 
   return (
     <div className="group-page">
+      <div className="back-arrow" onClick={handleBack}>
+        <FaArrowLeft
+          size={25}
+          style={{ cursor: "pointer", color: "white", marginRight: "330px" }}
+        />
+      </div>
       <div className="group-card">
         <p className="group-card-title">{group.name}</p>
 
@@ -75,13 +83,19 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
         <RiSettings5Fill
           className="info-icon setting"
           size={28}
-          onClick={handleSettingsClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSettingsClick();
+          }}
         />
 
         <FaInfoCircle
           size={26}
           className="info-icon bar"
-          onClick={() => setShowInfoModal(true)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowInfoModal(true);
+          }}
         />
       </div>
 
@@ -111,31 +125,37 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
           onClick={() => {
             handleNavigate("/materials");
             setFooterOption("Materials");
-            }}
-            >
-            <FaFileAlt size={40} />
-            Materials
-            </button>
-            </div>
+          }}
+        >
+          <FaFileAlt size={40} />
+          Materials
+        </button>
+      </div>
 
-            {modalType === "main" && (
-            <div className="modal">
-            <div className="modal-content">
+      {modalType === "main" && (
+        <div className="modal">
+          <div className="modal-content">
             <h3 className="text-center">Group Settings</h3>
-            
-            {isAdmin ? <button
-              onClick={() => setModalType("edit")}
-              className="btn btn-primary"
-              disabled={!isAdmin}
-            >
-              Edit Group Info
-            </button> :
-            <span className = "text-left p-2 mb-2"> Only the creator of group has access to edit the information of group. </span>}
+
+            {isAdmin ? (
+              <button
+                onClick={() => setModalType("edit")}
+                className="btn btn-primary"
+                disabled={!isAdmin}
+              >
+                Edit Group Info
+              </button>
+            ) : (
+              <span className="text-left p-2 mb-2">
+                {" "}
+                Only the creator of group has access to edit the information.{" "}
+              </span>
+            )}
             <button
               onClick={() => setModalType("leave")}
               className="btn btn-danger"
             >
-             {leaveText} Group
+              Leave Group
             </button>
             <button
               onClick={() => setModalType(null)}
@@ -143,13 +163,13 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
             >
               Cancel
             </button>
-            </div>
-            </div>
-            )}
+          </div>
+        </div>
+      )}
 
-            {modalType === "edit" && (
-            <div className="modal">
-            <div className="modal-content text-left">
+      {modalType === "edit" && (
+        <div className="modal">
+          <div className="modal-content text-left">
             <h3 className="text-center">Edit Group</h3>
             <label>Group Name:*</label>
             <input
@@ -185,32 +205,34 @@ const deleteConfirm = isAdmin ? "Deleting the group will remove all the data and
               <option value="Advanced">Advanced</option>
             </select>
             <div className="row-buttons-container">
-            <button
-              onClick={handleEditSubmit}
-              disabled={!editedGroup.name}
-              className="btn btn-success"
-            >
-              Save
-            </button>
-            <button
-              onClick={() => setModalType("main")}
-              className="btn btn-secondary"
-            >
-              Cancel
-            </button>
-            </div>
+              <button
+                onClick={handleEditSubmit}
+                disabled={!editedGroup.name}
+                className="btn btn-success"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setModalType("main")}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
             </div>
           </div>
+        </div>
       )}
 
       {modalType === "leave" && (
         <div className="modal">
           <div className="modal-content">
-            <h3 className="text-left ">Are you sure you want to {leaveText} group?</h3>
+            <h3 className="text-left ">
+              Are you sure you want to leave group?
+            </h3>
             <p className="text-left">{deleteConfirm}</p>
             <div className="row-buttons-container">
               <button onClick={handleLeaveGroup} className="btn btn-danger">
-                {leaveText}
+                Leave
               </button>
               <button
                 onClick={() => setModalType("main")}

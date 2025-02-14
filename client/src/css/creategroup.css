@@ -1,11 +1,8 @@
 /* Stile per il contenitore dell'immagine */
 .image-upload-container {
-    height: 110px;
-    /* Altezza del rettangolo */
+    height: 100px;
     width: 90px;
-    /* Larghezza del rettangolo */
     background-color: #acacac;
-    /* Colore di sfondo grigio */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,8 +16,21 @@
     font-size: 16px;
     font-weight: bold;
     color: #555;
-    /* Colore del testo */
 }
+
+.title-header {
+  display: flex;
+  align-items: center; /* Allinea verticalmente al centro */
+  justify-content: center; /* Allinea orizzontalmente al centro */
+  position: relative;
+  padding: 10px 20px;
+}
+
+.title-header h5 {
+  margin: 0; 
+  text-align: center; 
+}
+
 
 /* Stile quando l'immagine è stata caricata */
 .image-uploaded {
@@ -71,11 +81,16 @@
 }
 
 
+.create-button {
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .help-icon {
     cursor: pointer;
     color: #7A55C6;
 }
-
 
 .image-upload-container {
     border-radius: 8px;

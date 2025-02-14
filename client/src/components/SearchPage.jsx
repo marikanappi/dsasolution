@@ -62,7 +62,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
     if (
       filtersRef.current &&
       !filtersRef.current.contains(e.target) &&
-      !e.target.closest(".btn-filter") // Assicurati che il bottone abbia questa classe
+      !e.target.closest(".btn-filter")
     ) {
       closeFilters();
     }
@@ -115,33 +115,22 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
   // Componenti riutilizzabili
   const SuggestedGroupCard = ({ group, isSuggested }) => (
-    <li
-      className="group-item suggested-item"
-      onClick={() => setSelectedGroup(group)}
-    >
-      {/* First Row: Group Image + Name */}
-      <div className="group-header">
-        <div className="group-image-container">
-          <img
-            src={group.picture}
-            alt={`${group.name} Icon`}
-            className="group-icon"
-          />
-        </div>
+    <li className="group-item suggested-item" onClick={() => setSelectedGroup(group)}>
+    <div className="group-content">
+      {/* Colonna 1: Immagine */}
+      <div className="group-image-container">
+        <img src={group.picture} alt={`${group.name} Icon`} className="group-icon" />
+      </div>
+
+      {/* Colonna 2: Nome del gruppo */}
+      <div className="group-name-container">
         <div className="group-name suggested-group-name">{group.name}</div>
       </div>
 
-      {/* Second Row: University, Level & Join Button */}
-      <div className="info">
-        <div className="group-text">
-          <div className="group-level">
-            {group.level} - {group.SLD}
-          </div>
-        </div>
+      {/* Colonna 3: Pulsante "+" */}
+      <div className="group-button-container">
         <button
-          className={`join-btn ${
-            joinedGroups.includes(group.id) ? "joined" : ""
-          }`}
+          className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
           onClick={(e) => {
             e.stopPropagation();
             setConfirmJoin(group);
@@ -151,11 +140,14 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           {joinedGroups.includes(group.id) ? "✔" : "+"}
         </button>
       </div>
-    </li>
+    </div>
+  </li>
   );
 
   const OtherGroupCard = ({ group, onClick, isSuggested }) => (
-    <li className="other-group" onClick={() => setSelectedGroup(group)}>
+    <li className="group-item other-item" onClick={() => setSelectedGroup(group)}>
+<div className="group-header">
+      {/* Immagine del gruppo */}
       <div className="group-image-container">
         <img
           src={group.picture}
@@ -163,24 +155,22 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           className="group-icon"
         />
       </div>
-      <div className="group-info">
+
+      {/* Contenitore nome + pulsante */}
+      <div className="group-info-container">
         <div className="other-group-name">{group.name}</div>
-        <div className="group-level">
-          {group.level} - {group.SLD}
-        </div>
+        <button
+          className={`join-btn ${joinedGroups.includes(group.id) ? "joined" : ""}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setConfirmJoin(group);
+          }}
+          disabled={joinedGroups.includes(group.id)}
+        >
+          {joinedGroups.includes(group.id) ? "✔" : "+"}
+        </button>
       </div>
-      <button
-        className={`join-btn ${
-          joinedGroups.includes(group.id) ? "joined" : ""
-        }`}
-        onClick={(e) => {
-          e.stopPropagation();
-          setConfirmJoin(group);
-        }}
-        disabled={joinedGroups.includes(group.id)}
-      >
-        {joinedGroups.includes(group.id) ? "✔" : "+"}
-      </button>
+    </div>
     </li>
   );
 
@@ -228,7 +218,10 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   return (
     <div className="search-group-container">
       {/* Search Bar and Filter Button */}
-      <div className="search-and-filter-container">
+      
+      <div className="search-groups">
+        <div className="suggested-groups-container">
+        <div className="search-and-filter-container mb-0">
         <div className="d-flex mb-3">
           <input
             type="text"
@@ -266,13 +259,11 @@ const SearchGroup = ({ notifications, setNotifications }) => {
           </div>
         )}
       </div>
-      <div className="search-groups">
-        <div className="suggested-groups-container">
-          <p>
+          <p style={{ color: "white" }}>
             Suggested for You
             <FaQuestionCircle
               className="help-icon ms-2"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", color: "white" }}
               onClick={() =>
                 setTooltipModal({
                   visible: true,
@@ -296,19 +287,20 @@ const SearchGroup = ({ notifications, setNotifications }) => {
                     />
                   ))
                 ) : (
-                  <p>No groups found.</p>
+                  <p className="no-groups-message">No groups found.</p>
                 )}
               </ul>
             </>
           )}
         </div>
 
+
         {/* Altri Gruppi */}
         <p className="other-title">
-          Other Groups
+          Other Groups          
           <FaQuestionCircle
             className="help-icon light ms-2"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", color: "#7A55C6" }}
             onClick={() =>
               setTooltipModal({
                 visible: true,
@@ -320,8 +312,7 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
         <div className="other-groups-container">
           {filteredOtherGroups.length > 0 ? (
-            
-            <ul>
+            <il>
               {filteredOtherGroups.map((group) => (
                 <OtherGroupCard
                   key={group.id}
@@ -330,10 +321,10 @@ const SearchGroup = ({ notifications, setNotifications }) => {
                   isSuggested={false}
                 />
               ))}
-            </ul>
+            </il>
            
           ) : (
-            <p>No other groups found.</p>
+            <p className="no-groups-message">No other groups found.</p>
           )}
         </div>
       </div>
@@ -342,9 +333,8 @@ const SearchGroup = ({ notifications, setNotifications }) => {
       {tooltipModal.visible && (
         <div className="modal">
         <div className="modal-content">
-          <p>{tooltipModal.text}</p>
-          <button
-            className="btn btn-secondary"
+          <p className="text-left">{tooltipModal.text}</p>
+          <button className="btn btn-secondary"
             onClick={() => setTooltipModal({ visible: false, text: "" })}
           >
             Close

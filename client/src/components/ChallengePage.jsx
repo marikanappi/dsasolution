@@ -5,6 +5,7 @@ import Modal from "./GroupModal.jsx";
 import "../css/challengepage.css";
 import QuestionNavigation from "./QuestionNavigation.jsx";
 import { PiCatBold } from "react-icons/pi";
+import { FaArrowLeft } from "react-icons/fa";
 
 const ChallengePage = ({ setFooterOption }) => {
   const [showStartModal, setShowStartModal] = useState(false);
@@ -24,6 +25,7 @@ const ChallengePage = ({ setFooterOption }) => {
   const [showModal, setShowModal] = useState(false);
   const [history, setHistory] = useState([]);
   const [showRecapModal, setShowRecapModal] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
 
   useEffect(() => {
     setFooterOption("ChallengePage");
@@ -86,6 +88,14 @@ const ChallengePage = ({ setFooterOption }) => {
     setSelectedAnswer(Number(event.target.value)); // Convert to number
   };
 
+  const handleExit = () => {
+    setShowExitModal(false); // Close the modal
+    navigate("/challenges"); // Navigate to challenges page
+  };
+
+  const handleCancelArrow = () => {
+    setShowExitModal(false); // Close the modal without any action
+  };
   const correctMessages = [
     "🎉 Great work! Keep it up! 💪",
     "🚀 You're on fire! Stay focused!",
@@ -149,6 +159,15 @@ const ChallengePage = ({ setFooterOption }) => {
       setSelectedAnswer(null);
     }
   };
+
+  const handleBack = () => {
+    navigate(-1);
+  }
+
+  const handleBackModal = () => {
+    setShowExitModal(true); // Attiva il modal di conferma uscita
+  };
+
 
   const handleGoToRecap = () => {
     const skippedQuestions = totalQuestions - (correctAnswers + wrongAnswers);
@@ -225,6 +244,9 @@ const ChallengePage = ({ setFooterOption }) => {
 
   return (
     <div className="challenge-page">
+      <div className="back-arrow" onClick={handleBack}>
+        <FaArrowLeft size={25} />
+      </div>
       {showStartModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -242,6 +264,9 @@ const ChallengePage = ({ setFooterOption }) => {
       )}
       {!showStartModal && challenge && questions.length > 0 && (
         <div>
+          <div className="back-arrow" onClick={handleBackModal}>
+            <FaArrowLeft size={25} />
+          </div>
           <h1>{challenge.title}</h1>
           {renderProgressBar()}
 
@@ -267,13 +292,12 @@ const ChallengePage = ({ setFooterOption }) => {
                 return (
                   <div
                     key={index}
-                    className={`answer-option ${
-                      isAnswered && previousAnswer.answer === answer.id
-                        ? previousAnswer.correct
-                          ? "correct-answer"
-                          : "wrong-answer"
-                        : ""
-                    }`}
+                    className={`answer-option ${isAnswered && previousAnswer.answer === answer.id
+                      ? previousAnswer.correct
+                        ? "correct-answer"
+                        : "wrong-answer"
+                      : ""
+                      }`}
                   >
                     <input
                       type="radio"
@@ -352,6 +376,22 @@ const ChallengePage = ({ setFooterOption }) => {
                     onClick={() => setShowRecapModal(false)}
                   >
                     Continue Challenge
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {showExitModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <h3 className="text-left">Are you sure you want to exit?</h3>
+                <p className="text-left">All your changes will be discarded.</p>
+                <div className="row-buttons-container">
+                  <button className="btn btn-danger" onClick={handleExit}>
+                    Exit
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleCancelArrow}>
+                    Cancel
                   </button>
                 </div>
               </div>

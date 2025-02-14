@@ -15,5 +15,8 @@
     "url": "https://github.com/polito-hci-2024/dsasolution/issues"
   },
   "homepage": "https://github.com/polito-hci-2024/dsasolution#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "dsasolution": "file:"
+  }
 }

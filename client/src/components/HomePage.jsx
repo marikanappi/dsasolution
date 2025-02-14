@@ -50,7 +50,7 @@ const HomePage = ({
   return (
     <div className="home-page-container">
       <div className="home-page-header">
-        <h5 className="my-groups-header">My Groups</h5>
+        <h5 className="my-groups-header">Home</h5>
         <div className="notification-container"> {/* Container for the bell */}
           <NotificationSystem
             notifications={notifications}
@@ -58,8 +58,13 @@ const HomePage = ({
             groups={groups}
           />
         </div>
-      </div>       
+      </div>  
       <div className="my-groups-container">
+      <p className="other-title">
+      My Groups   
+      </p>  
+      <div className="my-groups-container-scroll">
+      
         {groups.length > 0 ? (
           <ul>
             {groups.map((group) => (
@@ -92,6 +97,7 @@ const HomePage = ({
         ) : (
           <p>No group found! You can create a group or join one.</p>
         )}
+      </div>
       </div>
   
       <div className="create-container">
