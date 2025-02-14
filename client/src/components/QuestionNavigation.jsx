@@ -41,7 +41,7 @@ const QuestionNavigation = ({
         <ChevronLeft size={24} />
       </button>
 
-      <p className="question-number m-0">
+      <p className="question-number">
         Question <span className="fw-bold">{currentQuestionIndex + 1}</span> / {totalQuestions}
       </p>
 

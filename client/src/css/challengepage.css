@@ -64,8 +64,11 @@
 }
 
 .question-number {
-  font-size: 16px;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #555;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 /* Question Text */
