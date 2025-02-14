@@ -23,6 +23,21 @@
 .document-card:hover {
   background-color: #f1f1f1;
 }
+.delete-icon-doc {
+  right: 10px; /* Spostato a destra */
+  bottom: 10px; /* Spostato in basso */
+  color: #000000;
+  font-size: 20px;
+  margin-left: 5px;
+
+}
+
+.download-icon-doc{
+  right: 10px; /* Spostato a destra */
+  bottom: 10px; /* Spostato in basso */
+  color: #6e00ad;
+  font-size: 25px;
+}
 
 .back-arrow {
   position: absolute;
@@ -46,7 +61,7 @@
 
 .pdf-icon {
   color: #ea1f18;
-  font-size: 40px;
+  font-size: 3rem;
 }
 
 .word-icon {
@@ -85,8 +100,72 @@
   color: #6e00ad;
   cursor: pointer;
   transition: color 0.2s ease;
+
 }
+
 
 .download-icon:hover {
   color: #1e1e1e;
+}
+.modal-delete-doc {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Overlay scuro dietro il modal */
+.modal-delete-doc-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-delete-doc p {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #1a1818;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-success {
+  background-color: #6e00ad;
+  color: white;
+  size: 20px;
+}
+
+.btn-danger {
+  background-color: #6e00ad;
+  color: white;
+  size: 20px;
 }

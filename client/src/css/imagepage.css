@@ -1,87 +1,107 @@
 .images-page {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto; /* Consente lo scroll verticale per il contenitore */
-  height: 100vh; /* Usa tutta l'altezza della finestra */
   padding: 20px;
-  max-height: 550px;
-  align-items: center; /* Centra orizzontalmente */
-  overflow-x: hidden; /* Impedisce lo scroll orizzontale se non necessario */
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
 }
 
-.page-title {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.back-arrow {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-  color: white;
-  z-index: 9999;
-}
 .images-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adatta automaticamente le immagini */
-  gap: 20px; /* Distanza tra le immagini */
-  width: 100%; /* Occupazione della larghezza completa */
-  max-height: 80vh; /* Limita l'altezza della griglia per mantenere lo scroll */
-  overflow-y: auto; /* Consente lo scroll verticale se il contenuto è troppo lungo */
-  padding-right: 10px; /* Piccola distanza a destra per evitare lo scroll orizzontale */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px; /* Aumentato lo spazio tra le immagini */
+  padding: 20px;
 }
 
 .image-card {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiungi una leggera ombra */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  margin-bottom: 10px; /* Aggiunto margine sotto ogni card */
 }
 
-.image-card:hover {
-  transform: scale(1.05); /* Scala l'immagine al passaggio del mouse */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Ombra più scura al passaggio del mouse */
+
+
+.image-container {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .image-thumbnail {
   width: 100%;
-  height: auto; /* Imposta l'altezza automatica per mantenere il rapporto di aspetto */
-  object-fit: cover; /* Copre l'area senza distorcere l'immagine */
-  display: block; /* Rimuove piccoli spazi sotto l'immagine */
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
+.download-icon,
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+
+.delete-icon {
+  right: 10px; /* Spostato a destra */
+  bottom: 10px; /* Spostato in basso */
+  color: #fb1818;
+}
+
+
 .image-details {
-  padding: 15px;
+  padding: 10px;
   background-color: #fff;
-  text-align: center;
+  border-top: 1px solid #eee;
+  margin-top: auto;
 }
 
 .image-details p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #333;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Evita che il testo vada a capo */
+  white-space: nowrap;
+  text-align: center;
 }
 
-/* Adattamenti per schermi più piccoli */
+.back-arrow {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  padding: 8px;
+ 
+}
+
+.group-card {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 768px) {
   .images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Colonne più strette su schermi piccoli */
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px; /* Spazio ridotto ma ancora significativo su mobile */
+    padding: 15px;
   }
 
-  .image-thumbnail {
-    height: 150px; /* Adatta l'altezza delle miniature */
-  }
-
-  .image-details {
-    padding: 10px;
-  }
-
-  .image-details p {
-    font-size: 0.9rem;
+  .image-card {
+    height: 250px;
   }
 }

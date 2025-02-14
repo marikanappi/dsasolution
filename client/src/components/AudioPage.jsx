@@ -13,6 +13,13 @@ const AudioPage = ({ group, setFooterOption }) => {
     navigate(-1);
   };
 
+   useEffect(() => {
+      if (setFooterOption) {
+        setFooterOption("Audio");
+      }
+    }, [setFooterOption]);
+  
+
   // Funzione per recuperare le immagini
   const fetchAudio = async () => {
     if (!group || !group.id) return; // Controllo se il gruppo esiste
@@ -36,7 +43,7 @@ const AudioPage = ({ group, setFooterOption }) => {
       </div>
 
       <div className="group-card">
-        <p className="group-card-title">{group.name}</p>
+        <h2 className="group-card-title">Audio for{group.name}</h2>
       </div>
 
       <div className="audio-page">
