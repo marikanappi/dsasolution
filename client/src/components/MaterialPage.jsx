@@ -22,10 +22,10 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-
+  
     if (selectedFile) {
       setFile(selectedFile);
-
+  
       // Controlla il tipo di file
       if (selectedFile.type.startsWith("image/")) {
         // Anteprima per immagini
@@ -36,56 +36,59 @@ const MaterialPage = ({ group, setFooterOption }) => {
         // Immagine statica per i PDF
         setFilePreview("/images/pdf-preview.png");
       } else if (selectedFile.type.startsWith("audio/")) {
-        // Immagine statica per audio
+        // Anteprima per audio (aggiungi un'anteprima specifica per audio, come un'icona o un'immagine)
         setFilePreview("/images/audio-preview.png");
       } else {
         // Anteprima generica per altri file
         setFilePreview("/images/file-preview.png");
       }
-
+  
       setModalOpen(true);
     }
   };
-
+  
   const handleUpload = async () => {
     if (!file) {
       alert("Seleziona un file prima di caricare!");
       return;
     }
-
+  
     let type;
     if (file.type.startsWith("image/")) type = "image";
     else if (file.type === "application/pdf") type = "document";
+    else if (file.type.startsWith("audio/")) type = "audio";  // Gestisci file audio
     else {
       alert("Tipo di file non supportato!");
       return;
     }
-
+  
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("group_id", group.id);
       formData.append("type", type);
-
+  
       const result = await fetch("http://localhost:3001/material", {
         method: "POST",
         body: formData,
       });
-
+  
       if (!result.ok) {
         throw new Error("Errore durante l'upload del file");
       }
-
+  
       const data = await result.json();
       const fileUrl = data.material.name;
-
+  
       // Navigazione basata sul tipo di file
       if (fileUrl.endsWith(".jpg") || fileUrl.endsWith(".png")) {
         navigate("/images");
       } else if (fileUrl.endsWith(".pdf")) {
         navigate("/documents");
+      } else if (fileUrl.endsWith(".mp3")) {
+        navigate("/audio");  // Naviga alla sezione audio
       }
-
+  
       setFile(null);
       setFilePreview(null);
       setModalOpen(false); // Chiudi il modal dopo l'upload
@@ -93,11 +96,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
       console.error("Errore durante l'upload:", error);
     }
   };
-
-  const closeModal = () => {
-    setModalOpen(false); // Chiude il modal
-  };
-
+  
   const cancelUpload = () => {
     setFile(null); // Resetta il file selezionato
     setFilePreview(null); // Cancella l'anteprima
@@ -149,7 +148,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
             <input
               type="file"
               id="fileInput"
-              accept=".png,.jpg,.jpeg,.pdf"
+              accept=".png,.jpg,.jpeg,.pdf,.mp3"
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
@@ -161,9 +160,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={closeModal}>
-              ✖
-            </button>
+            
 
             {/* Anteprima del file */}
             {filePreview && (

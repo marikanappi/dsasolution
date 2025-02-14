@@ -259,46 +259,9 @@ app.get('/material/documents/:group_id', async (req, res) => {
   } 
 });  
  
-app.get('/material/:group_id', async (req, res) => { 
-  const group_id = req.params.group_id;  
-  console.log(`Fetching audio for group ID: ${group_id}`); 
-  try { 
-      const audio = await getAudio(db, group_id);  
-      console.log('Audio retrieved:', audio); 
-      res.json(audio);  
-  } catch (err) { 
-      console.error('Error fetching audio:', err); 
-      res.status(500).json({ error: err.message });  
-  } 
-});
 
-app.get('/material/:group_id', async (req, res) => {
-  const group_id = req.params.group_id; 
-  console.log(`Fetching images for group ID: ${group_id}`);
-  try {
-      const images = await getImages(db, group_id); 
-      console.log('Images retrieved:', images);
-      res.json(images); 
-  } catch (err) {
-      console.error('Error fetching images:', err);
-      res.status(500).json({ error: err.message }); 
-  }
-});
 
-app.get('/material/documents/:group_id', async (req, res) => {
-  const group_id = req.params.group_id; 
-  console.log(`Fetching Document for group ID: ${group_id}`);
-  try {
-      const documents = await getDocuments(db, group_id); 
-      console.log('Document retrieved:', documents);
-      res.json(documents); 
-  } catch (err) {
-      console.error('Error fetching document:', err);
-      res.status(500).json({ error: err.message }); 
-  }
-}); 
-
-app.get('/material/:group_id', async (req, res) => {
+app.get('/material/audio/:group_id', async (req, res) => {
   const group_id = req.params.group_id; 
   console.log(`Fetching audio for group ID: ${group_id}`);
   try {
@@ -306,10 +269,13 @@ app.get('/material/:group_id', async (req, res) => {
       console.log('Audio retrieved:', audio);
       res.json(audio); 
   } catch (err) {
-      console.error('Error fetching audio:', err);
+      console.error('Error fetching images:', err);
       res.status(500).json({ error: err.message }); 
   }
 });
+
+
+
 
 app.post('/material', upload.single('file'), async (req, res) => {
   try {
@@ -335,6 +301,18 @@ app.post('/material', upload.single('file'), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+//elimina materiali 
+app.delete('/material/:id', async (req, res) => {
+  const group_id = req.params.group_id;
+  try {
+    await deleteMaterial(db, group_id);
+    res.status(200).json({ message: 'Material deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { FaFilePdf, FaFileWord, FaFileAlt, FaCloudDownloadAlt, FaArrowLeft } from "react-icons/fa";
+import { FaFilePdf, FaFileWord, FaFileAlt, FaCloudDownloadAlt, FaArrowLeft, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getDocument } from "../../API.mjs";
+import { getDocument, deleteMaterial } from "../../API.mjs";
 import "./../css/documentpage.css";
 
 const DocumentPage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [documents, setDocuments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [documentToDelete, setDocumentToDelete] = useState(null);
 
   useEffect(() => {
     if (setFooterOption) {
@@ -19,10 +21,10 @@ const DocumentPage = ({ group, setFooterOption }) => {
       if (!group || !group.id) return;
       try {
         const documentData = await getDocument(group.id);
-        setDocuments(documentData || []); // Evita problemi se il valore è null
+        setDocuments(documentData || []);
       } catch (err) {
         console.error("Error fetching documents:", err);
-        setDocuments([]); // Imposta un array vuoto in caso di errore
+        setDocuments([]);
       }
     };
 
@@ -33,15 +35,53 @@ const DocumentPage = ({ group, setFooterOption }) => {
     window.open(url, "_blank");
   };
 
-  const handleDownloadDocument = (url) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = url.split("/").pop();
-    link.click();
+  const handleDownloadDocument = async (url) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = url.split("/").pop();
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error downloading document:', error);
+      alert('Error downloading the document. Please try again.');
+    }
   };
 
   const handleBack = () => {
     navigate(-1);
+  };
+
+  
+
+  const handleDeleteDocument = async (material_id) => {
+    try {
+      await deleteMaterial(material_id);
+      setDocuments((prevDocuments) =>
+        prevDocuments.filter((doc) => doc.material_id !== material_id)
+      );
+      setShowModal(false);
+    } catch (err) {
+      console.error("Error deleting document:", err);
+    }
+  };
+
+  const handleConfirmDelete = (document) => {
+    setDocumentToDelete(document);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -51,7 +91,7 @@ const DocumentPage = ({ group, setFooterOption }) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">{group?.name || "Group"}</h2>
+        <h2 className="group-card-title">Documents for {group?.name || "Group"}</h2>
       </div>
 
       <div className="document-grid">
@@ -81,11 +121,19 @@ const DocumentPage = ({ group, setFooterOption }) => {
                   <span className="document-meta">{group?.name || "Unknown Group"}</span>
                 </div>
                 <FaCloudDownloadAlt
-                  className="download-icon"
+                  className="download-icon-doc"
                   title="Download"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDownloadDocument(document.name);
+                  }}
+                />
+                <FaTrash
+                  className="delete-icon-doc"
+                  title="Delete"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleConfirmDelete(document);
                   }}
                 />
               </div>
@@ -93,6 +141,21 @@ const DocumentPage = ({ group, setFooterOption }) => {
           })
         )}
       </div>
+
+      {/* Modal per conferma eliminazione */}
+      {showModal && (
+        <div className="modal-delete-doc">
+          <p>Are you sure you want to delete this document?</p>
+          <div className="modal-buttons">
+            <button className="btn btn-success" onClick={() => handleDeleteDocument(documentToDelete?.material_id)}>
+              Yes
+            </button>
+            <button className="btn btn-danger" onClick={handleCloseModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

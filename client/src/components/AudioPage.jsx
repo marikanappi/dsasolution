@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate} from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./../css/audiopage.css";
 import { getAudio } from "../../API.mjs";
 
@@ -12,6 +12,13 @@ const AudioPage = ({ group, setFooterOption}) => {
   const handleBack = () => {
     navigate(-1);
   };
+
+   useEffect(() => {
+      if (setFooterOption) {
+        setFooterOption("Audio");
+      }
+    }, [setFooterOption]);
+  
 
   // Funzione per recuperare le immagini
   const fetchAudio = async () => {
@@ -36,7 +43,7 @@ const AudioPage = ({ group, setFooterOption}) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">{group.name}</h2>
+        <h2 className="group-card-title">Audio for{group.name}</h2>
       </div>
 
       <div className="audio-page">

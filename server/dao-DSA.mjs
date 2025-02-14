@@ -395,3 +395,17 @@ export function addMaterial(db, group_id, name, type) {
         });
     });
 }
+
+//funzione per eliminare il material
+export function deleteMaterial(db, material_id) {
+    return new Promise((resolve, reject) => {
+        const query = "DELETE FROM material WHERE material_id = ?";
+        db.run(query, [material_id], function(err) {
+            if (err) {
+                console.error('Database error: ', err);
+                return reject(err);
+            }
+            resolve(this.changes);
+        });
+    });
+}

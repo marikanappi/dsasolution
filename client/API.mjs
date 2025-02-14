@@ -297,7 +297,7 @@ async function getDocument(group_id) {
 async function getAudio(group_id) { 
   try { 
     console.log(`Fetching audio for group ID: ${group_id}`); 
-    const response = await fetch(`${BASE_URL}/material/${group_id}`); 
+    const response = await fetch(`${BASE_URL}/material/audio/${group_id}`); 
     if (!response.ok) { 
       throw new Error(`Failed to fetch audio: ${response.statusText}`); 
     } 
@@ -334,6 +334,24 @@ async function addMaterial(groupid, name, type) {
   }
 }
 
+//deleteMaterial 
+async function deleteMaterial(material_id) {
+  try {
+    const response = await fetch(`${BASE_URL}/material/${material_id}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete material');
+    }
+    const result = await response.json();
+    console.log('Material deleted:', result.message);
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export {
   getAllGroups,
   getGroupsByLabel,
@@ -353,7 +371,8 @@ export {
   getDocument,
   getAudio,
   updateGroup,
-  addMaterial
+  addMaterial,
+  deleteMaterial
 };
 
 
