@@ -139,12 +139,6 @@
   color: #1a1818;
 }
 
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
 .btn {
   padding: 8px 20px;
   border: none;
@@ -156,16 +150,4 @@
 
 .btn:hover {
   opacity: 0.9;
-}
-
-.btn-success {
-  background-color: #6e00ad;
-  color: white;
-  size: 20px;
-}
-
-.btn-danger {
-  background-color: #6e00ad;
-  color: white;
-  size: 20px;
 }

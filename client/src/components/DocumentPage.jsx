@@ -146,11 +146,11 @@ const DocumentPage = ({ group, setFooterOption }) => {
       {showModal && (
         <div className="modal-delete-doc">
           <p>Are you sure you want to delete this document?</p>
-          <div className="modal-buttons">
+          <div className="modal-button">
             <button className="btn btn-success" onClick={() => handleDeleteDocument(documentToDelete?.material_id)}>
               Yes
             </button>
-            <button className="btn btn-danger" onClick={handleCloseModal}>
+            <button className="btn modal-button" onClick={handleCloseModal}>
               Cancel
             </button>
           </div>

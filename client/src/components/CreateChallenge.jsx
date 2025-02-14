@@ -83,7 +83,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
     <div className="generate-challenge-container">
       <div className="title-header">
         <div className="back-arrow" onClick={handleBack}>
-          <FaArrowLeft size={25} className="me-3" />
+          <FaArrowLeft size={25}  />
         </div>
         <h5>Generate Challenge</h5>
       </div>
