@@ -339,7 +339,7 @@ const CreateGroup = ({ setFooterOption }) => {
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
           <div className="exit-modal">
-            <p>Are you sure you want to exit?</p>
+            <p className="text-left">Are you sure you want to exit?</p>
             <div className="d-flex justify-content-center">
               <button
                 className="btn modal-button"
@@ -370,8 +370,9 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
       </div>
-    </div>
+    </div>  
   );
 };
+
 
 export default CreateGroup;

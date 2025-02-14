@@ -384,8 +384,8 @@ const ChallengePage = ({ setFooterOption }) => {
           {showExitModal && (
             <div className="modal">
               <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
+                <h3 className="text-left">Are you sure you want to exit?</h3>
+                <p className="text-left">All your changes will be discarded.</p>
                 <div className="row-buttons-container">
                   <button className="btn btn-danger" onClick={handleExit}>
                     Exit

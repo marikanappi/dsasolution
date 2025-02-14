@@ -26,27 +26,42 @@ const ImagePage = ({ group, setFooterOption }) => {
   useEffect(() => { 
     fetchImages(); 
   }, [group]); // Chiamata ogni volta che il gruppo cambia 
+
+  const handleImageError = (imageUrl) => {
+    setImages((prevImages) => prevImages.filter((img) => img.name !== imageUrl));
+  };
  
-  return ( 
-    <div className="images-page"> 
-      <h1 className="page-title"></h1> 
-       
-      <div className="images-grid"> 
-        {images.length === 0 ? ( 
-          <p>No images found.</p> 
-        ) : ( 
-          images.map((image) => ( 
-            <div key={image.material_id} className="image-card"> 
-              <img src={image.name} alt={image.name} className="image-thumbnail" /> 
-              <div className="image-details"> 
-                <p>{image.name}</p> 
-              </div> 
-            </div> 
-          )) 
-        )} 
-      </div> 
-    </div> 
-  ); 
+  return (
+    <>
+      <div className="group-card">
+        <h2 className="group-card-title">{group.name}</h2>
+      </div>
+      <div className="images-page">
+        <h1 className="page-title"></h1>
+  
+        <div className="images-grid">
+          {images.length === 0 ? (
+            <p>No images found.</p>
+          ) : (
+            images.map((image) => (
+              <div key={image.material_id} className="image-card">
+                <img
+                  src={image.name}
+                  alt={image.name}
+                  className="image-thumbnail"
+                  onError={() => handleImageError(image.name)}
+                />
+                <div className="image-details">
+                  <p></p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </>
+  );
+  
 }; 
  
 export default ImagePage;
