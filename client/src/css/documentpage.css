@@ -1,9 +1,7 @@
 .document-page {
   display: flex;
   flex-direction: column;
-  padding: 0;
   background-color: #f8f8f8;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .document-grid {

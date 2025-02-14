@@ -46,7 +46,7 @@ const ImagePage = ({ group, setFooterOption }) => {
       </div>
 
       <div className="group-card">
-        <h2 className="group-card-title">{group.name}</h2>
+        <p className="group-card-title">{group.name}</p>
       </div>
 
       <div className="images-page">
