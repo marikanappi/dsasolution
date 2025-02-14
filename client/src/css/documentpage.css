@@ -7,7 +7,7 @@
 }
 
 .document-grid {
-  max-height: 400px; /* Imposta un'altezza massima, modifica in base alle tue esigenze */
+  max-height: 100%; /* Imposta un'altezza massima, modifica in base alle tue esigenze */
   overflow-y: auto;  /* Aggiungi lo scorrimento verticale */
   padding-right: 10px; /* Aggiungi uno spazio extra per il scrollbar se necessario */
 }
@@ -48,6 +48,7 @@
 
 .pdf-icon {
   color: #ea1f18;
+  font-size: 40px;
 }
 
 .word-icon {
@@ -66,7 +67,7 @@
 }
 
 .document-details p {
-  margin: 0;
+  margin-right: 10px;
   font-size: 1rem;
   color: #1e1e1e;
   text-overflow: ellipsis;
@@ -82,7 +83,7 @@
 }
 
 .download-icon {
-  font-size: 1.4rem;
+  font-size: 2rem;
   color: #6e00ad;
   cursor: pointer;
   transition: color 0.2s ease;

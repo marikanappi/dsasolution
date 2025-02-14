@@ -21,7 +21,7 @@ const CreateGroup = ({ setFooterOption }) => {
   const [imageName, setImageName] = useState("");
   const [error, setError] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-  const [setMandatoryWarningVisible] = useState(false);
+  const [MandatoryWarningVisible, setMandatoryWarningVisible] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
@@ -74,7 +74,7 @@ const CreateGroup = ({ setFooterOption }) => {
       !formData.level ||
       !formData.specialNeeds
     ) {
-      setMandatoryWarningVisible(true);
+      setError("Please fill in all required fields."); // Imposta il messaggio di errore
       return;
     }
 
@@ -295,14 +295,17 @@ const CreateGroup = ({ setFooterOption }) => {
               ></textarea>
             </div>
           </div>
-
-          {/* Create Button */}
-          <div className="text-center mb-3 create-container">
-            <button type="submit" className="create-button" onClick={handleCreate}>
-              Create
-            </button>
-          </div>
         </form>
+
+        {error && <div className="error-message">{error}</div>}
+
+
+        {/* Create Button */}
+        <div className="create-container">
+          <button type="submit" className="create-button" onClick={handleCreate}>
+            Create
+          </button>
+        </div>
 
         {/* Tooltip Modal */}
         {tooltipModal.visible && (
@@ -319,22 +322,22 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
 
-{showSuccessModal && (
-  <div className="modal">
-    <div className="modal-content">
-      <h3>Group Created Successfully!</h3>
-      <p>Your group has been created and is ready for use.</p>
-      <button
-        className="btn btn-primary"
-        onClick={() => {
-          navigate("/"); // Naviga alla home
-        }}
-      >
-        Go to Home
-      </button>
-    </div>
-  </div>
-)}
+        {showSuccessModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Group Created Successfully!</h3>
+              <p>Your group has been created and is ready for use.</p>
+              <button
+                className="btn modal-button"
+                onClick={() => {
+                  navigate("/"); // Naviga alla home
+                }}
+              >
+                Go to Home
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Exit Confirmation Modal */}
         {exitModalVisible && (
@@ -370,7 +373,7 @@ const CreateGroup = ({ setFooterOption }) => {
           </div>
         )}
       </div>
-    </div>  
+    </div>
   );
 };
 

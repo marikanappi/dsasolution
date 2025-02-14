@@ -60,11 +60,6 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.group-item.mine:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
 .group-icon {
   width: 60px;
   height: 60px;
@@ -278,14 +273,4 @@
   25% { transform: rotate(10deg); }
   75% { transform: rotate(-10deg); }
   100% { transform: rotate(0); }
-}
-
-@keyframes slide-down {
-  from { transform: translateY(-10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }

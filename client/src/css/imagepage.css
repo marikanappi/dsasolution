@@ -4,8 +4,9 @@
   overflow-y: auto; /* Consente lo scroll verticale per il contenitore */
   height: 100vh; /* Usa tutta l'altezza della finestra */
   padding: 20px;
-  
+  max-height: 550px;
   align-items: center; /* Centra orizzontalmente */
+  overflow-x: hidden; /* Impedisce lo scroll orizzontale se non necessario */
 }
 
 .page-title {

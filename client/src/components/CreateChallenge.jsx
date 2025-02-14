@@ -14,7 +14,9 @@ const NewChallenge = ({ setFooterOption, group }) => {
   const [externalMaterial, setExternalMaterial] = useState(null); // To handle external material (PDF/images)
   const [numQuestions, setNumQuestions] = useState(1); // Default to 1 question
   const [topics, setTopics] = useState([]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [tooltipModal, setTooltipModal] = useState({
     visible: false,
@@ -39,14 +41,18 @@ const NewChallenge = ({ setFooterOption, group }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title || !selectedTopic) {
+      setError("Please fill in all required fields."); // Imposta il messaggio di errore
+      return;
+    }
+
     const challenge = new Challenge(title, group.id, selectedTopic);
-    console.log("titolo: ", challenge.title);
-    console.log("group.id: ", challenge.group_id);
-    console.log("selectedTopic: ", challenge.topic_id);
+    
     const result = await createChallenge(challenge);
     if (result) {
       setFooterOption("Group");
-      navigate("/challenges");
+      setShowSuccessModal(true);
     } else {
       console.error("Failed to create challenge");
     }
@@ -77,6 +83,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
         <h5>Generate Challenge</h5>
       </div>
+
       <form onSubmit={handleSubmit} className="challenge-form">
         <div className="form-group">
           <label htmlFor="title">Title*</label>
@@ -148,26 +155,45 @@ const NewChallenge = ({ setFooterOption, group }) => {
           />
         </div>
         <div className="create-container submit-btn">
-          <button type="submit" className="create-button">
+          <button type="submit" className="create-button" onClick={handleSubmit}>
             Generate
           </button>
         </div>
       </form>
+
+      {error && <div className="error-message">{error}</div>}
+
+      {showSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Challenge Created Successfully!</h3>
+            <p>Your challenge has been created and is ready for use.</p>
+            <button
+              className="btn modal-button"
+              onClick={() => {
+                navigate("/challenges"); // Naviga alla home
+              }}
+            >
+              Go to Challenges
+            </button>
+          </div>
+        </div>
+      )}
       {showExitModal && (
-            <div className="modal">
-              <div className="modal-content">
-                <h3>Are you sure you want to exit?</h3>
-                <p>All your changes will be discarded.</p>
-                <div className="row-buttons-container">
-                  <button className="btn btn-danger" onClick={handleExit}>
-                    Exit
-                  </button>
-                  <button className="btn modal-button" onClick={handleCancelArrow}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Are you sure you want to exit?</h3>
+            <p>All your changes will be discarded.</p>
+            <div className="row-buttons-container">
+              <button className="btn btn-danger" onClick={handleExit}>
+                Exit
+              </button>
+              <button className="btn modal-button" onClick={handleCancelArrow}>
+                Cancel
+              </button>
             </div>
+          </div>
+        </div>
       )}
 
       <TooltipCat
