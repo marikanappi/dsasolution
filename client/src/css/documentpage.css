@@ -26,6 +26,15 @@
   background-color: #f1f1f1;
 }
 
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: white;
+  z-index: 9999;
+}
+
 .document-thumbnail {
   font-size: 1.8rem;
   margin-right: 12px;

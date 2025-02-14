@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { FaFilePdf, FaFileWord, FaFileAlt, FaCloudDownloadAlt } from "react-icons/fa";
+import { FaFilePdf, FaFileWord, FaFileAlt, FaCloudDownloadAlt, FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { getDocument } from "../../API.mjs";
 import "./../css/documentpage.css";
 
 const DocumentPage = ({ group, setFooterOption }) => {
+  const navigate = useNavigate();
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
-    setFooterOption("Documents");
-  }, []);
-
-  const fetchDocuments = async () => {
-    if (!group || !group.id) return;
-    try {
-      const documentData = await getDocument(group.id);
-      setDocuments(documentData);
-    } catch (err) {
-      console.error("Error fetching documents:", err);
+    if (setFooterOption) {
+      setFooterOption("Documents");
     }
-  };
+  }, [setFooterOption]);
 
   useEffect(() => {
+    const fetchDocuments = async () => {
+      if (!group || !group.id) return;
+      try {
+        const documentData = await getDocument(group.id);
+        setDocuments(documentData || []); // Evita problemi se il valore è null
+      } catch (err) {
+        console.error("Error fetching documents:", err);
+        setDocuments([]); // Imposta un array vuoto in caso di errore
+      }
+    };
+
     fetchDocuments();
   }, [group]);
 
@@ -35,11 +40,20 @@ const DocumentPage = ({ group, setFooterOption }) => {
     link.click();
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="document-page">
-      <div className="group-card">
-        <h2 className="group-card-title">{group.name}</h2>
+      <div className="back-arrow" onClick={handleBack}>
+        <FaArrowLeft size={25} />
       </div>
+
+      <div className="group-card">
+        <h2 className="group-card-title">{group?.name || "Group"}</h2>
+      </div>
+
       <div className="document-grid">
         {documents.length === 0 ? (
           <p>No documents found.</p>
@@ -64,7 +78,7 @@ const DocumentPage = ({ group, setFooterOption }) => {
                 </div>
                 <div className="document-details">
                   <p title={fileName}>{fileName}</p>
-                  <span className="document-meta">{group.name}</span>
+                  <span className="document-meta">{group?.name || "Unknown Group"}</span>
                 </div>
                 <FaCloudDownloadAlt
                   className="download-icon"

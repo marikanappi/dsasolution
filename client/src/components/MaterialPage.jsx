@@ -1,7 +1,7 @@
 import { AiOutlineCloudUpload } from "react-icons/ai"; // Upload icon
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { FaFolder, FaPlus } from "react-icons/fa"; // Folder icon
+import { FaFilePdf, FaFolder, FaPlus, FaArrowLeft } from "react-icons/fa"; // Folder & Back icon
 import { MdInsertDriveFile } from "react-icons/md"; // Generic file icon
 import { addMaterial } from "../../API.mjs";
 import "./../css/materialpage.css";
@@ -28,19 +28,21 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
       // Controlla il tipo di file
       if (selectedFile.type.startsWith("image/")) {
-        // Se è un'immagine, usa FileReader per mostrare l'anteprima
+        // Anteprima per immagini
         const reader = new FileReader();
         reader.onload = () => setFilePreview(reader.result);
         reader.readAsDataURL(selectedFile);
       } else if (selectedFile.type === "application/pdf") {
-        // Se è un PDF, crea un URL per visualizzarlo con <embed>
-        const fileURL = URL.createObjectURL(selectedFile);
-        setFilePreview(fileURL);
+        // Immagine statica per i PDF
+        setFilePreview("/images/pdf-preview.png");
+      } else if (selectedFile.type.startsWith("audio/")) {
+        // Immagine statica per audio
+        setFilePreview("/images/audio-preview.png");
       } else {
-        setFilePreview(null); // Reset dell'anteprima per altri tipi di file
+        // Anteprima generica per altri file
+        setFilePreview("/images/file-preview.png");
       }
 
-      // Open the modal when file is selected
       setModalOpen(true);
     }
   };
@@ -76,28 +78,42 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
       const data = await result.json();
       const fileUrl = data.material.name;
-      //se il file finisce per .jpg o png vai a images
+
+      // Navigazione basata sul tipo di file
       if (fileUrl.endsWith(".jpg") || fileUrl.endsWith(".png")) {
-      navigate("/images");
+        navigate("/images");
+      } else if (fileUrl.endsWith(".pdf")) {
+        navigate("/documents");
       }
-      //se il file finisce per .pdf vai a documents
-      else if (fileUrl.endsWith(".pdf")) {
-      navigate("/documents");
-      }
+
       setFile(null);
       setFilePreview(null);
-      setModalOpen(false); // Close the modal after upload
+      setModalOpen(false); // Chiudi il modal dopo l'upload
     } catch (error) {
       console.error("Errore durante l'upload:", error);
     }
   };
 
   const closeModal = () => {
-    setModalOpen(false); // Close the modal when clicking on cancel or close
+    setModalOpen(false); // Chiude il modal
+  };
+
+  const cancelUpload = () => {
+    setFile(null); // Resetta il file selezionato
+    setFilePreview(null); // Cancella l'anteprima
+    setModalOpen(false); // Chiude il modal
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   return (
     <div className="material-container">
+      <div className="back-arrow" onClick={handleBack}>
+        <FaArrowLeft size={25} />
+      </div>
+
       <div className="group-page">
         <div className="group-card">
           <p className="group-card-title">{group.name}</p>
@@ -145,20 +161,30 @@ const MaterialPage = ({ group, setFooterOption }) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
+            <button className="close-btn" onClick={closeModal}>
+              ✖
+            </button>
+
             {/* Anteprima del file */}
-            {filePreview ? (
+            {filePreview && (
               file.type.startsWith("image/") ? (
                 <img src={filePreview} alt="Preview" className="preview-image" />
               ) : file.type === "application/pdf" ? (
-                <embed src={filePreview} type="application/pdf" width="100%" height="200px" />
-              ) : null
-            ) : (
-              <MdInsertDriveFile className="file-icon" />
+                <FaFilePdf className="pdf-icon" />
+              ) : file.type.startsWith("audio/") ? (
+                <img src="/images/audio-preview.png" alt="Audio Preview" className="preview-image" />
+              ) : (
+                <img src="/images/file-preview.png" alt="Generic File Preview" className="preview-image" />
+              )
             )}
-            <p>{file.name}</p>
+            <p>{file?.name}</p>
             <div className="modal-actions">
               <button onClick={handleUpload} className="upload-btn">
-              <AiOutlineCloudUpload className="upload-icon" /> Upload</button>
+                <AiOutlineCloudUpload className="upload-icon" /> Upload
+              </button>
+              <button onClick={cancelUpload} className="cancel-btn">
+                Cancel
+              </button>
             </div>
           </div>
         </div>

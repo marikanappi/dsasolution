@@ -14,6 +14,14 @@
   margin-bottom: 20px;
 }
 
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: white;
+  z-index: 9999;
+}
 .images-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adatta automaticamente le immagini */

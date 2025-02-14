@@ -109,12 +109,29 @@
   width: 90%;
 }
 
-.preview-image, embed {
+.preview-image {
   max-width: 100%;
-  max-height: 200px;
+  max-height: 300px; /* Aumenta l'altezza per ingrandire l'anteprima */
   border-radius: 8px;
+  display: block;
+  margin: 0 auto; /* Centra l'immagine nella modal */
 }
 
+.pdf-icon {
+  font-size: 100px; /* Imposta una dimensione maggiore per l'icona PDF */
+  color: #7a55c6; /* Puoi anche personalizzare il colore */
+  margin: 0 auto; /* Centra l'icona orizzontalmente */
+  display: block; /* Blocca l'elemento per permettere il centering */
+}
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: white;
+  z-index: 9999;
+}
 .modal-actions {
   margin-top: 20px;
   display: flex;
@@ -132,11 +149,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  size: 20px;
 }
 
 .upload-btn:hover {
   background-color: #55008a;
 }
+
 
 .cancel-btn {
   background-color: #f44336;

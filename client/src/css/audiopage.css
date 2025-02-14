@@ -1,0 +1,8 @@
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    color: white;
+    z-index: 9999;
+  }
