@@ -1,8 +1,9 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate, useState } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { useState } from 'react';
 import "./../css/audiopage.css";
-import { getaudio } from "../../API.mjs";
+import { getAudio } from "../../API.mjs";
 
 const AudioPage = ({ group, setFooterOption}) => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const AudioPage = ({ group, setFooterOption}) => {
   const fetchAudio = async () => {
     if (!group || !group.id) return; // Controllo se il gruppo esiste
     try {
-      const audioData = await getaudio(group.id);
+      const audioData = await getAudio(group.id);
       console.log("audioData", audioData);
       setImages(audioData || []); // Evita problemi se il valore è null
     } catch (err) {
