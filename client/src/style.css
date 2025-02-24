@@ -293,3 +293,12 @@ h6 {
   font-size: 26px;
   padding:20px;
 }
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: white;
+  z-index: 2000;
+}

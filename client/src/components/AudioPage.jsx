@@ -96,7 +96,7 @@ const AudioPage = ({ group, setFooterOption }) => {
       <div className="audio-page">
         <div className="audio-grid">
           {audio.length === 0 ? (
-            <p className="no-files-message">No audio files found.</p>
+            <p className="m-4">No audio files found.</p>
           ) : (
             audio.map((audioFile) => (
               <div key={audioFile.material_id} className="audio-card">
@@ -122,7 +122,7 @@ const AudioPage = ({ group, setFooterOption }) => {
                         }}
                       />
                       <FaTrash
-                        className="delete-icon-doc"
+                        className="delete-icon-audio"
                         title="Delete"
                         onClick={(e) => {
                           e.stopPropagation();

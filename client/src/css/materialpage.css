@@ -1,14 +1,10 @@
 /* Stile Generale */
-.material-container {
-  overflow: hidden;
- 
-}
+
 
 .material-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 15px;
+  margin:0;
 }
 
 
@@ -24,7 +20,7 @@
   color: #7a55c6;
   border: none;
   border-radius: 15px;
-  padding: 15px 20px;
+  padding: 16px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -32,6 +28,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
 }
 
 .folder-btn:hover {
@@ -41,7 +38,7 @@
 }
 
 .folder-icon {
-  font-size: 50px;
+  font-size: 55px;
   color: #7a55c6;
 }
 
@@ -72,6 +69,7 @@
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  margin-bottom: 16px;
 }
 
 .plus-icon-button:hover {
@@ -122,14 +120,6 @@
   display: block; /* Blocca l'elemento per permettere il centering */
 }
 
-.back-arrow {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-  color: white;
-  z-index: 9999;
-}
 .modal-actions {
   margin-top: 20px;
   display: flex;
@@ -176,6 +166,6 @@
   }
 
   .folder-btn {
-    width: 100%;
+    width: 80%;
   }
 }

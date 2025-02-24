@@ -114,7 +114,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
   };
 
   return (
-    <div className="material-container">
+    <div >
       <div className={`back-arrow ${modalOpen || showInfoModal ? "disabled" : ""}`}
         onClick={!modalOpen && !showInfoModal ? handleBack : null}>
         <FaArrowLeft size={25} />
@@ -135,7 +135,7 @@ const MaterialPage = ({ group, setFooterOption }) => {
 
         <div className="material-page">
           {/* Bottoni per scegliere il tipo di materiale */}
-          <div className="material-filters d-flex justify-content-around">
+          <div className="material-filters">
             <button className="folder-btn" onClick={() => handleNavigate("/images")}>
               <FaFolder className="folder-icon" />
               <span className="bold-text">Images</span>

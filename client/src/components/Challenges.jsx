@@ -47,7 +47,7 @@ const Challenges = ({ setFooterOption, group }) => {
       <div className="scrollable-challenges">
         <div className="row text-center challenge-grid">
           {challenges.length === 0 ? (
-            <p>No challenges available for this group.</p>
+            <p className="text-left">No challenges available for this group.</p>
           ) : (
             challenges.map((challenge) => (
               <div className="cards-container" key={challenge.id}>

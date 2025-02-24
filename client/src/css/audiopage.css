@@ -1,14 +1,6 @@
-.back-arrow {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-    color: white;
-    z-index: 9999;
-  }
+
   .audio-player {
     margin-bottom: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
   
   .audio-card {
@@ -30,13 +22,16 @@
     overflow: hidden;
     white-space: nowrap;
     max-width: 200px;
-    margin: 10px auto;
+    text-align: left;
   }
 
   .audio-details {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
     color: #666;
-    margin: 10px auto;
+    margin: 0 10px;
     word-wrap: break-word; /* Consente il ritorno a capo per il testo lungo */
     white-space: normal;   /* Disabilita il comportamento di non andare a capo */
     overflow: hidden;      /* Nasconde il testo che esce dalla card */

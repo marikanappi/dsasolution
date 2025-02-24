@@ -7,10 +7,11 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { PiCatBold } from "react-icons/pi";
 import TooltipCat from "./TooltipCat";
 import { FaArrowLeft } from "react-icons/fa";
+import Select from "react-select";
 
 const NewChallenge = ({ setFooterOption, group }) => {
   const [title, setTitle] = useState("");
-  const [selectedTopic, setSelectedTopic] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState(null);
   const [externalMaterial, setExternalMaterial] = useState(null); // To handle external material (PDF/images)
   const [numQuestions, setNumQuestions] = useState(1); // Default to 1 question
   const [topics, setTopics] = useState([]);
@@ -33,7 +34,6 @@ const NewChallenge = ({ setFooterOption, group }) => {
         const fetchedTopics = await getTopics(group.id);
         if (fetchedTopics) {
           setTopics(fetchedTopics);
-          setSelectedTopic(fetchedTopics[0]?.topic_id || ""); // Preselect the first topic if available
         }
       } catch (err) {
         console.error("Error fetching topics:", err);
@@ -42,6 +42,42 @@ const NewChallenge = ({ setFooterOption, group }) => {
 
     fetchTopics();
   }, [group.id]);
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      minWidth: "150px", // Adjust width as needed
+      fontSize: "16px", // Adjust font size
+    }),
+    menu: (provided) => ({
+      ...provided,
+      minWidth: "150px",
+    }),
+  };
+
+  // Convert topics to react-select options
+  const topicOptions = topics.map((topic) => ({
+    value: topic.topic_id,
+    label: topic.name,
+  }));
+
+  const numOptions = [...Array(12)].map((_, i) => ({
+    value: i + 1,
+    label: (i + 1).toString(),
+  }));
+
+  const customStylesNumber = {
+    control: (provided) => ({
+      ...provided,
+      width: "90px", // Match original width
+      minHeight: "32px", // Adjust height
+      fontSize: "14px",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      width: "80px",
+    }),
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +119,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
     <div className="generate-challenge-container">
       <div className="title-header">
         <div className="back-arrow" onClick={handleBack}>
-          <FaArrowLeft size={25}  />
+          <FaArrowLeft size={25} />
         </div>
         <h5>Generate Challenge</h5>
       </div>
@@ -102,7 +138,7 @@ const NewChallenge = ({ setFooterOption, group }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="topic">Topic</label>
+          <label htmlFor="topic">Topic*</label>
           <PiCatBold
             className="help-icon ms-2"
             size={30}
@@ -114,18 +150,21 @@ const NewChallenge = ({ setFooterOption, group }) => {
               })
             }
           />
-          <select
+          <Select
             id="topic"
-            value={selectedTopic}
-            onChange={(e) => setSelectedTopic(e.target.value)}
-            required
-          >
-            {topics.map((topic) => (
-              <option key={topic.topic_id} value={topic.topic_id}>
-                {topic.name}
-              </option>
-            ))}
-          </select>
+            value={
+              topicOptions.find((option) => option.value === selectedTopic) ||
+              null
+            }
+            onChange={(selectedOption) =>
+              setSelectedTopic(selectedOption ? selectedOption.value : null)
+            }
+            options={topicOptions}
+            styles={customStyles}
+            placeholder="Select a topic" // Ensures placeholder is shown when nothing is selected
+            isClearable // Allows users to clear selection
+            noOptionsMessage={() => "No topics available"} // Message when no options exist
+          />
         </div>
         <div className="form-group">
           <label htmlFor="externalMaterial">External Material</label>
@@ -147,28 +186,35 @@ const NewChallenge = ({ setFooterOption, group }) => {
             accept=".pdf,.jpg,.jpeg,.png"
           />
         </div>
-        <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
-          <label htmlFor="numQuestions" style={{ marginRight: "90px", flexShrink: 0 }}>Number of Questions</label>
-          <select
-            id="numQuestions"
-            value={numQuestions}
-            onChange={(e) => setNumQuestions(e.target.value)}
-            className="form-select ms-3"
-            required
-            style={{ width: "80px" }}
+        <div
+          className="form-group"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <label
+            htmlFor="numQuestions"
+            style={{ marginRight: "90px", flexShrink: 0 }}
           >
-            <option value="" disabled hidden>
-              Set Limit
-            </option>
-            {[...Array(11)].map((_, i) => (
-              <option key={i} value={i + 1}>
-                {i + 1}
-              </option>
-            ))}
-          </select>
+            Number of Questions
+          </label>
+          <Select
+            id="numQuestions"
+            value={numOptions.find((opt) => opt.value === numQuestions) || null}
+            onChange={(selectedOption) =>
+              setNumQuestions(selectedOption?.value || "")
+            }
+            options={[
+              ...numOptions,
+            ]}
+            styles={customStylesNumber}
+            
+          />
         </div>
         <div className="create-container submit-btn">
-          <button type="submit" className="create-button" onClick={handleSubmit}>
+          <button
+            type="submit"
+            className="create-button"
+            onClick={handleSubmit}
+          >
             Generate
           </button>
         </div>
@@ -225,9 +271,10 @@ const NewChallenge = ({ setFooterOption, group }) => {
         </div>
       )}
 
-      <TooltipCat tooltipModal={tooltipModal} setTooltipModal={setTooltipModal} />
-
-
+      <TooltipCat
+        tooltipModal={tooltipModal}
+        setTooltipModal={setTooltipModal}
+      />
     </div>
   );
 };

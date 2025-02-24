@@ -13,7 +13,7 @@ const ProfilePage = ({ setFooterOption, setGroup }) => {
     firstName: "Mario",
     lastName: "Rossi",
     university: "Politecnico di Torino",
-    disorder: "DSA",
+    disorder: "Dyscalculic",
     profile_image: "image_static/profile.png",
     email: "mario.rossi@studenti.polito.it",
   });

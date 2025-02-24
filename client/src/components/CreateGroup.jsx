@@ -4,6 +4,7 @@ import { FaQuestionCircle, FaArrowLeft } from "react-icons/fa";
 import { addGroup } from "../../API.mjs"; // Import API functions
 import "./../css/creategroup.css"; // Import CSS for styling
 import { useNavigate } from "react-router-dom"; // Import the navigate hook
+import Select from "react-select";
 
 const CreateGroup = ({ setFooterOption }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const CreateGroup = ({ setFooterOption }) => {
     level: "",
     specialNeeds: "",
     description: "",
-    maxParticipants: 0,
+    maxParticipants: 10,
   });
 
   const navigate = useNavigate(); // Use the navigate hook
@@ -33,6 +34,48 @@ const CreateGroup = ({ setFooterOption }) => {
   useEffect(() => {
     setFooterOption("CreateGroup");
   }, [setFooterOption]);
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      minWidth: "150px", // Adjust width as needed
+      fontSize: "14px", // Adjust font size
+    }),
+    menu: (provided) => ({
+      ...provided,
+      minWidth: "150px",
+    }),
+  };
+
+  const customStylesNumber = {
+    control: (provided) => ({
+      ...provided,
+      minWidth: "100px", // Adjust width as needed
+      fontSize: "14px", // Adjust font size
+    }),
+    menu: (provided) => ({
+      ...provided,
+      minWidth: "100px",
+    }),
+  };
+
+  const levelOptions = [
+    { value: "Beginner", label: "Beginner" },
+    { value: "Intermediate", label: "Intermediate" },
+    { value: "Advanced", label: "Advanced" },
+  ];
+
+  const specialNeedsOptions = [
+    { value: "Dyslexia", label: "Dyslexia" },
+    { value: "Dysgraphia", label: "Dysgraphia" },
+    { value: "Dyscalculia", label: "Dyscalculia" },
+    { value: "Dysorthography", label: "Dysorthography" },
+  ];
+
+  const maxParticipantsOptions = [...Array(50)].map((_, i) => ({
+    value: i + 1,
+    label: i + 1,
+  }));
 
   // Handle form field changes
   const handleInputChange = (e) => {
@@ -198,18 +241,19 @@ const CreateGroup = ({ setFooterOption }) => {
                   }
                 />
               </label>
-              <select
+              <Select
                 id="level"
-                value={formData.level}
-                onChange={handleInputChange}
-                className={`form-control form-select `}
-                required
-              >
-                <option value="">Select level</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
+                value={levelOptions.find(
+                  (option) => option.value === formData.level
+                )}
+                onChange={(selectedOption) =>
+                  handleInputChange({
+                    target: { id: "level", value: selectedOption.value },
+                  })
+                }
+                options={levelOptions}
+                styles={customStyles}
+              />
             </div>
 
             {/* Special Needs */}
@@ -218,7 +262,7 @@ const CreateGroup = ({ setFooterOption }) => {
                 htmlFor="specialNeeds"
                 className="form-label d-flex align-items-center"
               >
-                Special Needs*
+                SLD*
                 <FaQuestionCircle
                   className="help-icon ms-2"
                   style={{ cursor: "pointer" }}
@@ -230,19 +274,19 @@ const CreateGroup = ({ setFooterOption }) => {
                   }
                 />
               </label>
-              <select
+              <Select
                 id="specialNeeds"
-                value={formData.specialNeeds}
-                onChange={handleInputChange}
-                className={`form-control form-select `}
-                required
-              >
-                <option value="">Select special need</option>
-                <option value="Dyslexia">Dyslexia</option>
-                <option value="Dysgraphia">Dysgraphia</option>
-                <option value="Dyscalculia">Dyscalculia</option>
-                <option value="Dysorthography">Dysorthography</option>
-              </select>
+                value={specialNeedsOptions.find(
+                  (option) => option.value === formData.specialNeeds
+                )}
+                onChange={(selectedOption) =>
+                  handleInputChange({
+                    target: { id: "specialNeeds", value: selectedOption.value },
+                  })
+                }
+                options={specialNeedsOptions}
+                styles={customStyles}
+              />
             </div>
 
             {/* Max Participants */}
@@ -262,24 +306,25 @@ const CreateGroup = ({ setFooterOption }) => {
                   />
                 </label>
               </div>
-
-              <select
+              <Select
                 id="maxParticipants"
-                value={formData.maxParticipants}
-                onChange={handleInputChange}
-                className="form-select ms-3"
-                required
-                style={{ width: "80px" }}
-              >
-                <option value="" disabled hidden>
-                  Set Limit
-                </option>
-                {[...Array(50)].map((_, i) => (
-                  <option key={i} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
+                value={maxParticipantsOptions.find(
+                  (option) => option.value === formData.maxParticipants
+                )}
+                onChange={(selectedOption) =>
+                  handleInputChange({
+                    target: {
+                      id: "maxParticipants",
+                      value: selectedOption.value,
+                    },
+                  })
+                }
+                options={maxParticipantsOptions}
+                styles={{
+                  ...customStylesNumber,
+                  control: (base) => ({ ...base, width: "100px" }),
+                }}
+              />
             </div>
 
             {/* Description */}

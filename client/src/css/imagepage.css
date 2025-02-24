@@ -41,19 +41,17 @@
   position: absolute;
   top: 10px;
   font-size: 30px;
-  padding: 5px;
-  border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
   z-index: 2;
+  margin-left: 10px;
 }
 
 
 .delete-icon {
   position: absolute;
-  top: 10px;
-  font-size: 30px;
-  padding: 5px;
+  top: 15px;
+  font-size: 25px;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;

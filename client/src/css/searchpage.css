@@ -85,20 +85,21 @@
 
 .group-info-container {
   display: flex;
-  justify-content: space-between; /* Allinea gli elementi ai lati opposti */
+  justify-content: space-between; 
   align-items: center; /* Allinea verticalmente al centro */
-  width: 100%;
+  width: 120%;
   position: relative;
-  margin-left: 20px;
+  margin-left: 10px;
+  
 }
 
 .group-item.other-item {
-  background-color: #ffffff;
+  background-color: #ffff;
   display: flex;
   width: 350px;
   margin-left: 20px;
   border-radius: 10px;
-  padding: 30px;
+  padding: 26px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   cursor: pointer;

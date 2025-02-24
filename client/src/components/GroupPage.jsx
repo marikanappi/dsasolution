@@ -12,6 +12,7 @@ import "./../css/grouppage.css";
 import { leaveGroup, updateGroup } from "../../API.mjs";
 import GroupModal from "./GroupModal";
 import { RiSettings5Fill } from "react-icons/ri";
+import Select from "react-select";
 
 const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const isAdmin = group.usercreate === 1; // Replace with actual admin check
   const deleteConfirm = "You can join it again whenever you want.";
 
+  const [selectedSLD, setSelectedSLD] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+
   useEffect(() => {
     setFooterOption("GroupPage");
   }, []);
@@ -32,6 +36,25 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
   const handleNavigate = (path) => {
     navigate(path);
   };
+
+  useEffect(() => {
+    setSelectedSLD(sldOptions.find((option) => option.value === group.SLD) || null);
+    setSelectedLevel(levelOptions.find((option) => option.value === group.level) || null);
+  }, [group]); // Runs when `group` changes
+  
+
+  const sldOptions = [
+    { value: "Dyslexia", label: "Dyslexia" },
+    { value: "Dysgraphia", label: "Dysgraphia" },
+    { value: "Dyscalculia", label: "Dyscalculia" },
+    { value: "Dysorthography", label: "Dysorthography" },
+  ];
+
+  const levelOptions = [
+    { value: "Beginner", label: "Beginner" },
+    { value: "Intermediate", label: "Intermediate" },
+    { value: "Advanced", label: "Advanced" },
+  ];
 
   const handleLeaveGroup = async () => {
     try {
@@ -60,23 +83,21 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
     try {
       const response = await updateGroup(group.id, editedGroup);
       if (response) {
-        setGroup({ ...editedGroup });
+        setGroup({ ...group, ...editedGroup }); // Merge to retain unchanged fields
       }
     } catch (error) {
-      console.error("Error in modifying group information.:", error);
+      console.error("Error in modifying group information:", error);
     }
     setModalType(null);
   };
 
   return (
     <div className="group-page">
-      <div
-        className={`back-arrow ${modalType || showInfoModal ? "disabled" : ""}`}
-        onClick={!modalType && !showInfoModal ? handleBack : null}
-      >
+      <div >
         <FaArrowLeft
           size={25}
-          style={{ cursor: "pointer", color: "white", marginRight: "330px" }}
+          className={`back-arrow ${modalType || showInfoModal ? "disabled" : ""}`}
+          onClick={!modalType && !showInfoModal ? handleBack : null}
         />
       </div>
       <div className="group-card">
@@ -145,7 +166,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
                 onClick={() => setModalType("edit")}
                 className="btn modal-button"
                 style={{
-                  backgroundColor: "#007bff"
+                  backgroundColor: "#007bff",
                 }}
                 disabled={!isAdmin}
               >
@@ -177,6 +198,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
         <div className="modal">
           <div className="modal-content text-left">
             <h3 className="text-center">Edit Group</h3>
+
             <label>Group Name:*</label>
             <input
               className="m-0"
@@ -188,28 +210,49 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
             />
 
             <label>SLD:</label>
-            <select
-              name="SLD"
-              value={editedGroup.SLD}
-              onChange={handleEditChange}
-            >
-              <option value="Dyslexia">Dyslexia</option>
-              <option value="Dysgraphia">Dysgraphia</option>
-              <option value="Dyscalculia">Dyscalculia</option>
-              <option value="ADHD">ADHD</option>
-              <option value="ASD">ASD</option>
-            </select>
+            <Select
+              options={sldOptions}
+              value={selectedSLD} // Uses state
+              onChange={(selectedOption) => {
+                setSelectedSLD(selectedOption); // Update state
+                handleEditChange({
+                  target: { name: "SLD", value: selectedOption.value },
+                });
+              }}
+              styles={{
+                menu: (provided) => ({
+                  ...provided,
+                  width: "300px",
+                }),
+                control: (provided) => ({
+                  ...provided,
+                  textAlign: "left",
+                }),
+              }}
+            />
 
             <label>Level:</label>
-            <select
-              name="level"
-              value={editedGroup.level}
-              onChange={handleEditChange}
-            >
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
-            </select>
+            <Select
+              options={levelOptions}
+              value={selectedLevel} // Uses state
+              onChange={(selectedOption) => {
+                setSelectedLevel(selectedOption); // Update state
+                handleEditChange({
+                  target: { name: "level", value: selectedOption.value },
+                });
+              }}
+              styles={{
+                menu: (provided) => ({
+                  ...provided,
+                  width: "300px",
+                }),
+                control: (provided) => ({
+                  ...provided,
+                  textAlign: "left",
+                }),
+              }}
+            />
+
             <div className="row-buttons-container">
               <button
                 onClick={handleEditSubmit}

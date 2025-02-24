@@ -34,7 +34,7 @@ const HomePage = ({
     fetchGroups();
     // Set initial notifications (you might fetch these from an API)
     setNotifications([ // Correct sample notifications
-      { id: 1, message: "New challenge is added to the group!", groupId: 1 },
+      { id: 6, message: "New challenge is added to the group!", groupId: 6 },
       { id: 3, message: "Look there is new material !", groupId: 3 },
     ]);
   }, [setFooterOption, setNotifications]);

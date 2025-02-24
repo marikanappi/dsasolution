@@ -14,10 +14,11 @@ const GroupModal = ({ selectedGroup, setSelectedGroup }) => {
         <h2 className="modal-group-name">{selectedGroup.name}</h2>
         <p className="modal-group-university">{selectedGroup.university}</p>
         <p className="modal-group-level">{selectedGroup.level}</p>
+        <p className="modal-group-level">{selectedGroup.SLD}</p>
         <p className="modal-group-desc">{selectedGroup.description}</p>
-        <p className="modal-group-participants">
+        {/* <p className="modal-group-participants">
           Participants: {selectedGroup.numberOfPartecipants}
-        </p>
+        </p> */}
         <button
           className="btn modal-button"
           onClick={() => setSelectedGroup(null)}

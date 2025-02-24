@@ -98,7 +98,7 @@ const DocumentPage = ({ group, setFooterOption }) => {
 
       <div className="document-grid">
         {documents.length === 0 ? (
-          <p>No documents found.</p>
+          <p className="m-4">No documents found.</p>
         ) : (
           documents.map((document) => {
             const fileName = document.name.split("/").pop();
@@ -159,9 +159,10 @@ const DocumentPage = ({ group, setFooterOption }) => {
 
       {/* Modal per conferma eliminazione */}
       {showModal && (
-        <div className="modal-delete-doc">
-          <p>Are you sure you want to delete this document?</p>
-          <div className="modal-button">
+        <div className="modal">
+        <div className="modal-content">
+          <p className="text-left m-1">Are you sure you want to delete this document?</p>
+          <div className="row-buttons-container">
             <button className="btn btn-success" onClick={() => handleDeleteDocument(documentToDelete?.material_id)}>
               Yes
             </button>
@@ -169,6 +170,7 @@ const DocumentPage = ({ group, setFooterOption }) => {
               Cancel
             </button>
           </div>
+        </div>
         </div>
       )}
     </div>

@@ -9,8 +9,8 @@ const ImagePage = ({ group, setFooterOption }) => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const isAdmin = group.usercreate === 1; // Replace with actual admin check
-
-
+  const [showModal, setShowModal] = useState(false);
+  const [toBeDelete, setToBeDelete] = useState(null);
   useEffect(() => {
     if (setFooterOption) {
       setFooterOption("Images");
@@ -69,6 +69,7 @@ const ImagePage = ({ group, setFooterOption }) => {
     } catch (err) {
       console.error("Error deleting image:", err);
     }
+    setShowModal(false);
   };
 
   return (
@@ -86,7 +87,7 @@ const ImagePage = ({ group, setFooterOption }) => {
 
         <div className="images-grid">
           {images.length === 0 ? (
-            <p>No images found.</p>
+            <p >No images found.</p>
           ) : (
             images.map((image) => (
               <div key={image.material_id} className="image-card">
@@ -112,9 +113,8 @@ const ImagePage = ({ group, setFooterOption }) => {
                     title="Delete"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (window.confirm('Are you sure you want to delete this image?')) {
-                        handleDelete(image.material_id);
-                      }
+                      setShowModal(true);
+                      setToBeDelete(image.material_id)
                     }}
                   />
                   </div>
@@ -137,6 +137,21 @@ const ImagePage = ({ group, setFooterOption }) => {
             ))
           )}
         </div>
+        {showModal && (
+        <div className="modal">
+        <div className="modal-content">
+          <p className="text-left m-1">Are you sure you want to delete this image?</p>
+          <div className="row-buttons-container">
+            <button className="btn btn-success" onClick={() => handleDelete(toBeDelete)}>
+              Yes
+            </button>
+            <button className="btn modal-button" onClick={() => setShowModal(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+        </div>
+      )}
       </div>
     </>
   );

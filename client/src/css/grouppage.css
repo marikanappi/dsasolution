@@ -2,16 +2,8 @@
 .group-page {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  
   position: relative;
-}
-
-.back-arrow {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 40px;
-  cursor: pointer;
 }
 
 .group-card {
@@ -48,11 +40,11 @@
 
 /* Sezione dei tasti di azione */
 .action-buttons {
-
+margin-top: 22px;
   display: flex;
   flex-direction: column;
   width: 90%;
-  gap: 1rem;
+  gap: 10px;
   justify-content: center;
   align-self: center;
   padding: 1rem 1rem 1rem 1rem;
@@ -207,4 +199,8 @@
 .info-icon.setting {
   top: 10px;
   right: 50px;
+}
+
+.modal-content label {
+  text-align: left;
 }

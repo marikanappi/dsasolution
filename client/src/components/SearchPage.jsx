@@ -5,6 +5,7 @@ import { FaFilter } from "react-icons/fa";
 import { FaCheck, FaQuestionCircle } from "react-icons/fa"; // Icona spunta verde
 import GroupModal from "./GroupModal";
 import { PiCatBold } from "react-icons/pi"; // Icona gatto
+import Select from "react-select";
 
 const SearchGroup = ({ notifications, setNotifications }) => {
   const [suggestedGroups, setSuggestedGroups] = useState([]);
@@ -15,8 +16,8 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedSLD, setSelectedSLD] = useState("");
-  const [levels, setLevels] = useState([]);
-  const [slds, setSlds] = useState([]);
+  // const [levels, setLevels] = useState([]);
+  // const [slds, setSlds] = useState([]);
   const filtersRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [tooltipModal, setTooltipModal] = useState({
@@ -54,6 +55,36 @@ const SearchGroup = ({ notifications, setNotifications }) => {
 
     fetchGroups();
   }, []);
+
+  const slds = [
+    { value: "Dyslexia", label: "Dyslexia" },
+    { value: "Dysgraphia", label: "Dysgraphia" },
+    { value: "Dyscalculia", label: "Dyscalculia" },
+    { value: "Dysorthography", label: "Dysorthography" },
+  ];
+
+  const levels = [
+    { value: "Beginner", label: "Beginner" },
+    { value: "Intermediate", label: "Intermediate" },
+    { value: "Advanced", label: "Advanced" },
+  ];
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      minWidth: "310px", // Set fixed minimum width
+      maxWidth: "310px", // Limit maximum width
+      fontSize: "14px",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      minWidth: "310px",
+      maxWidth: "310px",
+    }),
+  };
+
+
+  
 
   // Gestione dei filtri
   const toggleFilters = () => setFiltersVisible(!filtersVisible);
@@ -178,18 +209,17 @@ const SearchGroup = ({ notifications, setNotifications }) => {
   const FilterDropdown = ({ options, label, selected, onSelect }) => (
     <div className="filter-dropdown">
       <h6>{label}</h6>
-      <select
-        className="form-select"
-        value={selected}
-        onChange={(e) => onSelect(e.target.value)}
-      >
-        <option value="">All</option>
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+      
+
+
+      <Select
+        options={options}
+        value={options.find((opt) => opt.value === selected) || null}
+        onChange={(selectedOption) => onSelect(selectedOption?.value || "")}
+        styles={customStyles}
+        isClearable
+        placeholder="All"
+      />
     </div>
   );
 
