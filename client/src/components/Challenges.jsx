@@ -39,7 +39,7 @@ const Challenges = ({ setFooterOption, group }) => {
       </div>
         <FaTrophy className="left-header-icon" size={68} />
         <span className="challenge-group-name">
-          Challenges for Group {group.name}
+          {group.name}
         </span>
       </div>
 

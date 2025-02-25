@@ -147,7 +147,7 @@
   display: flex;
   margin-bottom: 10px;
   padding: 0;
-  max-height: 350px; /* Scegli un'altezza adeguata */
+  max-height: 340px; /* Scegli un'altezza adeguata */
   overflow-y: auto;
   scrollbar-color: #7A55C6; /* Colore della barra di scorrimento */
 }
