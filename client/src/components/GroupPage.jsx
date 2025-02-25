@@ -223,6 +223,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
                 menu: (provided) => ({
                   ...provided,
                   width: "300px",
+                  textAlign: "left",
                 }),
                 control: (provided) => ({
                   ...provided,
@@ -245,6 +246,7 @@ const GroupPage = ({ setFooterOption, group, setGroup }) => {
                 menu: (provided) => ({
                   ...provided,
                   width: "300px",
+                  textAlign: "left",
                 }),
                 control: (provided) => ({
                   ...provided,

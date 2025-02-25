@@ -378,8 +378,8 @@ const CreateGroup = ({ setFooterOption }) => {
         {showSuccessModal && (
           <div className="modal">
             <div className="modal-content">
-              <h3>Group Created Successfully!</h3>
-              <p>Your group has been created and is ready for use.</p>
+              <h3 className="text-left m-2">Group Created Successfully!</h3>
+              <p className="text-left p-2">Your group has been created and is ready for use.</p>
               <button
                 className="btn modal-button"
                 onClick={() => {
