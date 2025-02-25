@@ -151,12 +151,14 @@ const AudioPage = ({ group, setFooterOption }) => {
           <div className="modal">
             <div className="modal-content">
               <p className="text-left">Are you sure you want to delete this file audio?</p>
+              <div className="row-buttons-container">
               <button className="btn btn-success" onClick={() => handleDeleteAudio(audioToDelete?.material_id)}>
                 Yes
               </button>
               <button className="btn modal-button" onClick={handleCloseModal}>
                 Cancel
               </button>
+              </div>
             </div>
           </div>
         )}
